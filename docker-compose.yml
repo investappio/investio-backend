@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  backend:
+    image: node:lts
+    environment:
+      - "PORT=${PORT}"
+      - "NODE_ENV=development"
+      - "MONGO_HOSTNAME=${MONGO_HOSTNAME}"
+      - "MONGO_DATABASE=${MONGO_DATABASE}"
+      - "MONGO_USERNAME=${MONGO_USERNAME}"
+      - "MONGO_PASSWORD=${MONGO_PASSWORD}"
+    working_dir: /home/node/app
+    volumes:
+      - ./src:/home/node/app/src
+      - ./package.json:/home/node/app/package.json
+    command: /bin/sh -c "npm i && npm start"
+    ports:
+      - "${PORT}:${PORT}"
+    expose:
+      - "${PORT}"
+  mongo:
+    image: mongo:latest
+    restart: always
+    command: [--auth]
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+
+    

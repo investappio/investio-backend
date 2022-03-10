@@ -1,0 +1,22 @@
+{
+  "name": "invest.io",
+  "version": "1.0.0",
+  "description": "Backend for an mock investment app",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "bcrypt": "^5.0.1",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-logger": "^3.2.1",
+    "mongoose": "^6.2.5",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0"
+  }
+}
