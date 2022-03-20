@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
 const minAge = 1000 * 60 * 60 * 24 * 365 * 13 // 13 years
-const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+const emailPattern = /^[\w.-]+@[\w.-]+\.\w{2,4}$/
+const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+const phonePattern = /^\d{12}$/
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -13,8 +15,7 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: false,
-    minlength: 12,
-    maxlength: 12
+    match: [phonePattern, 'Please provide a valid phone number.']
   },
   email: {
     type: String,
@@ -35,12 +36,13 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    minlength: 1,
+    minlength: 3,
     unique: true
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    match: [passwordPattern, 'Please provide a valid password.']
   }
 })
 
