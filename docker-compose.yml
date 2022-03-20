@@ -10,6 +10,7 @@ services:
       - "MONGO_DATABASE=${MONGO_DATABASE}"
       - "MONGO_USERNAME=${MONGO_USERNAME}"
       - "MONGO_PASSWORD=${MONGO_PASSWORD}"
+      - "JWT_SECRET=${JWT_SECRET}"
     working_dir: /home/node/app
     volumes:
       - ./src:/home/node/app/src

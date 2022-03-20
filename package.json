@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "nodemon src/app.js",
+    "lint": "eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,7 @@
     "bcrypt": "^5.0.1",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",
+    "koa-jwt": "^4.0.3",
     "koa-logger": "^3.2.1",
     "mongoose": "^6.2.5",
     "passport": "^0.5.2",

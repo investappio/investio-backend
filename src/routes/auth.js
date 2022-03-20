@@ -3,6 +3,18 @@ const User = require('../models/user')
 
 const router = new Router()
 
+router.post('/login', async (ctx) => {
+  ctx.body = {}
+
+  const { username, email, password } = ctx.request.body
+
+  const login = username || email
+
+  const { password: _, ...user } = (await User.authenticate(login, password)).toObject()
+
+  ctx.body.user = user
+})
+
 router.post('/register', async (ctx) => {
   ctx.body = {}
 
@@ -23,8 +35,11 @@ router.post('/register', async (ctx) => {
     await user.save()
   } catch (err) {
     ctx.body.success = false
-    ctx.body.err = err
+    ctx.body.err = { ...(err.errors), ...(err.keyPattern) }
+    return
   }
+
+  ctx.body.success = true
 })
 
 module.exports = router.routes()

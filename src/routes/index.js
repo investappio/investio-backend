@@ -6,7 +6,7 @@ const router = new Router()
 router.use('/auth', auth)
 
 router.get('/', async (ctx) => {
-  ctx.body = "Hello, world!"
+  ctx.body = 'Hello, world!'
 })
 
 module.exports = router.routes()

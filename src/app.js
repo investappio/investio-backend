@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const logger = require('koa-logger')
 const koaBody = require('koa-body')
+const jwt = require('koa-jwt')
 const mongoose = require('mongoose')
 
 const routes = require('./routes')
@@ -14,6 +15,8 @@ app.use(logger())
 app.use(koaBody({
   multipart: true
 }))
+
+app.use(jwt({ secret: process.env.JWT_SECRET.split(',') }).unless({ path: [/^\/auth/] }))
 
 mongoose.connect(
   `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DATABASE}`,
