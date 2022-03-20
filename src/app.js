@@ -16,7 +16,7 @@ app.use(koaBody({
   multipart: true
 }))
 
-app.use(jwt({ secret: process.env.JWT_SECRET.split(',') }).unless({ path: [/^\/auth/] }))
+app.use(jwt({ secret: process.env.JWT_SECRET.split(','), passthrough: true }))
 
 mongoose.connect(
   `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DATABASE}`,

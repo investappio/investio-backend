@@ -1,5 +1,6 @@
 const Router = require('@koa/router')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 const router = new Router()
 
@@ -12,7 +13,16 @@ router.post('/login', async (ctx) => {
 
   const { password: _, ...user } = (await User.authenticate(login, password)).toObject()
 
+  const token = jwt.sign(user, process.env.JWT_SECRET)
+
   ctx.body.user = user
+  ctx.body.token = token
+})
+
+router.post('/renew', async (ctx) => {
+  ctx.body = {}
+  // TODO: Revoke and renew the jwt token
+  ctx.body = ctx.state.user
 })
 
 router.post('/register', async (ctx) => {
