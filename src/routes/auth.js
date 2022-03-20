@@ -13,10 +13,14 @@ router.post('/login', async (ctx) => {
 
   const { password: _, ...user } = (await User.authenticate(login, password)).toObject()
 
-  const token = jwt.sign(user, process.env.JWT_SECRET)
+  if (user) {
+    ctx.body.success = true
+    ctx.body.user = user
+    ctx.body.token = await jwt.sign(user, process.env.JWT_SECRET)
+    return
+  }
 
-  ctx.body.user = user
-  ctx.body.token = token
+  ctx.body.success = false
 })
 
 router.post('/renew', async (ctx) => {
@@ -49,7 +53,11 @@ router.post('/register', async (ctx) => {
     return
   }
 
+  const { password: _, ...payload } = user.toObject()
+
   ctx.body.success = true
+  ctx.body.user = payload
+  ctx.body.token = await jwt.sign(payload, process.env.JWT_SECRET)
 })
 
 module.exports = router.routes()
