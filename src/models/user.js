@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
+const Follow = require('./follow')
 
 const minAge = 1000 * 60 * 60 * 24 * 365 * 13 // 13 years
 const emailPattern = /^[\w.-]+@[\w.-]+\.\w{2,4}$/
@@ -45,6 +46,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     match: [passwordPattern, 'Please provide a valid password.']
   }
+},
+{
+  toJSON: {
+    transform (_, ret) {
+      delete ret.password
+      delete ret.__v
+    }
+  }
 })
 
 async function authenticate (login, password) {
@@ -60,8 +69,31 @@ async function passwordHash () {
   this.password = await bcrypt.hash(this.password, 10)
 }
 
+async function search (query) {
+  return this.find({ username: { $regex: query } })
+}
+
 userSchema.static('authenticate', authenticate)
+userSchema.static('search', search)
+
+async function following (user) {
+  return Follow.exists({ follower: this, user })
+}
+
+async function follow (user) {
+  const isFollowing = await this.following(user)
+
+  if (isFollowing) return false
+
+  const newFollow = new Follow({ follower: this, user })
+
+  await newFollow.save()
+  return true
+}
+
+userSchema.method('following', following)
+userSchema.method('follow', follow)
 
 userSchema.pre('save', passwordHash)
 
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('User', userSchema)

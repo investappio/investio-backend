@@ -11,12 +11,12 @@ router.post('/login', async (ctx) => {
 
   const login = username || email
 
-  const { password: _, ...user } = (await User.authenticate(login, password)).toObject()
+  const user = await User.authenticate(login, password)
 
   if (user) {
     ctx.body.success = true
     ctx.body.user = user
-    ctx.body.token = await jwt.sign(user, process.env.JWT_SECRET)
+    ctx.body.token = await jwt.sign(user.toObject(), process.env.JWT_SECRET)
     return
   }
 
@@ -53,11 +53,9 @@ router.post('/register', async (ctx) => {
     return
   }
 
-  const { password: _, ...payload } = user.toObject()
-
   ctx.body.success = true
-  ctx.body.user = payload
-  ctx.body.token = await jwt.sign(payload, process.env.JWT_SECRET)
+  ctx.body.user = user
+  ctx.body.token = await jwt.sign(user.toObject(), process.env.JWT_SECRET)
 })
 
 module.exports = router.routes()
