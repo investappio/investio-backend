@@ -3,6 +3,9 @@ version: "3.8"
 services:
   backend:
     image: node:lts
+    depends_on:
+      mongo:
+        condition: service_healthy
     environment:
       - "PORT=${PORT}"
       - "NODE_ENV=development"
@@ -23,6 +26,11 @@ services:
   mongo:
     image: mongo:latest
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u ${MONGO_USERNAME} -p '${MONGO_PASSWORD}' --quiet"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
     command: [--auth]
     ports:
       - 27017:27017
