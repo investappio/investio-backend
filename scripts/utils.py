@@ -24,4 +24,5 @@ def iex_request(endpoint, token=None):
 
 def parse_stock(stock):
     stock["date"] = datetime.strptime(stock["date"], "%Y-%m-%d")
+    stock["updated"] = datetime.fromtimestamp(stock["updated"] / 1000.0)
     return stock

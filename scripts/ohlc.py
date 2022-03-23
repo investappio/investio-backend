@@ -21,7 +21,7 @@ stocks.create_index([("updated", pymongo.ASCENDING)], background=True)
 
 stocks.create_index(
     [
-        ("date", pymongo.ASCENDING),
+        ("updated", pymongo.ASCENDING),
         ("symbol", pymongo.ASCENDING),
     ],
     unique=True,
