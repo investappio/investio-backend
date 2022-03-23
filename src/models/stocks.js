@@ -1,37 +1,19 @@
 const { Schema, model } = require('mongoose')
 
 const stockSchema = new Schema({
-  close: {
-    type: Number,
-    required: true
-  },
-  high: {
-    type: Number,
-    required: true
-  },
-  low: {
-    type: Number,
-    required: true
-  },
-  open: {
-    type: Number,
-    required: true
-  },
   symbol: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
-  volume: {
-    type: Number,
-    required: true
+  name: {
+    type: String,
+    required: true,
+    index: true
   },
-  date: {
-    type: Date,
-    required: true
-  },
-  updated: {
-    type: Date,
-    required: true
+  type: {
+    type: String,
+    index: true
   }
 })
 
