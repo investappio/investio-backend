@@ -1,6 +1,7 @@
 import json
 from utils import iex_request, mongo_client, parse_stock
 import pymongo
+from pymongo.write_concern import WriteConcern
 
 db = mongo_client()
 
@@ -11,7 +12,7 @@ symbols = set(map(lambda t: t["symbol"], nyse))
 market = json.loads(iex_request("/stock/market/previous"))
 ohlc = list(filter(lambda o: o["symbol"] in symbols, market))
 
-stocks = db["stocks"]
+stocks = db["stocks"].with_options(write_concern=WriteConcern(w=0))
 
 stocks.create_index([("key", pymongo.ASCENDING)], background=True)
 stocks.create_index([("symbol", pymongo.ASCENDING)], background=True)
@@ -26,4 +27,4 @@ stocks.create_index(
     unique=True,
 )
 
-stocks.insert_many(list(map(lambda x: parse_stock(x), ohlc)))
+stocks.insert_many(list(map(lambda x: parse_stock(x), ohlc)), ordered=False)

@@ -23,6 +23,21 @@ services:
       - "${PORT}:${PORT}"
     expose:
       - "${PORT}"
+  stocks:
+    build: ./scripts
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: "python3 ohlc.py"
+    working_dir: /usr/src/app
+    volumes:
+      - ./scripts:/usr/src/app
+    environment:
+      - "MONGO_HOSTNAME=${MONGO_HOSTNAME}"
+      - "MONGO_DATABASE=${MONGO_DATABASE}"
+      - "MONGO_USERNAME=${MONGO_USERNAME}"
+      - "MONGO_PASSWORD=${MONGO_PASSWORD}"
+      - "IEX_CLOUD_TOKEN=${IEX_CLOUD_TOKEN}"
   mongo:
     image: mongo:latest
     restart: always
@@ -40,5 +55,15 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-
-    
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      mongo:
+        condition: service_healthy
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-run.stocks.image: "stocks"
+      ofelia.job-run.stocks.schedule: "0 0 1 * * *"
+      ofelia.job-run.stocks.command: "python3 python3 /usr/src/app/ohlc.py"
