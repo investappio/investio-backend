@@ -1,30 +1,70 @@
 import json
-from utils import iex_request, mongo_client, parse_stock
+from utils import iex_request, mongo_client, parse_price
 import pymongo
-from pymongo.write_concern import WriteConcern
+from pymongo import ReplaceOne
 
 db = mongo_client()
 
+"""
+Fetch all stocks and filter for those in the NYSE
+"""
+
 ref = json.loads(iex_request("/ref-data/symbols"))
-nyse = list(filter(lambda s: s["exchange"] == "XNYS", ref))
-symbols = set(map(lambda t: t["symbol"], nyse))
+nyse = list(filter(lambda x: x.get("exchange") == "XNYS", ref))
+
+stocks = db["stocks"]
+
+stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True)
+stocks.create_index([("name", pymongo.ASCENDING)], background=True)
+
+# Bulk insert/replace the fetched stocks
+stock_ops = list(
+    map(
+        lambda stock: ReplaceOne({"iexId": stock.get("iexId")}, stock, upsert=True),
+        nyse,
+    )
+)
+
+stocks.bulk_write(stock_ops)
+
+"""
+Fetch the market prices from the previous days of our updated stocks
+"""
 
 market = json.loads(iex_request("/stock/market/previous"))
-ohlc = list(filter(lambda o: o["symbol"] in symbols, market))
+symbols = set(map(lambda stock: stock.get("symbol"), nyse))
 
-stocks = db["stocks"].with_options(write_concern=WriteConcern(w=0))
+prices = db["prices"]
 
-stocks.create_index([("key", pymongo.ASCENDING)], background=True)
-stocks.create_index([("symbol", pymongo.ASCENDING)], background=True)
-stocks.create_index([("date", pymongo.ASCENDING)], background=True)
-stocks.create_index([("updated", pymongo.ASCENDING)], background=True)
+ohlc = list(
+    map(
+        lambda price: parse_price(price),
+        filter(lambda mprice: mprice.get("symbol") in symbols, market),
+    )
+)
 
-stocks.create_index(
+prices.create_index([("key", pymongo.ASCENDING)], background=True)
+prices.create_index([("symbol", pymongo.ASCENDING)], background=True)
+prices.create_index([("date", pymongo.ASCENDING)], background=True)
+
+prices.create_index(
     [
-        ("updated", pymongo.ASCENDING),
+        ("date", pymongo.ASCENDING),
         ("symbol", pymongo.ASCENDING),
     ],
     unique=True,
 )
 
-stocks.insert_many(list(map(lambda x: parse_stock(x), ohlc)), ordered=False)
+# Bulk insert/replace the fetched price info
+price_ops = list(
+    map(
+        lambda price: ReplaceOne(
+            {"symbol": price.get("symbol"), "date": price.get("date")},
+            price,
+            upsert=True,
+        ),
+        ohlc,
+    )
+)
+
+prices.bulk_write(price_ops)
