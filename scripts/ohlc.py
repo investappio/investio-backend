@@ -1,5 +1,5 @@
 import json
-from utils import iex_request, mongo_client
+from utils import iex_request, mongo_client, parse_stock
 import pymongo
 
 db = mongo_client()
@@ -16,14 +16,14 @@ stocks = db["stocks"]
 stocks.create_index([("key", pymongo.ASCENDING)], background=True)
 stocks.create_index([("symbol", pymongo.ASCENDING)], background=True)
 stocks.create_index([("date", pymongo.ASCENDING)], background=True)
+stocks.create_index([("updated", pymongo.ASCENDING)], background=True)
 
 stocks.create_index(
     [
         ("date", pymongo.ASCENDING),
         ("symbol", pymongo.ASCENDING),
-        ("updated", pymongo.ASCENDING),
     ],
     unique=True,
 )
 
-stocks.insert_many(ohlc)
+stocks.insert_many(list(map(lambda x: parse_stock(x), ohlc)))
