@@ -14,8 +14,8 @@ nyse = list(filter(lambda x: x.get("exchange") == "XNYS", ref))
 
 stocks = db["stocks"]
 
-stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True)
 stocks.create_index([("name", pymongo.ASCENDING)], background=True)
+stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True, background=True)
 
 # Bulk insert/replace the fetched stocks
 stock_ops = list(
