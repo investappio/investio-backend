@@ -17,4 +17,10 @@ const stockSchema = new Schema({
   }
 })
 
+async function search (query) {
+  return this.find({ $or: [{ name: { $regex: query } }, { symbol: { $regex: query } }] })
+}
+
+stockSchema.static('search', search)
+
 module.exports = model('Stock', stockSchema)

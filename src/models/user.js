@@ -91,7 +91,16 @@ async function follow (user) {
   return true
 }
 
+async function unfollow (user) {
+  const isFollowing = await this.following(user)
+
+  if (!isFollowing || this.username === user.username) return false
+
+  await Follow.findOneAndRemove({ follower: this, user })
+}
+
 userSchema.method('following', following)
+userSchema.method('unfollow', unfollow)
 userSchema.method('follow', follow)
 
 userSchema.pre('save', passwordHash)
