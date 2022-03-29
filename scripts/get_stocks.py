@@ -20,7 +20,7 @@ stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True, background=Tru
 # Bulk insert/replace the fetched stocks
 stock_ops = list(
     map(
-        lambda stock: ReplaceOne({"iexId": stock.get("iexId")}, stock, upsert=True),
+        lambda stock: ReplaceOne({"symbol": stock.get("symbol")}, stock, upsert=True),
         nyse,
     )
 )
