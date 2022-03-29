@@ -38,4 +38,10 @@ const priceSchema = new Schema({
   }
 })
 
+async function search (symbol, date = new Date().setHours(23, 59, 59, 999), days = 5) {
+  return this.find({ symbol, date: { $lte: date, $gte: date.getDate() - days } })
+}
+
+priceSchema.static('search', search)
+
 module.exports = model('Price', priceSchema)
