@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const Stocks = require('../models/stocks')
+const { Stock } = require('../models')
 
 const router = new Router()
 
@@ -15,10 +15,14 @@ router.get('/search', async (ctx) => {
 
   const { query } = ctx.request.query
 
-  const res = await Stocks.search(query)
+  const res = await Stock.search(query)
 
   ctx.body.success = true
-  ctx.body.stocks = res
+  ctx.body.stocks = await Promise.all(res.map(async stock => {
+    const s = stock.toObject()
+    s.price = (await stock.getClosePrice()).close
+    return s
+  }))
 })
 
 module.exports = router.routes()
