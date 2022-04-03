@@ -18,11 +18,7 @@ router.get('/search', async (ctx) => {
   const res = await Stock.search(query)
 
   ctx.body.success = true
-  ctx.body.stocks = await Promise.all(res.map(async stock => {
-    const s = stock.toObject()
-    s.price = (await stock.getClosePrice()).close
-    return s
-  }))
+  ctx.body.stocks = res
 })
 
 module.exports = router.routes()
