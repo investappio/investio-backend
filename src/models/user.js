@@ -70,7 +70,7 @@ async function passwordHash () {
 }
 
 async function search (query) {
-  return this.find({ username: { $regex: query } })
+  return this.find({ username: { $regex: query, $options: 'i' } })
 }
 
 userSchema.static('authenticate', authenticate)

@@ -40,7 +40,7 @@ router.post('/register', async (ctx) => {
     name,
     phone,
     email,
-    dob: dob * 1000,
+    dob: dob,
     username,
     password
   })

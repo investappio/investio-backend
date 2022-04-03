@@ -18,7 +18,7 @@ const stockSchema = new Schema({
 })
 
 async function search (query) {
-  return this.find({ $or: [{ name: { $regex: query } }, { symbol: { $regex: query } }] })
+  return this.find({ $or: [{ name: { $regex: query, $options: 'i' } }, { symbol: { $regex: query, $options: 'i' } }] })
 }
 
 stockSchema.static('search', search)
