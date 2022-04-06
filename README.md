@@ -4,6 +4,7 @@
 
 ## Table of Contents
 
+* [Getting Started](#getting-started)
 * [Servers](#servers)
 * [Paths](#paths)
   - [`POST` /auth/register](#op-post-auth-register) 
@@ -16,6 +17,22 @@
   - [User](#schema-user)
   - [Stock](#schema-stock)
   - [Price](#schema-price)
+
+
+## Getting Started
+
+```
+git clone https://github.com/Kushrati/investio-backend.git
+cd investio-backend
+echo "PORT=3000" > .env
+echo "MONGO_HOSTNAME=mongo" > .env
+echo "MONGO_DATABASE=..." > .env
+echo "MONGO_USERNAME=..." > .env
+echo "MONGO_PASSWORD=..." > .env
+echo "JWT_SECRET=..." > .env
+echo "IEX_CLOUD_TOKEN=..." > .env
+docker-compose up -d
+```
 
 
 <a id="servers" />
