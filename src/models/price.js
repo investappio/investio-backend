@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { DateTime } = require('luxon')
 
 const priceSchema = new Schema({
   close: {
@@ -38,8 +39,8 @@ const priceSchema = new Schema({
   }
 })
 
-async function search (symbol, date = new Date().setHours(23, 59, 59, 999), days = 5) {
-  return this.find({ symbol, date: { $lte: date, $gte: date.getDate() - days } })
+async function search (symbol, date = DateTime.now().endOf('day'), days = 5) {
+  return this.find({ symbol, date: { $lte: date, $gte: date.minus({ days }) } })
 }
 
 priceSchema.static('search', search)
