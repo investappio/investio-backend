@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const { Schema, model } = require('mongoose')
 const Follow = require('./follow')
+const Portfolio = require('./portfolio')
 
 const minAge = 1000 * 60 * 60 * 24 * 365 * 13 // 13 years
 const emailPattern = /^[\w.-]+@[\w.-]+\.\w{2,4}$/
@@ -99,6 +100,11 @@ async function unfollow (user) {
   await Follow.findOneAndRemove({ follower: this, user })
 }
 
+async function getPortfolio () {
+  return Portfolio.findOne({ user: this })
+}
+
+userSchema.method('getPortfolio', getPortfolio)
 userSchema.method('following', following)
 userSchema.method('unfollow', unfollow)
 userSchema.method('follow', follow)
