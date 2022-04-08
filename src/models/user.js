@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const { Schema, model } = require('mongoose')
+
 const Follow = require('./follow')
 const Portfolio = require('./portfolio')
 
@@ -101,7 +102,14 @@ async function unfollow (user) {
 }
 
 async function getPortfolio () {
-  return Portfolio.findOne({ user: this })
+  const portfolio = await Portfolio.findOne({ user: this }).populate('user')
+
+  if (portfolio == null) {
+    const newPortfolio = new Portfolio({ user: this })
+    return newPortfolio.save()
+  }
+
+  return portfolio
 }
 
 userSchema.method('getPortfolio', getPortfolio)

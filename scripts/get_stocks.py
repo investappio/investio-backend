@@ -38,7 +38,7 @@ prices = db["prices"]
 
 ohlc = list(
     map(
-        lambda price: parse_price(price),
+        lambda price: parse_price(price, stocks),
         filter(lambda mprice: mprice.get("symbol") in symbols, market),
     )
 )

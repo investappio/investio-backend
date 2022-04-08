@@ -2,7 +2,7 @@ import os
 from typing import Dict
 import requests
 from datetime import datetime
-from pymongo import MongoClient
+from pymongo import collection, MongoClient
 
 
 def mongo_client():
@@ -23,7 +23,8 @@ def iex_request(endpoint, token=None):
     return res.text
 
 
-def parse_price(price: Dict):
+def parse_price(price: Dict, stocks: collection.Collection = mongo_client()["stocks"]):
     price["date"] = datetime.strptime(price.get("date"), "%Y-%m-%d")
     price["updated"] = datetime.fromtimestamp(price.get("updated", 0.0) / 1000.0)
+    price["stock"] = stocks.find_one({"symbol": price["symbol"]})["_id"]
     return price

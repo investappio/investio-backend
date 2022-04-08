@@ -20,6 +20,22 @@ router.get('/search', async (ctx) => {
   ctx.body.users = res
 })
 
+router.get('/portfolio', async (ctx) => {
+  ctx.body = {}
+
+  if (!ctx.state.user) {
+    ctx.body.success = false
+    ctx.status = 401
+    return
+  }
+
+  const user = new User(ctx.state.user)
+  const portfolio = await user.getPortfolio()
+
+  ctx.body.success = true
+  ctx.body.portfolio = portfolio
+})
+
 router.post('/follow', async (ctx) => {
   ctx.body = {}
 

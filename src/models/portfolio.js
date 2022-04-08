@@ -11,7 +11,8 @@ const assetSchema = new Schema({
 
 const portfolioSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-  assets: [assetSchema]
+  assets: [assetSchema],
+  balance: { type: Number, required: true, default: 1000 }
 })
 
 module.exports = model('Portfolio', portfolioSchema)
