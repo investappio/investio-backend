@@ -1,0 +1,26 @@
+name: OpenAPI Markdown Generator
+
+on:
+  push:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Generate
+      run: |
+        docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate -i openapi.yaml \
+        -g markdown \
+        -o Documentation.md
+    - name: Commit Documentation
+      run: |
+        git config --global user.name 'Github Actions'
+        git config --global user.email 'github@users.noreply.github.com'
+        git commit -am "Automated Generation of API Documentation"
+        git push
+    

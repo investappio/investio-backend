@@ -1,0 +1,313 @@
+openapi: 3.0.0
+info:
+  title: Invest.io
+  version: '1.0'
+  description: 'API definition for the Invest.io app'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /auth/register:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-auth-register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                required:
+                  - success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                dob:
+                  type: string
+                  format: date-time
+                name:
+                  type: string
+              required:
+                - username
+                - email
+                - password
+                - dob
+                - name
+      description: Create and authenticate a new user
+      security: []
+  /auth/login:
+    post:
+      summary: ''
+      operationId: post-auth-login
+      responses:
+        '200':
+          description: User authenticated
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    success: true
+                    user: '$ref[#/components/schemas/User]'
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                required:
+                  - success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username|email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username|email
+                - password
+        description: ''
+      description: Login and authneticate a user
+      security: []
+    parameters: []
+  /user/search:
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+      operationId: get-user-search
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Username of user being searched
+          required: true
+      description: Search for users by username
+  /user/follow:
+    post:
+      summary: ''
+      operationId: post-user-follow
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  $ref: '#/components/schemas/User'
+              required:
+                - uid
+      description: Follow another user by their User Object ID
+  /user/portfolio:
+    get:
+      summary: ''
+      operationId: get-user-portfolio
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  portfolio:
+                    $ref: '#/components/schemas/Portfolio'
+      description: Follow another user by their User Object ID
+  /stocks/search:
+    get:
+      summary: ''
+      operationId: get-stocks-search
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  stocks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Stock'
+      description: Search for stocks by name or symbol
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Name or symbol of searched stock
+  /stocks/price:
+    get:
+      summary: ''
+      operationId: get-stocks-price
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  stocks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Price'
+      description: Search for a stock's historical prices by symbol
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: Symbol of searched stock
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: 'Schema respresenting a user account'
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        dob:
+          type: string
+          format: date-time
+        username:
+          type: string
+          description: Set to true if the user's email has been verified.
+        phone:
+          type: string
+      required:
+        - name
+        - email
+        - dob
+        - username
+    Portfolio:
+      title: Portfolio
+      type: object
+      description: "Schema respresenting a user's portfolio"
+      properties:
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                  type: number
+              stock:
+                $ref: '#/components/schemas/Stock'
+        balance:
+          type: number
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+        - balance
+        - user
+        - assets
+    Stock:
+      title: Stock
+      description: 'Schema respresenting a stock'
+      type: object
+      properties:
+        symbol:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+      required:
+        - symbol
+        - name
+        - type
+    Price:
+      title: Price
+      description: 'Schema respresenting neccesary information on a specific date for a stock'
+      type: object
+      properties:
+        close:
+          type: number
+        high:
+          type: number
+        low:
+          type: number
+        open:
+          type: number
+        symbol:
+          type: string
+        volume:
+          type: number
+        date:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        changePercent:
+          type: number
+      required:
+        - symbol
+        - close
+        - high
+        - low
+        - open
+        - date
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security: [ bearerAuth: [] ]
