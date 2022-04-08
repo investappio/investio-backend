@@ -16,7 +16,7 @@ jobs:
       run: |
         docker run --rm -v "${GITHUB_WORKSPACE}:/local" openapitools/openapi-generator-cli generate -i /local/openapi.yaml \
         -g markdown \
-        -o /local/documentation
+        -o /local/docs
     - name: Commit Documentation
       run: |
         git config --global user.name 'Github Actions'
