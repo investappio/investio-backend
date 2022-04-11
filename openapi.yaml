@@ -161,6 +161,31 @@ paths:
                   portfolio:
                     $ref: '#/components/schemas/Portfolio'
       description: Follow another user by their User Object ID
+  /stocks/gainers:
+    get:
+      summary: ''
+      operationId: get-stocks-gainers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  stocks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Stock'
+      description: Fetch the top gaining stocks
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: count
+          description: Name or symbol of searched stock
   /stocks/search:
     get:
       summary: ''

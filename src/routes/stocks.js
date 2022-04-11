@@ -38,4 +38,21 @@ router.get('/price', async (ctx) => {
   ctx.body.prices = res
 })
 
+router.get('/gainers', async (ctx) => {
+  ctx.body = {}
+
+  if (!ctx.state.user) {
+    console.log(ctx.request.headers)
+    ctx.body.success = false
+    ctx.status = 401
+    return
+  }
+
+  const symbols = await Stock.topGainers(10)
+  const res = await Stock.find({ symbol: { $in: symbols } })
+
+  ctx.body.success = true
+  ctx.body.stocks = res
+})
+
 module.exports = router.routes()

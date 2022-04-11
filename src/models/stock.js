@@ -24,9 +24,16 @@ async function getClosePrice () {
 
 stockSchema.method('getClosePrice', getClosePrice)
 
+async function topGainers (limit) {
+  const symbols = await Prices.find({}, { symbol: 1, _id: 0 }).sort({ changePercent: -1 }).limit(limit)
+  return symbols.map((v) => v.symbol)
+}
+
 async function search (query) {
   return this.find({ $or: [{ name: { $regex: query, $options: 'i' } }, { symbol: { $regex: query, $options: 'i' } }] })
 }
+
+stockSchema.static('topGainers', topGainers)
 
 stockSchema.static('search', search)
 
