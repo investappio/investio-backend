@@ -21,5 +21,7 @@ jobs:
       run: |
         git config --global user.name 'Github Actions'
         git config --global user.email 'github@users.noreply.github.com'
-        git add -A && git commit -m "Automated Generation of API Documentation"
-        /bin/sh -c "if [[ $(git status | egrep -c 'working tree clean') -eq 0 ]]; then git push; fi"
+        /bin/sh -c "if [[ $(git status | egrep -c 'working tree clean') -eq 0 ]]; then \
+          git add -A && git commit -m 'Automated Generation of API Documentation'; \
+          git push; \
+        fi"
