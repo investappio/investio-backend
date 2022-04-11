@@ -899,7 +899,7 @@ Fetch the top gaining stocks
 
 ##### &#9655; count
 
-Name or symbol of searched stock
+Number of stocks to return
 
 
 <table>
@@ -919,7 +919,7 @@ Name or symbol of searched stock
           number
         </td>
         <td>query</td>
-        <td>Name or symbol of searched stock</td>
+        <td>Number of stocks to return</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
