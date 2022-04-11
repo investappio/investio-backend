@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 Apis/DefaultApi.md
 Models/Portfolio.md
 Models/Portfolio_assets.md

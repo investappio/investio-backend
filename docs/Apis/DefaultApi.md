@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost:3000*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**getStocksGainers**](DefaultApi.md#getStocksGainers) | **GET** /stocks/gainers |  |
 | [**getStocksPrice**](DefaultApi.md#getStocksPrice) | **GET** /stocks/price |  |
 | [**getStocksSearch**](DefaultApi.md#getStocksSearch) | **GET** /stocks/search |  |
 | [**getUserPortfolio**](DefaultApi.md#getUserPortfolio) | **GET** /user/portfolio |  |
@@ -12,6 +13,33 @@ All URIs are relative to *http://localhost:3000*
 | [**postAuthRegister**](DefaultApi.md#postAuthRegister) | **POST** /auth/register |  |
 | [**postUserFollow**](DefaultApi.md#postUserFollow) | **POST** /user/follow |  |
 
+
+<a name="getStocksGainers"></a>
+# **getStocksGainers**
+> inline_response_200_5 getStocksGainers(count)
+
+
+
+    Fetch the top gaining stocks
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **count** | **BigDecimal**| Name or symbol of searched stock | [optional] [default to null] |
+
+### Return type
+
+[**inline_response_200_5**](../Models/inline_response_200_5.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 <a name="getStocksPrice"></a>
 # **getStocksPrice**

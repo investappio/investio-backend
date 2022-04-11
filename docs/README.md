@@ -7,7 +7,8 @@ All URIs are relative to *http://localhost:3000*
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *DefaultApi* | [**getStocksPrice**](Apis/DefaultApi.md#getstocksprice) | **GET** /stocks/price |  |
+| *DefaultApi* | [**getStocksGainers**](Apis/DefaultApi.md#getstocksgainers) | **GET** /stocks/gainers |  |
+*DefaultApi* | [**getStocksPrice**](Apis/DefaultApi.md#getstocksprice) | **GET** /stocks/price |  |
 *DefaultApi* | [**getStocksSearch**](Apis/DefaultApi.md#getstockssearch) | **GET** /stocks/search |  |
 *DefaultApi* | [**getUserPortfolio**](Apis/DefaultApi.md#getuserportfolio) | **GET** /user/portfolio |  |
 *DefaultApi* | [**getUserSearch**](Apis/DefaultApi.md#getusersearch) | **GET** /user/search |  |
