@@ -185,7 +185,7 @@ paths:
             type: number
           in: query
           name: count
-          description: Name or symbol of searched stock
+          description: Number of stocks to return
   /stocks/search:
     get:
       summary: ''
