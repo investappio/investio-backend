@@ -6,6 +6,7 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+    restart: always
     environment:
       - "PORT=${PORT}"
       - "NODE_ENV=development"
@@ -25,10 +26,11 @@ services:
       - "${PORT}"
   stocks:
     build: ./scripts
+    container_name: stocks
     depends_on:
       mongo:
         condition: service_healthy
-    command: "python3 get_stocks.py"
+    command: /bin/sh -c "python3 get_stocks.py && tail -f /dev/null"
     working_dir: /usr/src/app
     volumes:
       - ./scripts:/usr/src/app
@@ -38,6 +40,11 @@ services:
       - "MONGO_USERNAME=${MONGO_USERNAME}"
       - "MONGO_PASSWORD=${MONGO_PASSWORD}"
       - "IEX_CLOUD_TOKEN=${IEX_CLOUD_TOKEN}"
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.stocks.container: "stocks"
+      ofelia.job-exec.stocks.schedule: "0 0 1 * * *"
+      ofelia.job-exec.stocks.command: "python3 get_stocks.py"
   mongo:
     image: mongo:latest
     restart: always
@@ -62,8 +69,4 @@ services:
         condition: service_healthy
     command: daemon --docker
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      ofelia.job-run.stocks.image: "stocks"
-      ofelia.job-run.stocks.schedule: "0 0 1 * * *"
-      ofelia.job-run.stocks.command: "python3 python3 /usr/src/app/get_stocks.py"
+      - /var/run/docker.sock:/var/run/docker.sock:rw
