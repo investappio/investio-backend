@@ -13,7 +13,7 @@ API definition for the Invest.io app
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
-  - [`GET` /stocks/price](#op-get-stocks-price) 
+  - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
@@ -1139,19 +1139,17 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/price
-<a id="op-get-stocks-price" />
+### `GET` /stocks/{symbol}/price
+<a id="op-get-stocks-symbol-price" />
 
 Search for a stock's historical prices by symbol
 
 
+#### Path parameters
 
+##### &#9655; symbol
 
-#### Query parameters
-
-##### &#9655; query
-
-Symbol of searched stock
+Interval of previous days to get prices for
 
 
 <table>
@@ -1166,12 +1164,132 @@ Symbol of searched stock
   </thead>
   <tbody>
       <tr>
-        <td>query </td>
+        <td>symbol  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Interval of previous days to get prices for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+#### Query parameters
+
+##### &#9655; days
+
+Interval of previous days to get prices for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>days </td>
         <td>
           string
         </td>
         <td>query</td>
-        <td>Symbol of searched stock</td>
+        <td>Interval of previous days to get prices for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### &#9655; weeks
+
+Interval of previous weeks to get prices for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>weeks </td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Interval of previous weeks to get prices for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### &#9655; months
+
+Interval of previous months to get prices for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>months </td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Interval of previous months to get prices for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### &#9655; years
+
+Interval of previous years to get prices for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>years </td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Interval of previous years to get prices for</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
