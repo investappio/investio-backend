@@ -79,15 +79,25 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username|email:
-                  type: string
-                password:
-                  type: string
-              required:
-                - username|email
-                - password
+              oneOf:
+                - type: object
+                  properties:
+                    username:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - username
+                    - password
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                    - email
+                    - password
         description: ""
       description: Login and authneticate a user
       security: []
@@ -282,10 +292,6 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  stocks:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Price"
       description: Purchase a stock for the logged in user
       parameters:
         - schema:
@@ -294,6 +300,46 @@ paths:
           name: symbol
           required: true
           description: Symbol of the stock to purchase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: number
+                  minimum: 0
+  /stocks/{symbol}/sell:
+    post:
+      summary: ""
+      operationId: post-stocks-sell
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+      description: Sell a stock for the logged in user
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: symbol
+          required: true
+          description: Symbol of the stock to sell
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: number
+                  minimum: 0
 components:
   schemas:
     User:

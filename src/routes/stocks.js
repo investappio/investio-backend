@@ -49,9 +49,21 @@ router.get('/gainers', authentication, async (ctx) => {
 router.post('/:symbol/buy', authentication, async (ctx) => {
   ctx.body = {}
 
+  const { quantity } = ctx.request.body
+
   const portfolio = await ctx.user.getPortfolio()
   const stock = await Stock.findOne({ symbol: ctx.params.symbol })
-  await portfolio.buy(stock, 1)
+  ctx.body.success = await portfolio.buy(stock, Number(Number(quantity).toFixed(6)))
+})
+
+router.post('/:symbol/sell', authentication, async (ctx) => {
+  ctx.body = {}
+
+  const { quantity } = ctx.request.body
+
+  const portfolio = await ctx.user.getPortfolio()
+  const stock = await Stock.findOne({ symbol: ctx.params.symbol })
+  ctx.body.success = await portfolio.sell(stock, Number(Number(quantity).toFixed(6)))
 })
 
 module.exports = router.routes()
