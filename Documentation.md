@@ -14,6 +14,7 @@ API definition for the Invest.io app
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
+  - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
@@ -1323,6 +1324,186 @@ Start date to get historic prices from
       </tr>
   </tbody>
 </table>
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks</td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "stocks": [
+    {
+      "close": 0,
+      "high": 0,
+      "low": 0,
+      "open": 0,
+      "symbol": "string",
+      "volume": 0,
+      "date": "2019-08-24T14:15:22Z",
+      "updated": "2019-08-24T14:15:22Z",
+      "changePercent": 0
+    }
+  ]
+}
+```
+
+</div>
+
+### `POST` /stocks/{symbol}/buy
+<a id="op-post-stocks-symbol-buy" />
+
+Purchase a stock for the logged in user
+
+
+#### Path parameters
+
+##### &#9655; symbol
+
+Symbol of the stock to purchase
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>symbol  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Symbol of the stock to purchase</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
 
 
 
