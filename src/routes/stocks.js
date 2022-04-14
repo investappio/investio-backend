@@ -1,18 +1,12 @@
 const Router = require('@koa/router')
 const { DateTime } = require('luxon')
-const { Stock, Price, User } = require('../models')
+const { Stock, Price } = require('../models')
+const { authentication } = require('../utils')
 
 const router = new Router()
 
-router.get('/search', async (ctx) => {
+router.get('/search', authentication, async (ctx) => {
   ctx.body = {}
-
-  if (!ctx.state.user) {
-    console.log(ctx.request.headers)
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
 
   const { query } = ctx.request.query
 
@@ -22,15 +16,8 @@ router.get('/search', async (ctx) => {
   ctx.body.stocks = res
 })
 
-router.get('/:symbol/price', async (ctx) => {
+router.get('/:symbol/price', authentication, async (ctx) => {
   ctx.body = {}
-
-  if (!ctx.state.user) {
-    console.log(ctx.request.headers)
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
 
   const { days, weeks, months, years, date } = ctx.request.query
 
@@ -41,21 +28,14 @@ router.get('/:symbol/price', async (ctx) => {
     years: years || 0
   }
 
-  const res = await Price.get(ctx.params.symbol, { date: date ? new DateTime(date) : null, duration })
+  const res = await Price.get(ctx.params.symbol, { date: date ? new DateTime(date) : DateTime.now(), duration })
 
   ctx.body.success = true
   ctx.body.prices = res
 })
 
-router.get('/gainers', async (ctx) => {
+router.get('/gainers', authentication, async (ctx) => {
   ctx.body = {}
-
-  if (!ctx.state.user) {
-    console.log(ctx.request.headers)
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
 
   const { count } = ctx.request.query
 
@@ -66,18 +46,10 @@ router.get('/gainers', async (ctx) => {
   ctx.body.stocks = res
 })
 
-router.post('/:symbol/buy', async (ctx) => {
+router.post('/:symbol/buy', authentication, async (ctx) => {
   ctx.body = {}
 
-  if (!ctx.state.user) {
-    console.log(ctx.request.headers)
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
-
-  const user = User(ctx.state.user)
-  const portfolio = await user.getPortfolio()
+  const portfolio = await ctx.user.getPortfolio()
   const stock = await Stock.findOne({ symbol: ctx.params.symbol })
   await portfolio.buy(stock, 1)
 })

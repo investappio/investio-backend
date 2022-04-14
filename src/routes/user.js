@@ -1,16 +1,11 @@
 const Router = require('@koa/router')
 const { User } = require('../models')
+const { authentication } = require('../utils')
 
 const router = new Router()
 
-router.get('/search', async (ctx) => {
+router.get('/search', authentication, async (ctx) => {
   ctx.body = {}
-
-  if (!ctx.state.user) {
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
 
   const { query } = ctx.request.query
 
@@ -20,35 +15,22 @@ router.get('/search', async (ctx) => {
   ctx.body.users = res
 })
 
-router.get('/portfolio', async (ctx) => {
+router.get('/portfolio', authentication, async (ctx) => {
   ctx.body = {}
 
-  if (!ctx.state.user) {
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
-
-  const user = new User(ctx.state.user)
-  const portfolio = await user.getPortfolio()
+  const portfolio = await ctx.user.getPortfolio()
 
   ctx.body.success = true
   ctx.body.portfolio = portfolio
 })
 
-router.post('/follow', async (ctx) => {
+router.post('/follow', authentication, async (ctx) => {
   ctx.body = {}
-
-  if (!ctx.state.user) {
-    ctx.body.success = false
-    ctx.status = 401
-    return
-  }
 
   const { uid } = ctx.request.body
   const user = await User.findById(uid)
 
-  ctx.body.success = await new User(ctx.state.user).follow(user)
+  ctx.body.success = await ctx.user.follow(user)
 })
 
 module.exports = router.routes()

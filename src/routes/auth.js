@@ -23,12 +23,6 @@ router.post('/login', async (ctx) => {
   ctx.body.success = false
 })
 
-router.post('/renew', async (ctx) => {
-  ctx.body = {}
-  // TODO: Revoke and renew the jwt token
-  ctx.body = ctx.state.user
-})
-
 router.post('/register', async (ctx) => {
   ctx.body = {}
 
