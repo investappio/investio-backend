@@ -702,7 +702,7 @@ _No headers specified_
 ### `GET` /user/portfolio
 <a id="op-get-user-portfolio" />
 
-Follow another user by their User Object ID
+Get the portfolio of the current user
 
 
 
