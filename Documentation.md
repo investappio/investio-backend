@@ -74,6 +74,8 @@ API definition for the Invest.io app
 ### `POST` /auth/register
 <a id="op-post-auth-register" />
 
+> Create a new user and authenticate them
+
 Create and authenticate a new user
 
 
@@ -265,6 +267,8 @@ _No headers specified_
 
 ### `POST` /auth/login
 <a id="op-post-auth-login" />
+
+> Authenticate a user by email or username
 
 Login and authneticate a user
 
@@ -462,6 +466,8 @@ _No headers specified_
 ### `GET` /user/search
 <a id="op-get-user-search" />
 
+> General search for a user
+
 Search for users by username
 
 
@@ -606,6 +612,8 @@ _No headers specified_
 ### `POST` /user/follow
 <a id="op-post-user-follow" />
 
+> Follow another user
+
 Follow another user by their User Object ID
 
 
@@ -743,6 +751,8 @@ _No headers specified_
 
 ### `GET` /user/portfolio
 <a id="op-get-user-portfolio" />
+
+> Get the current user's portfolio
 
 Get the portfolio of the current user
 
@@ -932,6 +942,8 @@ _No headers specified_
 ### `GET` /stocks/gainers
 <a id="op-get-stocks-gainers" />
 
+> Get the top gaining stocks from previous day
+
 Fetch the top gaining stocks
 
 
@@ -1058,6 +1070,8 @@ _No headers specified_
 ### `GET` /stocks/search
 <a id="op-get-stocks-search" />
 
+> General search for stocks
+
 Search for stocks by name or symbol
 
 
@@ -1183,6 +1197,8 @@ _No headers specified_
 
 ### `GET` /stocks/{symbol}/price
 <a id="op-get-stocks-symbol-price" />
+
+> Get a stock's price data
 
 Search for a stock's historical prices by symbol
 
@@ -1511,6 +1527,8 @@ _No headers specified_
 ### `POST` /stocks/{symbol}/buy
 <a id="op-post-stocks-symbol-buy" />
 
+> Buy a stock for a user
+
 Purchase a stock for the logged in user
 
 
@@ -1617,6 +1635,118 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+      <tr>
+        <td>portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets <strong>(required)</strong></td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.quantity</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.balance <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
   </tbody>
 </table>
 
@@ -1625,7 +1755,27 @@ _No headers specified_
 
 ```json
 {
-  "success": true
+  "success": true,
+  "portfolio": {
+    "assets": [
+      {
+        "quantity": 0,
+        "stock": {
+          "symbol": "string",
+          "name": "string",
+          "type": "string"
+        }
+      }
+    ],
+    "balance": 0,
+    "user": {
+      "name": "string",
+      "email": "user@example.com",
+      "dob": "2019-08-24T14:15:22Z",
+      "username": "string",
+      "phone": "string"
+    }
+  }
 }
 ```
 
@@ -1633,6 +1783,8 @@ _No headers specified_
 
 ### `POST` /stocks/{symbol}/sell
 <a id="op-post-stocks-symbol-sell" />
+
+> Sell a user's stock
 
 Sell a stock for the logged in user
 
@@ -1740,6 +1892,118 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+      <tr>
+        <td>portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets <strong>(required)</strong></td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.quantity</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.balance <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
   </tbody>
 </table>
 
@@ -1748,7 +2012,27 @@ _No headers specified_
 
 ```json
 {
-  "success": true
+  "success": true,
+  "portfolio": {
+    "assets": [
+      {
+        "quantity": 0,
+        "stock": {
+          "symbol": "string",
+          "name": "string",
+          "type": "string"
+        }
+      }
+    ],
+    "balance": 0,
+    "user": {
+      "name": "string",
+      "email": "user@example.com",
+      "dob": "2019-08-24T14:15:22Z",
+      "username": "string",
+      "phone": "string"
+    }
+  }
 }
 ```
 
