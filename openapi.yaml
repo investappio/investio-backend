@@ -236,7 +236,7 @@ paths:
           in: path
           name: symbol
           required: true
-          description: Interval of previous days to get prices for
+          description: Symbol of the stock to get the price of
         - schema:
             type: string
           in: query
