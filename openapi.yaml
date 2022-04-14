@@ -9,7 +9,7 @@ paths:
   /auth/register:
     parameters: []
     post:
-      summary: ""
+      summary: "Create a new user and authenticate them"
       operationId: post-auth-register
       responses:
         "200":
@@ -54,7 +54,7 @@ paths:
       security: []
   /auth/login:
     post:
-      summary: ""
+      summary: "Authenticate a user by email or username"
       operationId: post-auth-login
       responses:
         "200":
@@ -64,10 +64,6 @@ paths:
               schema:
                 description: ""
                 type: object
-                x-examples:
-                  example-1:
-                    success: true
-                    user: "$ref[#/components/schemas/User]"
                 properties:
                   success:
                     type: boolean
@@ -104,7 +100,7 @@ paths:
     parameters: []
   /user/search:
     get:
-      summary: ""
+      summary: "General search for a user"
       tags: []
       responses:
         "200":
@@ -131,7 +127,7 @@ paths:
       description: Search for users by username
   /user/follow:
     post:
-      summary: ""
+      summary: "Follow another user"
       operationId: post-user-follow
       responses:
         "200":
@@ -156,7 +152,7 @@ paths:
       description: Follow another user by their User Object ID
   /user/portfolio:
     get:
-      summary: ""
+      summary: "Get the current user's portfolio"
       operationId: get-user-portfolio
       responses:
         "200":
@@ -173,7 +169,7 @@ paths:
       description: Get the portfolio of the current user
   /stocks/gainers:
     get:
-      summary: ""
+      summary: "Get the top gaining stocks from previous day"
       operationId: get-stocks-gainers
       responses:
         "200":
@@ -199,7 +195,7 @@ paths:
           description: Number of stocks to return
   /stocks/search:
     get:
-      summary: ""
+      summary: "General search for stocks"
       operationId: get-stocks-search
       responses:
         "200":
@@ -224,7 +220,7 @@ paths:
           description: Name or symbol of searched stock
   /stocks/{symbol}/price:
     get:
-      summary: ""
+      summary: "Get a stock's price data"
       operationId: get-stocks-price
       responses:
         "200":
@@ -280,7 +276,7 @@ paths:
           description: Start date to get historic prices from
   /stocks/{symbol}/buy:
     post:
-      summary: ""
+      summary: "Buy a stock for a user"
       operationId: post-stocks-buy
       responses:
         "200":
@@ -292,6 +288,8 @@ paths:
                 properties:
                   success:
                     type: boolean
+                  portfolio:
+                    $ref: "#/components/schemas/Portfolio"
       description: Purchase a stock for the logged in user
       parameters:
         - schema:
@@ -311,7 +309,7 @@ paths:
                   minimum: 0
   /stocks/{symbol}/sell:
     post:
-      summary: ""
+      summary: "Sell a user's stock"
       operationId: post-stocks-sell
       responses:
         "200":
@@ -323,6 +321,8 @@ paths:
                 properties:
                   success:
                     type: boolean
+                  portfolio:
+                    $ref: "#/components/schemas/Portfolio"
       description: Sell a stock for the logged in user
       parameters:
         - schema:
