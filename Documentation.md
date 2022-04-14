@@ -15,6 +15,7 @@ API definition for the Invest.io app
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
+  - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
@@ -288,21 +289,61 @@ Login and authneticate a user
   </thead>
   <tbody>
       <tr>
-        <td>username|email <strong>(required)</strong></td>
+        <td>body</td>
         <td>
-          string
+          oneOf
         </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
-      <tr>
-        <td>password <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
+        <tr>
+          <td>body.0 <strong>(required)</strong></td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.0.username <strong>(required)</strong></td>
+          <td>
+            string
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.0.password <strong>(required)</strong></td>
+          <td>
+            string
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1 <strong>(required)</strong></td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1.email <strong>(required)</strong></td>
+          <td>
+            string
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1.password <strong>(required)</strong></td>
+          <td>
+            string
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
   </tbody>
 </table>
 
@@ -311,7 +352,7 @@ Login and authneticate a user
 
 ```json
 {
-  "username|email": "string",
+  "username": "string",
   "password": "string"
 }
 ```
@@ -1508,6 +1549,42 @@ Symbol of the stock to purchase
 
 
 
+#### Request body
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>quantity</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "quantity": 0
+}
+```
+
+
 
 
 #### Responses
@@ -1540,80 +1617,78 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true
+}
+```
+
+</div>
+
+### `POST` /stocks/{symbol}/sell
+<a id="op-post-stocks-symbol-sell" />
+
+Sell a stock for the logged in user
+
+
+#### Path parameters
+
+##### &#9655; symbol
+
+Symbol of the stock to sell
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
       <tr>
-        <td>stocks</td>
-        <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.symbol <strong>(required)</strong></td>
+        <td>symbol  <strong>(required)</strong></td>
         <td>
           string
         </td>
-        <td></td>
+        <td>path</td>
+        <td>Symbol of the stock to sell</td>
         <td><em>Any</em></td>
       </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+#### Request body
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
       <tr>
-        <td>stocks.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.changePercent</td>
+        <td>quantity</td>
         <td>
           number
         </td>
@@ -1628,20 +1703,52 @@ _No headers specified_
 
 ```json
 {
-  "success": true,
-  "stocks": [
-    {
-      "close": 0,
-      "high": 0,
-      "low": 0,
-      "open": 0,
-      "symbol": "string",
-      "volume": 0,
-      "date": "2019-08-24T14:15:22Z",
-      "updated": "2019-08-24T14:15:22Z",
-      "changePercent": 0
-    }
-  ]
+  "quantity": 0
+}
+```
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true
 }
 ```
 
