@@ -160,7 +160,7 @@ paths:
                     type: boolean
                   portfolio:
                     $ref: '#/components/schemas/Portfolio'
-      description: Follow another user by their User Object ID
+      description: Get the portfolio of the current user
   /stocks/gainers:
     get:
       summary: ''
