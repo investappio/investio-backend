@@ -916,7 +916,7 @@ Number of stocks to return
       <tr>
         <td>count </td>
         <td>
-          number
+          integer
         </td>
         <td>query</td>
         <td>Number of stocks to return</td>
@@ -1199,7 +1199,7 @@ Interval of previous days to get prices for
       <tr>
         <td>days </td>
         <td>
-          string
+          integer
         </td>
         <td>query</td>
         <td>Interval of previous days to get prices for</td>
@@ -1228,7 +1228,7 @@ Interval of previous weeks to get prices for
       <tr>
         <td>weeks </td>
         <td>
-          string
+          integer
         </td>
         <td>query</td>
         <td>Interval of previous weeks to get prices for</td>
@@ -1257,7 +1257,7 @@ Interval of previous months to get prices for
       <tr>
         <td>months </td>
         <td>
-          string
+          integer
         </td>
         <td>query</td>
         <td>Interval of previous months to get prices for</td>
@@ -1286,10 +1286,39 @@ Interval of previous years to get prices for
       <tr>
         <td>years </td>
         <td>
-          string
+          integer
         </td>
         <td>query</td>
         <td>Interval of previous years to get prices for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### &#9655; date
+
+Start date to get historic prices from
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>date </td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Start date to get historic prices from</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
