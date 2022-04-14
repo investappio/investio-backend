@@ -1149,7 +1149,7 @@ Search for a stock's historical prices by symbol
 
 ##### &#9655; symbol
 
-Interval of previous days to get prices for
+Symbol of the stock to get the price of
 
 
 <table>
@@ -1169,7 +1169,7 @@ Interval of previous days to get prices for
           string
         </td>
         <td>path</td>
-        <td>Interval of previous days to get prices for</td>
+        <td>Symbol of the stock to get the price of</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
