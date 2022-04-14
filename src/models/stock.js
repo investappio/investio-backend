@@ -19,7 +19,8 @@ const stockSchema = new Schema({
 })
 
 async function getClosePrice () {
-  return Prices.findOne({ symbol: this.symbol }).sort({ date: -1 }).populate('close')
+  const price = await Prices.findOne({ symbol: this.symbol }, 'close')
+  return price.close
 }
 
 stockSchema.method('getClosePrice', getClosePrice)

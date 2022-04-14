@@ -1,5 +1,6 @@
+from datetime import datetime
 import json
-from utils import iex_request, mongo_client, parse_price
+from utils import iex_request, mongo_client
 import pymongo
 from pymongo import ReplaceOne
 
@@ -20,7 +21,11 @@ stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True, background=Tru
 # Bulk insert/replace the fetched stocks
 stock_ops = list(
     map(
-        lambda stock: ReplaceOne({"symbol": stock.get("symbol")}, stock, upsert=True),
+        lambda stock: ReplaceOne(
+            {"symbol": stock.get("symbol").lower()},
+            dict(stock, **({"symbol": stock.get("symbol").lower()})),
+            upsert=True,
+        ),
         nyse,
     )
 )
@@ -38,8 +43,20 @@ prices = db["prices"]
 
 ohlc = list(
     map(
-        lambda price: parse_price(price, stocks),
-        filter(lambda mprice: mprice.get("symbol") in symbols, market),
+        lambda price: dict(
+            price,
+            **(
+                {
+                    "symbol": price.get("symbol").lower(),
+                    "date": datetime.strptime(price.get("date"), "%Y-%m-%d"),
+                    "updated": datetime.fromtimestamp(
+                        price.get("updated", 0.0) / 1000.0
+                    ),
+                    "stock": stocks.find_one({"symbol": price.get("symbol").lower()})["_id"],
+                }
+            )
+        ),
+        filter(lambda price: price.get("symbol") in symbols, market),
     )
 )
 

@@ -211,7 +211,7 @@ paths:
           in: query
           name: query
           description: Name or symbol of searched stock
-  /stocks/price:
+  /stocks/{symbol}/price:
     get:
       summary: ''
       operationId: get-stocks-price
@@ -233,9 +233,30 @@ paths:
       parameters:
         - schema:
             type: string
+          in: path
+          name: symbol
+          required: true
+          description: Interval of previous days to get prices for
+        - schema:
+            type: string
           in: query
-          name: query
-          description: Symbol of searched stock
+          name: days
+          description: Interval of previous days to get prices for
+        - schema:
+            type: string
+          in: query
+          name: weeks
+          description: Interval of previous weeks to get prices for
+        - schema:
+            type: string
+          in: query
+          name: months
+          description: Interval of previous months to get prices for
+        - schema:
+            type: string
+          in: query
+          name: years
+          description: Interval of previous years to get prices for
 components:
   schemas:
     User:

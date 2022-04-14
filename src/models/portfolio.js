@@ -15,4 +15,11 @@ const portfolioSchema = new Schema({
   balance: { type: Number, required: true, default: 1000 }
 })
 
+async function buy (stock, amount) {
+  const price = await stock.getClosePrice()
+  await this.update({ 'assets.$.stock': stock }, { $inc: { quantity: amount * price } })
+}
+
+portfolioSchema.method('buy', buy)
+
 module.exports = model('Portfolio', portfolioSchema)
