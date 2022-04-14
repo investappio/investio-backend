@@ -39,11 +39,10 @@ const priceSchema = new Schema({
   }
 })
 
-async function get (symbol, opts = { date: DateTime.now().endOf('day'), duration: { days: 5 } }) {
-  const duration = opts.duration || { days: 5 }
-  const date = opts.date || DateTime.now().endOf('day')
+async function get (symbol, opts) {
+  const options = { ...{ date: DateTime.now(), duration: { days: 5 } }, ...opts }
 
-  return this.find({ symbol, date: { $lte: date, $gte: date.minus(duration) } })
+  return this.find({ symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } })
 }
 
 priceSchema.static('get', get)

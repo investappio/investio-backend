@@ -25,7 +25,7 @@ async function getClosePrice () {
 
 stockSchema.method('getClosePrice', getClosePrice)
 
-async function topGainers (limit) {
+async function topGainers (limit = 5) {
   const symbols = await Prices.find({}, { symbol: 1, _id: 0 }).sort({ changePercent: -1 }).limit(limit)
   return symbols.map((v) => v.symbol)
 }

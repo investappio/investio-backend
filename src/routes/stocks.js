@@ -41,7 +41,7 @@ router.get('/:symbol/price', async (ctx) => {
     years: years || 0
   }
 
-  const res = await Price.get(ctx.params.symbol, { date: date ? DateTime(date) : null, duration })
+  const res = await Price.get(ctx.params.symbol, { date: date ? new DateTime(date) : null, duration })
 
   ctx.body.success = true
   ctx.body.prices = res
@@ -59,7 +59,7 @@ router.get('/gainers', async (ctx) => {
 
   const { count } = ctx.request.query
 
-  const symbols = await Stock.topGainers(count || 10)
+  const symbols = await Stock.topGainers(count || 5)
   const res = await Stock.find({ symbol: { $in: symbols } })
 
   ctx.body.success = true
