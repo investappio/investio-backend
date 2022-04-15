@@ -3,10 +3,11 @@ version: "3.8"
 services:
   backend:
     image: node:lts
+    container_name: backend
     depends_on:
       mongo:
         condition: service_healthy
-    restart: always
+    restart: unless-stopped
     environment:
       - "PORT=${PORT}"
       - "NODE_ENV=development"
@@ -27,6 +28,7 @@ services:
   stocks:
     build: ./scripts
     container_name: stocks
+    restart: unless-stopped
     depends_on:
       mongo:
         condition: service_healthy
@@ -43,11 +45,12 @@ services:
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.stocks.container: "stocks"
-      ofelia.job-exec.stocks.schedule: "0 0 1 * * *"
+      ofelia.job-exec.stocks.schedule: "0 0 0 * * *"
       ofelia.job-exec.stocks.command: "python3 get_stocks.py"
   mongo:
     image: mongo:latest
-    restart: always
+    container_name: mongo
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u ${MONGO_USERNAME} -p '${MONGO_PASSWORD}' --quiet"]
       interval: 30s
@@ -64,9 +67,11 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
   ofelia:
     image: mcuadros/ofelia:latest
+    container_name: ofelia
+    restart: unless-stopped
     depends_on:
-      mongo:
-        condition: service_healthy
+      stocks:
+        condition: service_started
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
