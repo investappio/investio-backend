@@ -14,6 +14,7 @@ API definition for the Invest.io app
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
+  - [`GET` /stocks/{symbol}/pricehistory](#op-get-stocks-symbol-pricehistory) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
   - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
 * [Schemas](#schemas)
@@ -850,6 +851,86 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
+        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
         <td>portfolio.balance <strong>(required)</strong></td>
         <td>
           number
@@ -858,7 +939,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.user <strong>(required)</strong></td>
+        <td>portfolio.user</td>
         <td>
           object
         </td>
@@ -921,7 +1002,18 @@ _No headers specified_
         "stock": {
           "symbol": "string",
           "name": "string",
-          "type": "string"
+          "type": "string",
+          "price": {
+            "close": 0,
+            "high": 0,
+            "low": 0,
+            "open": 0,
+            "symbol": "string",
+            "volume": 0,
+            "date": "2019-08-24T14:15:22Z",
+            "updated": "2019-08-24T14:15:22Z",
+            "changePercent": 0
+          }
         }
       }
     ],
@@ -1046,6 +1138,86 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+      <tr>
+        <td>stocks.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
   </tbody>
 </table>
 
@@ -1059,7 +1231,18 @@ _No headers specified_
     {
       "symbol": "string",
       "name": "string",
-      "type": "string"
+      "type": "string",
+      "price": {
+        "close": 0,
+        "high": 0,
+        "low": 0,
+        "open": 0,
+        "symbol": "string",
+        "volume": 0,
+        "date": "2019-08-24T14:15:22Z",
+        "updated": "2019-08-24T14:15:22Z",
+        "changePercent": 0
+      }
     }
   ]
 }
@@ -1174,6 +1357,86 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+      <tr>
+        <td>stocks.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
   </tbody>
 </table>
 
@@ -1187,7 +1450,18 @@ _No headers specified_
     {
       "symbol": "string",
       "name": "string",
-      "type": "string"
+      "type": "string",
+      "price": {
+        "close": 0,
+        "high": 0,
+        "low": 0,
+        "open": 0,
+        "symbol": "string",
+        "volume": 0,
+        "date": "2019-08-24T14:15:22Z",
+        "updated": "2019-08-24T14:15:22Z",
+        "changePercent": 0
+      }
     }
   ]
 }
@@ -1198,9 +1472,9 @@ _No headers specified_
 ### `GET` /stocks/{symbol}/price
 <a id="op-get-stocks-symbol-price" />
 
-> Get a stock's price data
+> Get a stock's recent pricing
 
-Search for a stock's historical prices by symbol
+Get a stock's recent price
 
 
 #### Path parameters
@@ -1228,6 +1502,104 @@ Symbol of the stock to get the price of
         </td>
         <td>path</td>
         <td>Symbol of the stock to get the price of</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "price": 0
+}
+```
+
+</div>
+
+### `GET` /stocks/{symbol}/pricehistory
+<a id="op-get-stocks-symbol-pricehistory" />
+
+> Get a stock's historical price data
+
+Get a stock's historical prices
+
+
+#### Path parameters
+
+##### &#9655; symbol
+
+Symbol of the stock to get the price history of
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>symbol  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Symbol of the stock to get the price history of</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -1418,7 +1790,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks</td>
+        <td>prices</td>
         <td>
           array(object)
         </td>
@@ -1426,7 +1798,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.close <strong>(required)</strong></td>
+        <td>prices.close <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1434,7 +1806,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.high <strong>(required)</strong></td>
+        <td>prices.high <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1442,7 +1814,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.low <strong>(required)</strong></td>
+        <td>prices.low <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1450,7 +1822,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.open <strong>(required)</strong></td>
+        <td>prices.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1458,7 +1830,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.symbol <strong>(required)</strong></td>
+        <td>prices.symbol <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1466,7 +1838,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.volume</td>
+        <td>prices.volume</td>
         <td>
           number
         </td>
@@ -1474,7 +1846,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.date <strong>(required)</strong></td>
+        <td>prices.date <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1482,7 +1854,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.updated</td>
+        <td>prices.updated</td>
         <td>
           string
         </td>
@@ -1490,7 +1862,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.changePercent</td>
+        <td>prices.changePercent</td>
         <td>
           number
         </td>
@@ -1506,7 +1878,7 @@ _No headers specified_
 ```json
 {
   "success": true,
-  "stocks": [
+  "prices": [
     {
       "close": 0,
       "high": 0,
@@ -1692,6 +2064,86 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
+        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
         <td>portfolio.balance <strong>(required)</strong></td>
         <td>
           number
@@ -1700,7 +2152,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.user <strong>(required)</strong></td>
+        <td>portfolio.user</td>
         <td>
           object
         </td>
@@ -1763,7 +2215,18 @@ _No headers specified_
         "stock": {
           "symbol": "string",
           "name": "string",
-          "type": "string"
+          "type": "string",
+          "price": {
+            "close": 0,
+            "high": 0,
+            "low": 0,
+            "open": 0,
+            "symbol": "string",
+            "volume": 0,
+            "date": "2019-08-24T14:15:22Z",
+            "updated": "2019-08-24T14:15:22Z",
+            "changePercent": 0
+          }
         }
       }
     ],
@@ -1949,6 +2412,86 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
+        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
         <td>portfolio.balance <strong>(required)</strong></td>
         <td>
           number
@@ -1957,7 +2500,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.user <strong>(required)</strong></td>
+        <td>portfolio.user</td>
         <td>
           object
         </td>
@@ -2020,7 +2563,18 @@ _No headers specified_
         "stock": {
           "symbol": "string",
           "name": "string",
-          "type": "string"
+          "type": "string",
+          "price": {
+            "close": 0,
+            "high": 0,
+            "low": 0,
+            "open": 0,
+            "symbol": "string",
+            "volume": 0,
+            "date": "2019-08-24T14:15:22Z",
+            "updated": "2019-08-24T14:15:22Z",
+            "changePercent": 0
+          }
         }
       }
     ],
@@ -2171,6 +2725,86 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
+        <td>assets.stock.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
         <td>balance <strong>(required)</strong></td>
         <td>
           number
@@ -2179,7 +2813,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>user <strong>(required)</strong></td>
+        <td>user</td>
         <td>
           object
         </td>
@@ -2239,7 +2873,18 @@ _No headers specified_
       "stock": {
         "symbol": "string",
         "name": "string",
-        "type": "string"
+        "type": "string",
+        "price": {
+          "close": 0,
+          "high": 0,
+          "low": 0,
+          "open": 0,
+          "symbol": "string",
+          "volume": 0,
+          "date": "2019-08-24T14:15:22Z",
+          "updated": "2019-08-24T14:15:22Z",
+          "changePercent": 0
+        }
       }
     }
   ],
@@ -2291,6 +2936,86 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
+      <tr>
+        <td>price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
   </tbody>
 </table>
 
@@ -2300,7 +3025,18 @@ _No headers specified_
 {
   "symbol": "string",
   "name": "string",
-  "type": "string"
+  "type": "string",
+  "price": {
+    "close": 0,
+    "high": 0,
+    "low": 0,
+    "open": 0,
+    "symbol": "string",
+    "volume": 0,
+    "date": "2019-08-24T14:15:22Z",
+    "updated": "2019-08-24T14:15:22Z",
+    "changePercent": 0
+  }
 }
 ```
 <a id="schema-price" />
