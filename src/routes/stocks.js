@@ -19,6 +19,15 @@ router.get('/search', authentication, async (ctx) => {
 router.get('/:symbol/price', authentication, async (ctx) => {
   ctx.body = {}
 
+  const stock = await Stock.findOne({ symbol: ctx.params.symbol })
+
+  ctx.body.success = true
+  ctx.body.price = stock.price.close
+})
+
+router.get('/:symbol/pricehistory', authentication, async (ctx) => {
+  ctx.body = {}
+
   const { days, weeks, months, years, date } = ctx.request.query
 
   const duration = {

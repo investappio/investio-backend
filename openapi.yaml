@@ -220,7 +220,7 @@ paths:
           description: Name or symbol of searched stock
   /stocks/{symbol}/price:
     get:
-      summary: "Get a stock's price data"
+      summary: "Get a stock's recent pricing"
       operationId: get-stocks-price
       responses:
         "200":
@@ -232,11 +232,10 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  stocks:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Price"
-      description: Search for a stock's historical prices by symbol
+                  price:
+                    type: number
+                    minimum: 0
+      description: Get a stock's recent price
       parameters:
         - schema:
             type: string
@@ -244,6 +243,32 @@ paths:
           name: symbol
           required: true
           description: Symbol of the stock to get the price of
+  /stocks/{symbol}/pricehistory:
+    get:
+      summary: "Get a stock's historical price data"
+      operationId: get-stocks-pricehistory
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  prices:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Price"
+      description: Get a stock's historical prices
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: symbol
+          required: true
+          description: Symbol of the stock to get the price history of
         - schema:
             type: integer
             minimum: 0
@@ -385,7 +410,6 @@ components:
           $ref: "#/components/schemas/User"
       required:
         - balance
-        - user
         - assets
     Stock:
       title: Stock
@@ -398,10 +422,13 @@ components:
           type: string
         type:
           type: string
+        price:
+          $ref: "#/components/schemas/Price"
       required:
         - symbol
         - name
         - type
+        - price
     Price:
       title: Price
       description: "Schema respresenting neccesary information on a specific date for a stock"

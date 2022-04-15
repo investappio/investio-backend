@@ -15,18 +15,12 @@ const stockSchema = new Schema({
   type: {
     type: String,
     index: true
-  }
+  },
+  price: { type: Schema.Types.ObjectId, ref: 'Price', required: true }
 })
 
-async function getClosePrice () {
-  const price = await Prices.findOne({ symbol: this.symbol }, 'close')
-  return price.close
-}
-
-stockSchema.method('getClosePrice', getClosePrice)
-
 async function topGainers (limit = 5) {
-  const symbols = await Prices.find({}, { symbol: 1, _id: 0 }).sort({ changePercent: -1 }).limit(limit)
+  const symbols = await Prices.find({}, { symbol: 1, _id: 0 }).sort('-changePercent').limit(limit)
   return symbols.map((v) => v.symbol)
 }
 
@@ -37,5 +31,13 @@ async function search (query) {
 stockSchema.static('topGainers', topGainers)
 
 stockSchema.static('search', search)
+
+async function autoPopulate (next) {
+  this.populate('price')
+  await next()
+}
+
+stockSchema.pre('findOne', autoPopulate)
+  .pre('find', autoPopulate)
 
 module.exports = model('Stock', stockSchema)

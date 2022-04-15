@@ -17,7 +17,7 @@ const portfolioSchema = new Schema({
 })
 
 async function buy (stock, quantity) {
-  const price = await stock.getClosePrice()
+  const price = await stock.price.close
   const value = Number((quantity * price).toFixed(2))
 
   const asset = this.assets.get(stock.symbol) || {}
@@ -33,7 +33,7 @@ async function buy (stock, quantity) {
 }
 
 async function sell (stock, quantity) {
-  const price = await stock.getClosePrice()
+  const price = await stock.price.close
   const value = Number((quantity * price).toFixed(2))
 
   const asset = this.assets.get(stock.symbol)
@@ -55,5 +55,13 @@ async function sell (stock, quantity) {
 
 portfolioSchema.method('buy', buy)
 portfolioSchema.method('sell', sell)
+
+async function autoPopulate (next) {
+  this.populate('assets.$*.stock')
+  this.populate('user')
+  await next()
+}
+
+portfolioSchema.pre('findOne', autoPopulate)
 
 module.exports = model('Portfolio', portfolioSchema)

@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 from utils import iex_request, mongo_client
 import pymongo
-from pymongo import ReplaceOne
+from pymongo import ReplaceOne, UpdateOne
 
 db = mongo_client()
 
@@ -52,7 +52,6 @@ ohlc = list(
                     "updated": datetime.fromtimestamp(
                         price.get("updated", 0.0) / 1000.0
                     ),
-                    "stock": stocks.find_one({"symbol": price.get("symbol").lower()})["_id"],
                 }
             )
         ),
@@ -84,4 +83,17 @@ price_ops = list(
     )
 )
 
-prices.bulk_write(price_ops)
+new_prices = list(prices.bulk_write(price_ops).upserted_ids.values())
+
+price_insert_ops = list(
+    map(
+        lambda price: UpdateOne(
+            {"symbol": price.get("symbol")},
+            {"$set": {"price": price.get("_id")}},
+            upsert=False,
+        ),
+        prices.find({"_id": {"$in": new_prices}}),
+    )
+)
+
+stocks.bulk_write(price_insert_ops)

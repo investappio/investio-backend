@@ -42,7 +42,7 @@ const priceSchema = new Schema({
 async function get (symbol, opts) {
   const options = { ...{ date: DateTime.now(), duration: { days: 5 } }, ...opts }
 
-  return this.find({ symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } })
+  return this.find({ symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } }).sort('+date')
 }
 
 priceSchema.static('get', get)

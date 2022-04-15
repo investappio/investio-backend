@@ -102,7 +102,7 @@ async function unfollow (user) {
 }
 
 async function getPortfolio () {
-  const portfolio = await Portfolio.findOne({ user: this }).populate('user').populate('assets.$*.stock')
+  const portfolio = await Portfolio.findOne({ user: this })
 
   if (portfolio == null) {
     const newPortfolio = new Portfolio({ user: this })
