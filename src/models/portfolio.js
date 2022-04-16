@@ -99,7 +99,7 @@ async function getHistory (opts) {
         }
       })
 
-      const diff = Big(price.close).times(-1)
+      const diff = Big(price.close).times(-1).times(cur.quantity)
 
       return (await prev).plus(diff).plus((indx === orders.length - 1) ? Big(cur.snapshot) : Big(0))
     }, Big(0))
