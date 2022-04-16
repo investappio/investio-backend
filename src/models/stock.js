@@ -37,7 +37,7 @@ async function topGainers (limit = 5) {
 }
 
 async function search (query) {
-  return this.find({ $or: [{ name: { $regex: query, $options: 'i' } }, { symbol: { $regex: query, $options: 'i' } }] })
+  return this.find({ $or: [{ name: { $regex: query, $options: 'i' } }, { symbol: { $regex: query, $options: 'i' } }] }).limit(25)
 }
 
 stockSchema.static('topGainers', topGainers)
