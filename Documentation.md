@@ -14,7 +14,7 @@ API definition for the Invest.io app
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
-  - [`GET` /stocks/{symbol}/pricehistory](#op-get-stocks-symbol-pricehistory) 
+  - [`GET` /stocks/{symbol}/price/historical](#op-get-stocks-symbol-price-historical) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
   - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
 * [Schemas](#schemas)
@@ -1576,8 +1576,8 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/{symbol}/pricehistory
-<a id="op-get-stocks-symbol-pricehistory" />
+### `GET` /stocks/{symbol}/price/historical
+<a id="op-get-stocks-symbol-price-historical" />
 
 > Get a stock's historical price data
 
