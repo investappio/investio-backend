@@ -25,7 +25,7 @@ router.get('/:symbol/price', authentication, async (ctx) => {
   ctx.body.price = stock.price.close
 })
 
-router.get('/:symbol/pricehistory', authentication, async (ctx) => {
+router.get('/:symbol/price/historical', authentication, async (ctx) => {
   ctx.body = {}
 
   const { days, weeks, months, years, date } = ctx.request.query

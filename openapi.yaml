@@ -243,7 +243,7 @@ paths:
           name: symbol
           required: true
           description: Symbol of the stock to get the price of
-  /stocks/{symbol}/pricehistory:
+  /stocks/{symbol}/price/historical:
     get:
       summary: "Get a stock's historical price data"
       operationId: get-stocks-pricehistory
