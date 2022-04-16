@@ -9,7 +9,9 @@ API definition for the Invest.io app
   - [`POST` /auth/register](#op-post-auth-register) 
   - [`POST` /auth/login](#op-post-auth-login) 
   - [`GET` /user/search](#op-get-user-search) 
-  - [`POST` /user/follow](#op-post-user-follow) 
+  - [`POST` /user/{user}/follow](#op-post-user-user-follow) 
+  - [`GET` /user/{user}/following](#op-get-user-user-following) 
+  - [`GET` /user/{user}/portfolio](#op-get-user-user-portfolio) 
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
@@ -610,21 +612,19 @@ _No headers specified_
 
 </div>
 
-### `POST` /user/follow
-<a id="op-post-user-follow" />
+### `POST` /user/{user}/follow
+<a id="op-post-user-user-follow" />
 
 > Follow another user
 
 Follow another user by their User Object ID
 
 
+#### Path parameters
 
+##### &#9655; user
 
-
-
-#### Request body
-###### application/json
-
+Username of the user being followed
 
 
 <table>
@@ -632,76 +632,27 @@ Follow another user by their User Object ID
     <tr>
       <th>Name</th>
       <th>Type</th>
+      <th>In</th>
       <th>Description</th>
       <th>Accepted values</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td>uid <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a user account</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>uid.name <strong>(required)</strong></td>
+        <td>user  <strong>(required)</strong></td>
         <td>
           string
         </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>uid.email <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>uid.dob <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>uid.username <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td>Set to true if the user's email has been verified.</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>uid.phone</td>
-        <td>
-          string
-        </td>
-        <td></td>
+        <td>path</td>
+        <td>Username of the user being followed</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
 </table>
 
 
-##### Example _(generated)_
 
-```json
-{
-  "uid": {
-    "name": "string",
-    "email": "user@example.com",
-    "dob": "2019-08-24T14:15:22Z",
-    "username": "string",
-    "phone": "string"
-  }
-}
-```
+
 
 
 
@@ -745,6 +696,416 @@ _No headers specified_
 ```json
 {
   "success": true
+}
+```
+
+</div>
+
+### `GET` /user/{user}/following
+<a id="op-get-user-user-following" />
+
+> Get a user's following status for another user
+
+Check if the current user follows another user
+
+
+#### Path parameters
+
+##### &#9655; user
+
+Username of the user to fetch follow status for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>user  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Username of the user to fetch follow status for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>following</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "following": true
+}
+```
+
+</div>
+
+### `GET` /user/{user}/portfolio
+<a id="op-get-user-user-portfolio" />
+
+> Get a user's portfolio by username
+
+Get a user's portfolio by username
+
+
+#### Path parameters
+
+##### &#9655; user
+
+Username of the user to fetch the portfolio from
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>user  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Username of the user to fetch the portfolio from</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets <strong>(required)</strong></td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.quantity</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting neccesary information on a specific date for a stock</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.volume</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.updated</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "portfolio": {
+    "assets": [
+      {
+        "quantity": 0,
+        "stock": {
+          "symbol": "string",
+          "name": "string",
+          "type": "string",
+          "price": {
+            "close": 0,
+            "high": 0,
+            "low": 0,
+            "open": 0,
+            "symbol": "string",
+            "volume": 0,
+            "date": "2019-08-24T14:15:22Z",
+            "updated": "2019-08-24T14:15:22Z",
+            "changePercent": 0
+          }
+        }
+      }
+    ],
+    "cash": 0,
+    "value": 0,
+    "user": {
+      "name": "string",
+      "email": "user@example.com",
+      "dob": "2019-08-24T14:15:22Z",
+      "username": "string",
+      "phone": "string"
+    }
+  }
 }
 ```
 
