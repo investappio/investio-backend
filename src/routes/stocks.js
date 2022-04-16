@@ -48,8 +48,7 @@ router.get('/gainers', authentication, async (ctx) => {
 
   const { count } = ctx.request.query
 
-  const symbols = await Stock.topGainers(count || 5)
-  const res = await Stock.find({ symbol: { $in: symbols } })
+  const res = await Stock.topGainers(count || 5)
 
   ctx.body.success = true
   ctx.body.stocks = res

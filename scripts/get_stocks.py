@@ -21,9 +21,9 @@ stocks.create_index([("symbol", pymongo.ASCENDING)], unique=True, background=Tru
 # Bulk insert/replace the fetched stocks
 stock_ops = list(
     map(
-        lambda stock: ReplaceOne(
+        lambda stock: UpdateOne(
             {"symbol": stock.get("symbol").lower()},
-            dict(stock, **({"symbol": stock.get("symbol").lower()})),
+            {"$set": dict(stock, **({"symbol": stock.get("symbol").lower()}))},
             upsert=True,
         ),
         nyse,
@@ -74,9 +74,9 @@ prices.create_index(
 # Bulk insert/replace the fetched price info
 price_ops = list(
     map(
-        lambda price: ReplaceOne(
+        lambda price: UpdateOne(
             {"symbol": price.get("symbol"), "date": price.get("date")},
-            price,
+            {"$set": price},
             upsert=True,
         ),
         ohlc,
@@ -85,15 +85,17 @@ price_ops = list(
 
 new_prices = list(prices.bulk_write(price_ops).upserted_ids.values())
 
-price_insert_ops = list(
-    map(
-        lambda price: UpdateOne(
-            {"symbol": price.get("symbol")},
-            {"$set": {"price": price.get("_id")}},
-            upsert=False,
-        ),
-        prices.find({"_id": {"$in": new_prices}}),
-    )
-)
+if len(new_prices):
 
-stocks.bulk_write(price_insert_ops)
+    price_insert_ops = list(
+        map(
+            lambda price: UpdateOne(
+                {"symbol": price.get("symbol")},
+                {"$set": {"price": price.get("_id")}},
+                upsert=False,
+            ),
+            prices.find({"_id": {"$in": new_prices}}),
+        )
+    )
+
+    stocks.bulk_write(price_insert_ops)

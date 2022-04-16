@@ -20,8 +20,11 @@ const stockSchema = new Schema({
 })
 
 async function topGainers (limit = 5) {
-  const symbols = await Price.find({}, { symbol: 1, _id: 0 }).sort('-changePercent').limit(limit)
-  return symbols.map((v) => v.symbol)
+  const symbols = (await Price.find({}, { symbol: 1, _id: 0 })
+    .sort('-changePercent').limit(limit)
+  ).map((v) => v.symbol)
+
+  return this.find({ symbol: { $in: symbols } })
 }
 
 async function search (query) {
