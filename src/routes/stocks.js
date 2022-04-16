@@ -1,11 +1,10 @@
 const Router = require('@koa/router')
 const { DateTime } = require('luxon')
-const { Stock, Price } = require('../models')
-const { authentication } = require('../utils')
+const { Stock } = require('../models')
 
 const router = new Router()
 
-router.get('/search', authentication, async (ctx) => {
+router.get('/search', async (ctx) => {
   ctx.body = {}
 
   const { query } = ctx.request.query
@@ -16,34 +15,7 @@ router.get('/search', authentication, async (ctx) => {
   ctx.body.stocks = res
 })
 
-router.get('/:symbol/price', authentication, async (ctx) => {
-  ctx.body = {}
-
-  const stock = await Stock.findOne({ symbol: ctx.params.symbol })
-
-  ctx.body.success = true
-  ctx.body.price = stock.price.close
-})
-
-router.get('/:symbol/price/historical', authentication, async (ctx) => {
-  ctx.body = {}
-
-  const { days, weeks, months, years, date } = ctx.request.query
-
-  const duration = {
-    days: days || 5,
-    weeks: weeks || 0,
-    months: months || 0,
-    years: years || 0
-  }
-
-  const res = await Price.get(ctx.params.symbol, { date: date ? new DateTime(date) : DateTime.now(), duration })
-
-  ctx.body.success = true
-  ctx.body.prices = res
-})
-
-router.get('/gainers', authentication, async (ctx) => {
+router.get('/gainers', async (ctx) => {
   ctx.body = {}
 
   const { count } = ctx.request.query
@@ -54,26 +26,54 @@ router.get('/gainers', authentication, async (ctx) => {
   ctx.body.stocks = res
 })
 
-router.post('/:symbol/buy', authentication, async (ctx) => {
-  ctx.body = {}
+router.use('/:symbol',
+  async (ctx, next) => {
+    const stock = await Stock.findOne({ symbol: ctx.params.symbol })
+    ctx.stock = stock
+    await next()
+  }, (new Router())
+    .post('/buy', async (ctx) => {
+      ctx.body = {}
 
-  const { quantity } = ctx.request.body
+      const { quantity } = ctx.request.body
 
-  const portfolio = await ctx.user.getPortfolio()
-  const stock = await Stock.findOne({ symbol: ctx.params.symbol })
-  ctx.body.success = await portfolio.buy(stock, quantity || 0)
-  ctx.body.portfolio = portfolio
-})
+      const portfolio = await ctx.user.getPortfolio()
+      ctx.body.success = await portfolio.buy(ctx.stock, quantity || 0)
+      ctx.body.portfolio = portfolio
+    })
+    .post('/sell', async (ctx) => {
+      ctx.body = {}
 
-router.post('/:symbol/sell', authentication, async (ctx) => {
-  ctx.body = {}
+      const { quantity } = ctx.request.body
 
-  const { quantity } = ctx.request.body
+      const portfolio = await ctx.user.getPortfolio()
+      ctx.body.success = await portfolio.sell(ctx.stock, quantity || 0)
+      ctx.body.portfolio = portfolio
+    })
+    .get('/price', async (ctx) => {
+      ctx.body = {}
 
-  const portfolio = await ctx.user.getPortfolio()
-  const stock = await Stock.findOne({ symbol: ctx.params.symbol })
-  ctx.body.success = await portfolio.sell(stock, quantity || 0)
-  ctx.body.portfolio = portfolio
-})
+      ctx.body.success = true
+      ctx.body.price = ctx.stock.price.close
+    })
+    .get('/price/historical', async (ctx) => {
+      ctx.body = {}
+
+      const { days, weeks, months, years, date } = ctx.request.query
+
+      const duration = {
+        days: days || 5,
+        weeks: weeks || 0,
+        months: months || 0,
+        years: years || 0
+      }
+
+      const res = await ctx.stock.getPriceHistory({ date: date ? new DateTime(date) : DateTime.now(), duration })
+
+      ctx.body.success = true
+      ctx.body.prices = res
+    })
+    .routes()
+)
 
 module.exports = router.routes()

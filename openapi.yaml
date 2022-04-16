@@ -125,7 +125,7 @@ paths:
           description: Username of user being searched
           required: true
       description: Search for users by username
-  /user/follow:
+  /user/{user}/follow:
     post:
       summary: "Follow another user"
       operationId: post-user-follow
@@ -139,17 +139,60 @@ paths:
                 properties:
                   success:
                     type: boolean
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                uid:
-                  $ref: "#/components/schemas/User"
-              required:
-                - uid
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user
+          description: Username of the user being followed
+          required: true
       description: Follow another user by their User Object ID
+  /user/{user}/following:
+    get:
+      summary: "Get a user's following status for another user"
+      operationId: get-user-following
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  following:
+                    type: boolean
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user
+          description: Username of the user to fetch follow status for
+          required: true
+      description: Check if the current user follows another user
+  /user/{user}/portfolio:
+    get:
+      summary: "Get a user's portfolio by username"
+      operationId: get-other-user-portfolio
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  portfolio:
+                    $ref: "#/components/schemas/Portfolio"
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: user
+          description: Username of the user to fetch the portfolio from
+          required: true
+      description: Get a user's portfolio by username
   /user/portfolio:
     get:
       summary: "Get the current user's portfolio"

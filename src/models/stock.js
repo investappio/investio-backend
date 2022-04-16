@@ -1,3 +1,4 @@
+const { DateTime } = require('luxon')
 const { Schema, model } = require('mongoose')
 const Price = model('Price')
 
@@ -18,6 +19,14 @@ const stockSchema = new Schema({
   },
   price: { type: Schema.Types.ObjectId, ref: 'Price', required: true }
 })
+
+async function getPriceHistory (opts) {
+  const options = { ...{ date: DateTime.now(), duration: { days: 5 } }, ...opts }
+
+  return Price.find({ symbol: this.symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } }).sort('+date')
+}
+
+stockSchema.method('getPriceHistory', getPriceHistory)
 
 async function topGainers (limit = 5) {
   const symbols = (await Price.find({}, { symbol: 1, _id: 0 })

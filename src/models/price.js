@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-const { DateTime } = require('luxon')
 
 const priceSchema = new Schema({
   close: {
@@ -38,13 +37,5 @@ const priceSchema = new Schema({
     index: true
   }
 })
-
-async function get (symbol, opts) {
-  const options = { ...{ date: DateTime.now(), duration: { days: 5 } }, ...opts }
-
-  return this.find({ symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } }).sort('+date')
-}
-
-priceSchema.static('get', get)
 
 module.exports = model('Price', priceSchema)
