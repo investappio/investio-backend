@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const Prices = model('Price')
+const Price = model('Price')
 
 const stockSchema = new Schema({
   symbol: {
@@ -20,7 +20,7 @@ const stockSchema = new Schema({
 })
 
 async function topGainers (limit = 5) {
-  const symbols = await Prices.find({}, { symbol: 1, _id: 0 }).sort('-changePercent').limit(limit)
+  const symbols = await Price.find({}, { symbol: 1, _id: 0 }).sort('-changePercent').limit(limit)
   return symbols.map((v) => v.symbol)
 }
 

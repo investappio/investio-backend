@@ -1,4 +1,7 @@
 const { Schema, model } = require('mongoose')
+const Order = model('Order')
+
+const Big = require('big.js')
 
 const opts = { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 
@@ -18,37 +21,47 @@ const portfolioSchema = new Schema({
   cash: { type: Number, required: true, default: 1000, min: 0 }
 }, opts)
 
-async function buy (stock, quantity) {
+async function buy (stock, qty) {
   const price = await stock.price.close
-  const value = Number((quantity * price).toFixed(2))
+  const quantity = Big(qty).round(6)
+  const value = quantity.times(price).round(2)
 
   const asset = this.assets.get(stock.symbol) || {}
 
-  if (this.cash > value && value > 1) {
-    this.assets.set(stock.symbol, { stock, quantity: ((asset.quantity || 0) + quantity).toFixed(6) })
-    this.cash = (this.cash - value).toFixed(2)
+  if (Big(this.cash).gt(value) && value.gt(1)) {
+    this.assets.set(stock.symbol, { stock, quantity: quantity.plus(asset.quantity || 0).toFixed(6) })
+    this.cash = Big(this.cash).minus(value).toFixed(2)
     await this.save()
+
+    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.toFixed(6) })
+    await order.save()
+
     return true
   }
 
   return false
 }
 
-async function sell (stock, quantity) {
+async function sell (stock, qty) {
   const price = await stock.price.close
-  const value = Number((quantity * price).toFixed(2))
+  const quantity = Big(qty).round(6)
+  const value = quantity.times(price).round(2)
 
   const asset = this.assets.get(stock.symbol)
 
-  if (value > 0.01 && asset && asset.quantity >= quantity) {
-    if (asset.quantity === quantity) {
+  if (value.gte(0.01) && asset && quantity.lte(asset.quantity)) {
+    if (quantity.eq(asset.quantity)) {
       this.assets.delete(stock.symbol)
     } else {
-      this.assets.set(stock.symbol, { stock, quantity: ((asset.quantity) - quantity).toFixed(6) })
+      this.assets.set(stock.symbol, { stock, quantity: Big(asset.quantity).minus(quantity).toFixed(6) })
     }
 
-    this.cash = (this.cash + value).toFixed(2)
+    this.cash = value.plus(this.cash).toFixed(2)
     await this.save()
+
+    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.times(-1).toFixed(6) })
+    await order.save()
+
     return true
   }
 
@@ -60,10 +73,10 @@ portfolioSchema.method('sell', sell)
 
 portfolioSchema.virtual('value').get(function () {
   const stocks = [...this.assets.keys()].reduce((prev, cur) =>
-    prev + this.assets.get(cur).quantity * this.assets.get(cur).stock.price.close, 0
+    Big(this.assets.get(cur).quantity).times(this.assets.get(cur).stock.price.close).plus(prev), Big(0)
   )
 
-  return (this.cash + stocks).toFixed(2)
+  return stocks.plus(this.cash).toFixed(2)
 })
 
 async function autoPopulate (next) {

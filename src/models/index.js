@@ -1,4 +1,5 @@
 const Follow = require('./follow')
+const Order = require('./order')
 const Price = require('./price')
 const Portfolio = require('./portfolio')
 const Stock = require('./stock')
@@ -9,5 +10,6 @@ module.exports = {
   Price,
   Portfolio,
   Stock,
-  User
+  User,
+  Order
 }
