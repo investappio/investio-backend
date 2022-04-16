@@ -404,7 +404,9 @@ components:
                 type: number
               stock:
                 $ref: "#/components/schemas/Stock"
-        balance:
+        cash:
+          type: number
+        value:
           type: number
         user:
           $ref: "#/components/schemas/User"

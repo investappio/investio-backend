@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose')
 
+const opts = { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+
 const assetSchema = new Schema({
   stock: { type: Schema.Types.ObjectId, ref: 'Stock', required: true },
   quantity: {
@@ -13,8 +15,8 @@ const assetSchema = new Schema({
 const portfolioSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
   assets: { type: Map, of: assetSchema, default: new Map(), required: true },
-  balance: { type: Number, required: true, default: 1000, min: 0 }
-})
+  cash: { type: Number, required: true, default: 1000, min: 0 }
+}, opts)
 
 async function buy (stock, quantity) {
   const price = await stock.price.close
@@ -22,9 +24,9 @@ async function buy (stock, quantity) {
 
   const asset = this.assets.get(stock.symbol) || {}
 
-  if (this.balance > value && value > 1) {
+  if (this.cash > value && value > 1) {
     this.assets.set(stock.symbol, { stock, quantity: ((asset.quantity || 0) + quantity).toFixed(6) })
-    this.balance = (this.balance - value).toFixed(2)
+    this.cash = (this.cash - value).toFixed(2)
     await this.save()
     return true
   }
@@ -45,7 +47,7 @@ async function sell (stock, quantity) {
       this.assets.set(stock.symbol, { stock, quantity: ((asset.quantity) - quantity).toFixed(6) })
     }
 
-    this.balance = (this.balance + value).toFixed(2)
+    this.cash = (this.cash + value).toFixed(2)
     await this.save()
     return true
   }
@@ -55,6 +57,14 @@ async function sell (stock, quantity) {
 
 portfolioSchema.method('buy', buy)
 portfolioSchema.method('sell', sell)
+
+portfolioSchema.virtual('value').get(function () {
+  const stocks = [...this.assets.keys()].reduce((prev, cur) =>
+    prev + this.assets.get(cur).quantity * this.assets.get(cur).stock.price.close, 0
+  )
+
+  return (this.cash + stocks).toFixed(2)
+})
 
 async function autoPopulate (next) {
   this.populate('assets.$*.stock')
