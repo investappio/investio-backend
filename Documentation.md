@@ -931,7 +931,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.balance <strong>(required)</strong></td>
+        <td>portfolio.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
         <td>
           number
         </td>
@@ -1017,7 +1025,8 @@ _No headers specified_
         }
       }
     ],
-    "balance": 0,
+    "cash": 0,
+    "value": 0,
     "user": {
       "name": "string",
       "email": "user@example.com",
@@ -2144,7 +2153,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.balance <strong>(required)</strong></td>
+        <td>portfolio.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
         <td>
           number
         </td>
@@ -2230,7 +2247,8 @@ _No headers specified_
         }
       }
     ],
-    "balance": 0,
+    "cash": 0,
+    "value": 0,
     "user": {
       "name": "string",
       "email": "user@example.com",
@@ -2492,7 +2510,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.balance <strong>(required)</strong></td>
+        <td>portfolio.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
         <td>
           number
         </td>
@@ -2578,7 +2604,8 @@ _No headers specified_
         }
       }
     ],
-    "balance": 0,
+    "cash": 0,
+    "value": 0,
     "user": {
       "name": "string",
       "email": "user@example.com",
@@ -2805,7 +2832,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>balance <strong>(required)</strong></td>
+        <td>cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>value</td>
         <td>
           number
         </td>
@@ -2888,7 +2923,8 @@ _No headers specified_
       }
     }
   ],
-  "balance": 0,
+  "cash": 0,
+  "value": 0,
   "user": {
     "name": "string",
     "email": "user@example.com",
