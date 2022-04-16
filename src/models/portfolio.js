@@ -1,8 +1,10 @@
 const { Schema, model } = require('mongoose')
 const Order = model('Order')
+const Price = model('Price')
 
 const Big = require('big.js')
 const { DateTime } = require('luxon')
+const { Duration } = require('luxon')
 
 const assetSchema = new Schema({
   stock: { type: Schema.Types.ObjectId, ref: 'Stock', required: true },
@@ -69,8 +71,43 @@ async function sell (stock, qty) {
 
 async function getHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
-  // TODO: Loop by days for 2w, weeks for 3m, and months for 1y to calculate snapshots for the given time period
-  Order.find({ date: { $lt: options.date.startOf('day'), $gte: options.date.minus(options.duration) } })
+
+  const step = (() => {
+    const duration = options.duration
+
+    switch (true) {
+      case duration.weeks != null:
+        return Duration.fromDurationLike({ days: 1 })
+      case duration.months != null:
+        return Duration.fromDurationLike({ weeks: 1 })
+      case duration.years != null:
+        return Duration.fromDurationLike({ months: 1 })
+    }
+  })()
+
+  let date = (new DateTime(options.date)).endOf('day')
+  const endDate = date.minus(Duration.fromDurationLike(options.duration))
+
+  for (; date > endDate; date = date.minus(step)) {
+    const orders = await Order.find({ date: { $gte: date.startOf('day'), $lte: date.endOf('day') } }).sort('+date')
+
+    const snapshot = await orders.reduce(async (prev, cur, indx) => {
+      const price = await Price.findOne({
+        symbol: cur.stock.symbol,
+        date: {
+          $lte: DateTime.fromJSDate(cur.date).startOf('day')
+        }
+      })
+
+      const diff = Big(price.close).times(-1)
+
+      return (await prev).plus(diff).plus((indx === orders.length - 1) ? Big(cur.snapshot) : Big(0))
+    }, Big(0))
+
+    console.log(snapshot.toFixed(2))
+    console.log(date.toISODate())
+    // TODO: Create a value history model
+  }
 }
 
 portfolioSchema.method('buy', buy)
