@@ -16,7 +16,7 @@ API definition for the Invest.io app
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
-  - [`GET` /stocks/{symbol}/price/historical](#op-get-stocks-symbol-price-historical) 
+  - [`GET` /stocks/{symbol}/price/historical/{range}](#op-get-stocks-symbol-price-historical-range) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
   - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
 * [Schemas](#schemas)
@@ -1937,8 +1937,8 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/{symbol}/price/historical
-<a id="op-get-stocks-symbol-price-historical" />
+### `GET` /stocks/{symbol}/price/historical/{range}
+<a id="op-get-stocks-symbol-price-historical-range" />
 
 > Get a stock's historical price data
 
@@ -1976,13 +1976,9 @@ Symbol of the stock to get the price history of
 </table>
 
 
+##### &#9655; range
 
-
-#### Query parameters
-
-##### &#9655; days
-
-Interval of previous days to get prices for
+Interval to get prices from
 
 
 <table>
@@ -1997,132 +1993,18 @@ Interval of previous days to get prices for
   </thead>
   <tbody>
       <tr>
-        <td>days </td>
-        <td>
-          integer
-        </td>
-        <td>query</td>
-        <td>Interval of previous days to get prices for</td>
-        <td><em>Any</em></td>
-      </tr>
-  </tbody>
-</table>
-
-
-##### &#9655; weeks
-
-Interval of previous weeks to get prices for
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>In</th>
-      <th>Description</th>
-      <th>Accepted values</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td>weeks </td>
-        <td>
-          integer
-        </td>
-        <td>query</td>
-        <td>Interval of previous weeks to get prices for</td>
-        <td><em>Any</em></td>
-      </tr>
-  </tbody>
-</table>
-
-
-##### &#9655; months
-
-Interval of previous months to get prices for
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>In</th>
-      <th>Description</th>
-      <th>Accepted values</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td>months </td>
-        <td>
-          integer
-        </td>
-        <td>query</td>
-        <td>Interval of previous months to get prices for</td>
-        <td><em>Any</em></td>
-      </tr>
-  </tbody>
-</table>
-
-
-##### &#9655; years
-
-Interval of previous years to get prices for
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>In</th>
-      <th>Description</th>
-      <th>Accepted values</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td>years </td>
-        <td>
-          integer
-        </td>
-        <td>query</td>
-        <td>Interval of previous years to get prices for</td>
-        <td><em>Any</em></td>
-      </tr>
-  </tbody>
-</table>
-
-
-##### &#9655; date
-
-Start date to get historic prices from
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>In</th>
-      <th>Description</th>
-      <th>Accepted values</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td>date </td>
+        <td>range  <strong>(required)</strong></td>
         <td>
           string
         </td>
-        <td>query</td>
-        <td>Start date to get historic prices from</td>
-        <td><em>Any</em></td>
+        <td>path</td>
+        <td>Interval to get prices from</td>
+        <td><code>2w</code>, <code>3m</code>, <code>1y</code></td>
       </tr>
   </tbody>
 </table>
+
+
 
 
 
