@@ -25,6 +25,26 @@ async function getPortfolio (ctx) {
 
 router.get('/portfolio', getPortfolio)
 
+router.get('/portfolio/historical/:range', async (ctx) => {
+  ctx.body = {}
+
+  const duration = (() => {
+    switch (ctx.params.range) {
+      case '3m':
+        return { months: 3 }
+      case '1y':
+        return { years: 1 }
+      default:
+        return { weeks: 2 }
+    }
+  })()
+
+  const portfolio = await ctx.user.getPortfolio()
+  await portfolio.getHistory({ duration })
+
+  ctx.body.success = true
+})
+
 router.use('/:user',
   async (ctx, next) => {
     const user = await User.findOne({ username: ctx.params.user })

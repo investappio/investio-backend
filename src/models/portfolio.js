@@ -2,8 +2,7 @@ const { Schema, model } = require('mongoose')
 const Order = model('Order')
 
 const Big = require('big.js')
-
-const opts = { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+const { DateTime } = require('luxon')
 
 const assetSchema = new Schema({
   stock: { type: Schema.Types.ObjectId, ref: 'Stock', required: true },
@@ -19,7 +18,7 @@ const portfolioSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
   assets: { type: Map, of: assetSchema, default: new Map(), required: true },
   cash: { type: Number, required: true, default: 1000, min: 0 }
-}, opts)
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } })
 
 async function buy (stock, qty) {
   const price = await stock.price.close
@@ -33,7 +32,7 @@ async function buy (stock, qty) {
     this.cash = Big(this.cash).minus(value).toFixed(2)
     await this.save()
 
-    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.toFixed(6) })
+    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.toFixed(6), snapshot: Big(this.value).minus(this.cash).toFixed(2) })
     await order.save()
 
     return true
@@ -59,7 +58,7 @@ async function sell (stock, qty) {
     this.cash = value.plus(this.cash).toFixed(2)
     await this.save()
 
-    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.times(-1).toFixed(6) })
+    const order = new Order({ portfolio: this, stock: stock, quantity: quantity.times(-1).toFixed(6), snapshot: Big(this.value).minus(this.cash).toFixed(2) })
     await order.save()
 
     return true
@@ -68,8 +67,15 @@ async function sell (stock, qty) {
   return false
 }
 
+async function getHistory (opts) {
+  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
+  // TODO: Loop by days for 2w, weeks for 3m, and months for 1y to calculate snapshots for the given time period
+  Order.find({ date: { $lt: options.date.startOf('day'), $gte: options.date.minus(options.duration) } })
+}
+
 portfolioSchema.method('buy', buy)
 portfolioSchema.method('sell', sell)
+portfolioSchema.method('getHistory', getHistory)
 
 portfolioSchema.virtual('value').get(function () {
   const stocks = [...this.assets.keys()].reduce((prev, cur) =>

@@ -286,7 +286,7 @@ paths:
           name: symbol
           required: true
           description: Symbol of the stock to get the price of
-  /stocks/{symbol}/price/historical:
+  /stocks/{symbol}/price/historical/{range}:
     get:
       summary: "Get a stock's historical price data"
       operationId: get-stocks-pricehistory
@@ -313,35 +313,15 @@ paths:
           required: true
           description: Symbol of the stock to get the price history of
         - schema:
-            type: integer
-            minimum: 0
-          in: query
-          name: days
-          description: Interval of previous days to get prices for
-        - schema:
-            type: integer
-            minimum: 0
-          in: query
-          name: weeks
-          description: Interval of previous weeks to get prices for
-        - schema:
-            type: integer
-            minimum: 0
-          in: query
-          name: months
-          description: Interval of previous months to get prices for
-        - schema:
-            type: integer
-            minimum: 0
-          in: query
-          name: years
-          description: Interval of previous years to get prices for
-        - schema:
             type: string
-            format: date-time
-          in: query
-          name: date
-          description: Start date to get historic prices from
+            enum:
+              - 2w
+              - 3m
+              - 1y
+          in: path
+          name: range
+          required: true
+          description: Interval to get prices from
   /stocks/{symbol}/buy:
     post:
       summary: "Buy a stock for a user"

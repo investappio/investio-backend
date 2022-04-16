@@ -1,5 +1,4 @@
 const Router = require('@koa/router')
-const { DateTime } = require('luxon')
 const { Stock } = require('../models')
 
 const router = new Router()
@@ -56,19 +55,21 @@ router.use('/:symbol',
       ctx.body.success = true
       ctx.body.price = ctx.stock.price.close
     })
-    .get('/price/historical', async (ctx) => {
+    .get('/price/historical/:range', async (ctx) => {
       ctx.body = {}
 
-      const { days, weeks, months, years, date } = ctx.request.query
+      const duration = (() => {
+        switch (ctx.params.range) {
+          case '3m':
+            return { months: 3 }
+          case '1y':
+            return { years: 1 }
+          default:
+            return { weeks: 2 }
+        }
+      })()
 
-      const duration = {
-        days: days || 5,
-        weeks: weeks || 0,
-        months: months || 0,
-        years: years || 0
-      }
-
-      const res = await ctx.stock.getPriceHistory({ date: date ? new DateTime(date) : DateTime.now(), duration })
+      const res = await ctx.stock.getPriceHistory({ duration })
 
       ctx.body.success = true
       ctx.body.prices = res

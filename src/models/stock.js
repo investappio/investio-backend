@@ -21,7 +21,7 @@ const stockSchema = new Schema({
 })
 
 async function getPriceHistory (opts) {
-  const options = { ...{ date: DateTime.now(), duration: { days: 5 } }, ...opts }
+  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
   return Price.find({ symbol: this.symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } }).sort('+date')
 }
