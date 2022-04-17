@@ -109,7 +109,7 @@ async function getHistory (opts) {
 
     res.push({
       date,
-      change: snapshot.toFixed(2)
+      value: (res.at(-1) ? res.at(-1).value.minus(snapshot) : Big(this.value).minus(this.cash)).round(2)
     })
 
     if (head) break
