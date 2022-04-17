@@ -90,6 +90,7 @@ async function getHistory (opts) {
   const endDate = date.minus(Duration.fromDurationLike(options.duration))
 
   for (; date > endDate; date = date.minus(step)) {
+    let head = false
     const orders = await Order.find({ date: { $gte: date.endOf('day').minus(step), $lte: date.endOf('day') } }).sort('-date')
 
     const snapshot = await orders.reduce(async (prev, cur) => {
@@ -100,7 +101,8 @@ async function getHistory (opts) {
         }
       }).sort('-date')
 
-      const diff = price ? Big(price.close).times(cur.quantity).times(-1) : Big(0)
+      const diff = price ? Big(price.close).times(cur.quantity) : Big(0)
+      head = cur.prev == null
 
       return (await prev).plus(diff)
     }, Big(0))
@@ -109,9 +111,11 @@ async function getHistory (opts) {
       date,
       change: snapshot.toFixed(2)
     })
+
+    if (head) break
   }
 
-  return res
+  return res.reverse()
 }
 
 portfolioSchema.method('buy', buy)
