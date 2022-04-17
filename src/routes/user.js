@@ -40,9 +40,10 @@ router.get('/portfolio/historical/:range', async (ctx) => {
   })()
 
   const portfolio = await ctx.user.getPortfolio()
-  await portfolio.getHistory({ duration })
+  const history = await portfolio.getHistory({ duration })
 
   ctx.body.success = true
+  ctx.body.history = history
 })
 
 router.use('/:user',

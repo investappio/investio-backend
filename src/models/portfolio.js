@@ -85,29 +85,30 @@ async function getHistory (opts) {
     }
   })()
 
+  const res = new Map()
   let date = (new DateTime(options.date)).endOf('day')
   const endDate = date.minus(Duration.fromDurationLike(options.duration))
 
   for (; date > endDate; date = date.minus(step)) {
-    const orders = await Order.find({ date: { $gte: date.startOf('day'), $lte: date.endOf('day') } }).sort('+date')
+    const orders = await Order.find({ date: { $gte: date.endOf('day').minus(step), $lte: date.endOf('day') } }).sort('-date')
 
-    const snapshot = await orders.reduce(async (prev, cur, indx) => {
+    const snapshot = await orders.reduce(async (prev, cur) => {
       const price = await Price.findOne({
         symbol: cur.stock.symbol,
         date: {
-          $lte: DateTime.fromJSDate(cur.date).startOf('day')
+          $lte: date.endOf('day')
         }
-      })
+      }).sort('-date')
 
-      const diff = Big(price.close).times(-1).times(cur.quantity)
+      const diff = price ? Big(price.close).times(cur.quantity).times(-1) : Big(0)
 
-      return (await prev).plus(diff).plus((indx === orders.length - 1) ? Big(cur.snapshot) : Big(0))
+      return (await prev).plus(diff)
     }, Big(0))
 
-    console.log(snapshot.toFixed(2))
-    console.log(date.toISODate())
-    // TODO: Create a value history model
+    res.set(date.minus(step).toISODate(), snapshot.toFixed(2))
   }
+
+  return Object.fromEntries(res)
 }
 
 portfolioSchema.method('buy', buy)
