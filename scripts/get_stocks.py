@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 from utils import iex_request, mongo_client
 import pymongo
-from pymongo import ReplaceOne, UpdateOne
+from pymongo import UpdateOne
 
 db = mongo_client()
 

@@ -85,12 +85,29 @@ async function getHistory (opts) {
     }
   })()
 
-  const res = []
+  let head = false
   let date = (new DateTime(options.date)).endOf('day')
   const endDate = date.minus(Duration.fromDurationLike(options.duration))
 
+  const res = [
+    {
+      date: date,
+      value: Big(this.value).minus(this.cash).round(2)
+    }
+  ]
+
   for (; date > endDate; date = date.minus(step)) {
-    let head = false
+    const closeDate = date.minus(step)
+
+    if (head) {
+      res.push({
+        date: closeDate,
+        value: Big(0)
+      })
+
+      continue
+    }
+
     const orders = await Order.find({ date: { $gte: date.endOf('day').minus(step), $lte: date.endOf('day') } }).sort('-date')
 
     const snapshot = await orders.reduce(async (prev, cur) => {
@@ -107,12 +124,12 @@ async function getHistory (opts) {
       return (await prev).plus(diff)
     }, Big(0))
 
-    res.push({
-      date,
-      value: (res.at(-1) ? res.at(-1).value.minus(snapshot) : Big(this.value).minus(this.cash)).round(2)
-    })
+    if (head) continue
 
-    if (head) break
+    res.push({
+      date: closeDate,
+      value: res.at(-1).value.minus(snapshot)
+    })
   }
 
   return res.reverse()
