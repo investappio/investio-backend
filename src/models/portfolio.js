@@ -85,7 +85,7 @@ async function getHistory (opts) {
     }
   })()
 
-  const res = new Map()
+  const res = []
   let date = (new DateTime(options.date)).endOf('day')
   const endDate = date.minus(Duration.fromDurationLike(options.duration))
 
@@ -105,10 +105,13 @@ async function getHistory (opts) {
       return (await prev).plus(diff)
     }, Big(0))
 
-    res.set(date.minus(step).toISODate(), snapshot.toFixed(2))
+    res.push({
+      date,
+      change: snapshot.toFixed(2)
+    })
   }
 
-  return Object.fromEntries(res)
+  return res
 }
 
 portfolioSchema.method('buy', buy)
