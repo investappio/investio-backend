@@ -1424,14 +1424,14 @@ _No headers specified_
 
 > Get a stock's recent pricing
 
-Get a stock's recent price
+Get a stock's latest quote
 
 
 #### Path parameters
 
 ##### &#9655; symbol
 
-Symbol of the stock to get the price of
+Symbol of the stock to get the quote of
 
 
 <table>
@@ -1451,7 +1451,7 @@ Symbol of the stock to get the price of
           string
         </td>
         <td>path</td>
-        <td>Symbol of the stock to get the price of</td>
+        <td>Symbol of the stock to get the quote of</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
