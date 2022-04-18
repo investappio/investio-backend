@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-import arrow
 
 # Requires the PyMongo package.
 # https://api.mongodb.com/python/current
