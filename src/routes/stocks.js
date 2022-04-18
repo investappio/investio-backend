@@ -44,7 +44,7 @@ router.post('/:symbol/sell', async (ctx) => {
   ctx.body.success = await portfolio.sell(ctx.params.symbol, qty, notional)
 })
 
-router.get('/:symbol/price', async (ctx) => {
+router.get('/:symbol/quote', async (ctx) => {
   ctx.body = {}
 
   ctx.body.quote = await Asset.fetchQuote(ctx.params.symbol)

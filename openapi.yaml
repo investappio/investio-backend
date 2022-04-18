@@ -278,14 +278,14 @@ paths:
                   quote:
                     type: number
                     minimum: 0
-      description: Get a stock's recent price
+      description: Get a stock's latest quote
       parameters:
         - schema:
             type: string
           in: path
           name: symbol
           required: true
-          description: Symbol of the stock to get the price of
+          description: Symbol of the stock to get the quote of
   /stocks/{symbol}/price/historical/{range}:
     get:
       summary: "Get a stock's historical price data"
