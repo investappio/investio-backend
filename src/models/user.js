@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
-const { Schema, model } = require('mongoose')
 
+const { Schema, model } = require('mongoose')
 const Follow = require('./follow')
 const Portfolio = require('./portfolio')
 
@@ -36,7 +36,7 @@ const userSchema = new Schema({
       },
       message: 'You must be at least 13 years old to use this app.'
     }
-  }, // Time in milliseconds
+  },
   username: {
     type: String,
     required: true,
@@ -102,12 +102,12 @@ async function unfollow (user) {
 }
 
 async function getPortfolio () {
-  const portfolio = await Portfolio.findOne({ user: this })
+  const existing = await Portfolio.findOne({ user: this })
 
-  if (portfolio == null) {
-    const newPortfolio = new Portfolio({ user: this })
-    return newPortfolio.save()
-  }
+  const portfolio = existing || new Portfolio({ user: this })
+  await portfolio.save()
+
+  portfolio._doc.value = await portfolio.getValue()
 
   return portfolio
 }

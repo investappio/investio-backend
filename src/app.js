@@ -4,7 +4,6 @@ const koaBody = require('koa-body')
 const jwt = require('koa-jwt')
 
 const mongoose = require('mongoose')
-require('./models')
 
 const routes = require('./routes')
 const { normalizePort } = require('./utils')

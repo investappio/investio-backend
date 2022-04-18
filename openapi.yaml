@@ -459,25 +459,22 @@ components:
       description: "Schema respresenting neccesary information on a specific date for a stock"
       type: object
       properties:
-        close:
+        symbol:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        open:
           type: number
         high:
           type: number
         low:
           type: number
-        open:
+        close:
           type: number
-        symbol:
-          type: string
         volume:
           type: number
-        date:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        changePercent:
+        average:
           type: number
       required:
         - symbol

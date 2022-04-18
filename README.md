@@ -12,6 +12,7 @@ echo "MONGO_DATABASE=..." > .env
 echo "MONGO_USERNAME=..." > .env
 echo "MONGO_PASSWORD=..." > .env
 echo "JWT_SECRET=..." > .env
-echo "IEX_CLOUD_TOKEN=..." > .env
+echo APCA_API_KEY_ID=..." > .env
+echo APCA_API_SECRET_KEY=..." > .env
 docker-compose up -d
 ```

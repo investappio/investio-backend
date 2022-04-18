@@ -15,7 +15,10 @@ services:
       - "MONGO_DATABASE=${MONGO_DATABASE}"
       - "MONGO_USERNAME=${MONGO_USERNAME}"
       - "MONGO_PASSWORD=${MONGO_PASSWORD}"
+      - "REDIS_PASSWORD=${REDIS_PASSWORD}"
       - "JWT_SECRET=${JWT_SECRET}"
+      - "APCA_API_KEY_ID=${APCA_API_KEY_ID}"
+      - "APCA_API_SECRET_KEY=${APCA_API_SECRET_KEY}"
     working_dir: /home/node/app
     volumes:
       - ./src:/home/node/app/src
@@ -28,9 +31,11 @@ services:
   stocks:
     build: ./scripts
     container_name: stocks
-    restart: unless-stopped
+    restart: on-failure:1
     depends_on:
       mongo:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     command: /bin/sh -c "python3 get_stocks.py && tail -f /dev/null"
     working_dir: /usr/src/app
@@ -42,18 +47,34 @@ services:
       - "MONGO_USERNAME=${MONGO_USERNAME}"
       - "MONGO_PASSWORD=${MONGO_PASSWORD}"
       - "IEX_CLOUD_TOKEN=${IEX_CLOUD_TOKEN}"
+      - "APCA_API_KEY_ID=${APCA_API_KEY_ID}"
+      - "APCA_API_SECRET_KEY=${APCA_API_SECRET_KEY}"
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.stocks.container: "stocks"
-      ofelia.job-exec.stocks.schedule: "0 0 0 * * *"
+      ofelia.job-exec.stocks.schedule: "0 0 5 * * *"
       ofelia.job-exec.stocks.command: "python3 get_stocks.py"
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: --loglevel warning --requirepass ${REDIS_PASSWORD}
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 6379:6379
+    environment:
+      - "REDIS_PASSWORD=${REDIS_PASSWORD}"
   mongo:
     image: mongo:latest
     container_name: mongo
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u ${MONGO_USERNAME} -p '${MONGO_PASSWORD}' --quiet"]
-      interval: 30s
+      interval: 1s
       timeout: 5s
       retries: 10
     command: [--auth]

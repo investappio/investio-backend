@@ -1,7 +1,17 @@
 const { Schema, model } = require('mongoose')
 
 const priceSchema = new Schema({
-  close: {
+  symbol: {
+    type: String,
+    required: true,
+    index: true
+  },
+  timestamp: {
+    type: Date,
+    required: true,
+    index: true
+  },
+  open: {
     type: Number,
     required: true
   },
@@ -13,28 +23,17 @@ const priceSchema = new Schema({
     type: Number,
     required: true
   },
-  open: {
+  close: {
     type: Number,
     required: true
-  },
-  symbol: {
-    type: String,
-    required: true,
-    index: true
   },
   volume: {
     type: Number,
     required: true
   },
-  date: {
-    type: Date,
-    required: true,
-    index: true
-  },
-  updated: {
-    type: Date,
-    required: true,
-    index: true
+  average: {
+    type: Number,
+    required: true
   }
 })
 

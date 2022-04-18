@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const { Stock } = require('../models')
+const { Asset } = require('../models')
 
 const router = new Router()
 
@@ -8,73 +8,68 @@ router.get('/search', async (ctx) => {
 
   const { query } = ctx.request.query
 
-  const res = await Stock.search(query)
+  const res = await Asset.search(query)
 
   ctx.body.success = true
   ctx.body.stocks = res
 })
 
+// TODO: Adapt to Alpaca API
 router.get('/gainers', async (ctx) => {
   ctx.body = {}
 
   const { count } = ctx.request.query
 
-  const res = await Stock.topGainers(count || 5)
+  const res = await Asset.topGainers(count || 5)
 
   ctx.body.success = true
   ctx.body.stocks = res
 })
 
-router.use('/:symbol',
-  async (ctx, next) => {
-    const stock = await Stock.findOne({ symbol: ctx.params.symbol })
-    ctx.stock = stock
-    await next()
-  }, (new Router())
-    .post('/buy', async (ctx) => {
-      ctx.body = {}
+router.post('/:symbol/buy', async (ctx) => {
+  ctx.body = {}
 
-      const { quantity } = ctx.request.body
+  const { qty, notional } = ctx.request.body
 
-      const portfolio = await ctx.user.getPortfolio()
-      ctx.body.success = await portfolio.buy(ctx.stock, quantity || 0)
-      ctx.body.portfolio = portfolio
-    })
-    .post('/sell', async (ctx) => {
-      ctx.body = {}
+  const portfolio = await ctx.user.getPortfolio()
+  ctx.body.success = await portfolio.buy(ctx.params.symbol, qty, notional)
+})
 
-      const { quantity } = ctx.request.body
+router.post('/:symbol/sell', async (ctx) => {
+  ctx.body = {}
 
-      const portfolio = await ctx.user.getPortfolio()
-      ctx.body.success = await portfolio.sell(ctx.stock, quantity || 0)
-      ctx.body.portfolio = portfolio
-    })
-    .get('/price', async (ctx) => {
-      ctx.body = {}
+  const { qty, notional } = ctx.request.body
 
-      ctx.body.success = true
-      ctx.body.price = ctx.stock.price.close
-    })
-    .get('/price/historical/:range', async (ctx) => {
-      ctx.body = {}
+  const portfolio = await ctx.user.getPortfolio()
+  ctx.body.success = await portfolio.sell(ctx.params.symbol, qty, notional)
+})
 
-      const duration = (() => {
-        switch (ctx.params.range) {
-          case '3m':
-            return { months: 3 }
-          case '1y':
-            return { years: 1 }
-          default:
-            return { weeks: 2 }
-        }
-      })()
+router.get('/:symbol/price', async (ctx) => {
+  ctx.body = {}
 
-      const res = await ctx.stock.getPriceHistory({ duration })
+  ctx.body.price = await Asset.fetchPrice(ctx.params.symbol)
+  ctx.body.success = true
+})
 
-      ctx.body.success = true
-      ctx.body.prices = res
-    })
-    .routes()
-)
+router.get('/:symbol/price/historical/:range', async (ctx) => {
+  ctx.body = {}
+
+  const duration = (() => {
+    switch (ctx.params.range) {
+      case '3m':
+        return { months: 3 }
+      case '1y':
+        return { years: 1 }
+      default:
+        return { weeks: 2 }
+    }
+  })()
+
+  const asset = await Asset.findOne({ symbol: ctx.params.symbol })
+  const res = await asset.getPriceHistory({ duration })
+
+  ctx.body.success = true
+  ctx.body.prices = res
+})
 
 module.exports = router.routes()
