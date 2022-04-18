@@ -1,29 +1,25 @@
-const { Schema, model } = require('mongoose')
 const { DateTime } = require('luxon')
 
-const opts = { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+const { Schema, model } = require('mongoose')
 
 const orderSchema = new Schema({
-  portfolio: { type: Schema.Types.ObjectId, ref: 'Portfolio', required: true },
-  stock: { type: Schema.Types.ObjectId, ref: 'Stock' },
-  quantity: { type: Number },
-  snapshot: { type: Number, required: true },
-  date: { type: Date, index: true, default: DateTime.now(), required: true },
+  portfolio: { type: Schema.Types.ObjectId, ref: 'Portfolio', required: true, index: true },
+  symbol: { type: String, required: true },
+  qty: { type: Number, required: true },
+  notional: { type: Number, required: true },
+  side: { type: String, enum: ['buy', 'sell'], required: true },
+  timestamp: { type: Date, index: true, default: DateTime.now(), required: true },
   prev: { type: Schema.Types.ObjectId, ref: 'Order' },
   next: { type: Schema.Types.ObjectId, ref: 'Order' }
-}, opts)
-
-orderSchema.virtual('type').get(function () {
-  return this.quantity > 0 ? 'BUY' : 'SELL'
 })
 
 async function listLink (next) {
   const prev = await this.constructor.findOne({
     next: null,
     portfolio: this.portfolio,
-    date: { $lte: this.date },
+    timestamp: { $lte: this.timestamp },
     _id: { $ne: this }
-  }).sort('+date')
+  }).sort('-_id')
 
   if (prev != null) {
     prev.next = this
@@ -37,14 +33,6 @@ async function listLink (next) {
   await next()
 }
 
-async function autoPopulate (next) {
-  this.populate('stock')
-  await next()
-}
-
-orderSchema
-  .pre('findOne', autoPopulate)
-  .pre('find', autoPopulate)
-  .pre('save', listLink)
+orderSchema.pre('save', listLink)
 
 module.exports = model('Order', orderSchema)

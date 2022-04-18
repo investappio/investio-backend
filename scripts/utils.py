@@ -1,6 +1,6 @@
 import os
-import requests
 from pymongo import MongoClient
+from alpaca_trade_api.rest import REST
 
 
 def mongo_client():
@@ -14,8 +14,4 @@ def mongo_client():
     ]
 
 
-def iex_request(endpoint, token=None):
-    TOKEN = os.environ.get("IEX_CLOUD_TOKEN")
-    url = f"https://sandbox.iexapis.com/beta{endpoint}?token={token or TOKEN}"
-    res = requests.get(url)
-    return res.text
+alpaca = REST(base_url="https://paper-api.alpaca.markets")

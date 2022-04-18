@@ -227,7 +227,7 @@ paths:
                   stocks:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Stock"
+                      $ref: "#/components/schemas/Asset"
       description: Fetch the top gaining stocks
       parameters:
         - schema:
@@ -253,7 +253,7 @@ paths:
                   stocks:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Stock"
+                      $ref: "#/components/schemas/Asset"
       description: Search for stocks by name or symbol
       parameters:
         - schema:
@@ -261,10 +261,10 @@ paths:
           in: query
           name: query
           description: Name or symbol of searched stock
-  /stocks/{symbol}/price:
+  /stocks/{symbol}/quote:
     get:
       summary: "Get a stock's recent pricing"
-      operationId: get-stocks-price
+      operationId: get-stocks-quote
       responses:
         "200":
           description: OK
@@ -275,7 +275,7 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  price:
+                  quote:
                     type: number
                     minimum: 0
       description: Get a stock's recent price
@@ -289,7 +289,7 @@ paths:
   /stocks/{symbol}/price/historical/{range}:
     get:
       summary: "Get a stock's historical price data"
-      operationId: get-stocks-pricehistory
+      operationId: get-stocks-price-history
       responses:
         "200":
           description: OK
@@ -336,8 +336,6 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  portfolio:
-                    $ref: "#/components/schemas/Portfolio"
       description: Purchase a stock for the logged in user
       parameters:
         - schema:
@@ -350,11 +348,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                quantity:
-                  type: number
-                  minimum: 0
+              oneOf:
+                - type: object
+                  properties:
+                    qty:
+                      type: number
+                      minimum: 0
+                - type: object
+                  properties:
+                    notional:
+                      type: number
+                      minimum: 0
   /stocks/{symbol}/sell:
     post:
       summary: "Sell a user's stock"
@@ -369,8 +373,6 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  portfolio:
-                    $ref: "#/components/schemas/Portfolio"
       description: Sell a stock for the logged in user
       parameters:
         - schema:
@@ -383,11 +385,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                quantity:
-                  type: number
-                  minimum: 0
+              oneOf:
+                - type: object
+                  properties:
+                    qty:
+                      type: number
+                      minimum: 0
+                - type: object
+                  properties:
+                    notional:
+                      type: number
+                      minimum: 0
 components:
   schemas:
     User:
@@ -419,14 +427,9 @@ components:
       description: "Schema respresenting a user's portfolio"
       properties:
         assets:
-          type: array
-          items:
-            type: object
-            properties:
-              quantity:
-                type: number
-              stock:
-                $ref: "#/components/schemas/Stock"
+          type: object
+          additionalProperties:
+            type: number
         cash:
           type: number
         value:
@@ -434,58 +437,62 @@ components:
         user:
           $ref: "#/components/schemas/User"
       required:
-        - balance
+        - cash
         - assets
-    Stock:
-      title: Stock
-      description: "Schema respresenting a stock"
+    Asset:
+      title: Asset
+      description: "Schema respresenting a stock asset"
       type: object
       properties:
         symbol:
           type: string
         name:
           type: string
-        type:
+        class:
           type: string
-        price:
-          $ref: "#/components/schemas/Price"
+        exchange:
+          type: string
+        active:
+          type: boolean
       required:
         - symbol
         - name
-        - type
-        - price
+        - class
+        - exchange
+        - active
     Price:
       title: Price
       description: "Schema respresenting neccesary information on a specific date for a stock"
       type: object
       properties:
-        close:
+        symbol:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        open:
           type: number
         high:
           type: number
         low:
           type: number
-        open:
+        close:
           type: number
-        symbol:
-          type: string
         volume:
           type: number
-        date:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        changePercent:
+        average:
+          type: number
+        change:
           type: number
       required:
         - symbol
-        - close
+        - timestamp
+        - open
         - high
         - low
-        - open
-        - date
+        - close
+        - volume
+        - average
   securitySchemes:
     bearerAuth:
       type: http
