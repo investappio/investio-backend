@@ -930,7 +930,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -954,17 +970,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -978,23 +986,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>portfolio.assets.stock.price.average</td>
         <td>
           number
         </td>
@@ -1083,15 +1075,14 @@ _No headers specified_
           "name": "string",
           "type": "string",
           "price": {
-            "close": 0,
+            "symbol": "string",
+            "timestamp": "2019-08-24T14:15:22Z",
+            "open": 0,
             "high": 0,
             "low": 0,
-            "open": 0,
-            "symbol": "string",
+            "close": 0,
             "volume": 0,
-            "date": "2019-08-24T14:15:22Z",
-            "updated": "2019-08-24T14:15:22Z",
-            "changePercent": 0
+            "average": 0
           }
         }
       }
@@ -1220,7 +1211,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1244,17 +1251,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1268,23 +1267,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>portfolio.assets.stock.price.average</td>
         <td>
           number
         </td>
@@ -1373,15 +1356,14 @@ _No headers specified_
           "name": "string",
           "type": "string",
           "price": {
-            "close": 0,
+            "symbol": "string",
+            "timestamp": "2019-08-24T14:15:22Z",
+            "open": 0,
             "high": 0,
             "low": 0,
-            "open": 0,
-            "symbol": "string",
+            "close": 0,
             "volume": 0,
-            "date": "2019-08-24T14:15:22Z",
-            "updated": "2019-08-24T14:15:22Z",
-            "changePercent": 0
+            "average": 0
           }
         }
       }
@@ -1517,7 +1499,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.close <strong>(required)</strong></td>
+        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1541,17 +1539,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.open <strong>(required)</strong></td>
+        <td>stocks.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1565,23 +1555,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.changePercent</td>
+        <td>stocks.price.average</td>
         <td>
           number
         </td>
@@ -1603,15 +1577,14 @@ _No headers specified_
       "name": "string",
       "type": "string",
       "price": {
-        "close": 0,
+        "symbol": "string",
+        "timestamp": "2019-08-24T14:15:22Z",
+        "open": 0,
         "high": 0,
         "low": 0,
-        "open": 0,
-        "symbol": "string",
+        "close": 0,
         "volume": 0,
-        "date": "2019-08-24T14:15:22Z",
-        "updated": "2019-08-24T14:15:22Z",
-        "changePercent": 0
+        "average": 0
       }
     }
   ]
@@ -1736,7 +1709,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.close <strong>(required)</strong></td>
+        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1760,17 +1749,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.open <strong>(required)</strong></td>
+        <td>stocks.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1784,23 +1765,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.changePercent</td>
+        <td>stocks.price.average</td>
         <td>
           number
         </td>
@@ -1822,15 +1787,14 @@ _No headers specified_
       "name": "string",
       "type": "string",
       "price": {
-        "close": 0,
+        "symbol": "string",
+        "timestamp": "2019-08-24T14:15:22Z",
+        "open": 0,
         "high": 0,
         "low": 0,
-        "open": 0,
-        "symbol": "string",
+        "close": 0,
         "volume": 0,
-        "date": "2019-08-24T14:15:22Z",
-        "updated": "2019-08-24T14:15:22Z",
-        "changePercent": 0
+        "average": 0
       }
     }
   ]
@@ -2050,7 +2014,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.close <strong>(required)</strong></td>
+        <td>prices.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>prices.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>prices.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2074,17 +2054,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.open <strong>(required)</strong></td>
+        <td>prices.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>prices.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -2098,23 +2070,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>prices.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>prices.changePercent</td>
+        <td>prices.average</td>
         <td>
           number
         </td>
@@ -2132,15 +2088,14 @@ _No headers specified_
   "success": true,
   "prices": [
     {
-      "close": 0,
+      "symbol": "string",
+      "timestamp": "2019-08-24T14:15:22Z",
+      "open": 0,
       "high": 0,
       "low": 0,
-      "open": 0,
-      "symbol": "string",
+      "close": 0,
       "volume": 0,
-      "date": "2019-08-24T14:15:22Z",
-      "updated": "2019-08-24T14:15:22Z",
-      "changePercent": 0
+      "average": 0
     }
   ]
 }
@@ -2324,7 +2279,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2348,17 +2319,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -2372,23 +2335,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>portfolio.assets.stock.price.average</td>
         <td>
           number
         </td>
@@ -2477,15 +2424,14 @@ _No headers specified_
           "name": "string",
           "type": "string",
           "price": {
-            "close": 0,
+            "symbol": "string",
+            "timestamp": "2019-08-24T14:15:22Z",
+            "open": 0,
             "high": 0,
             "low": 0,
-            "open": 0,
-            "symbol": "string",
+            "close": 0,
             "volume": 0,
-            "date": "2019-08-24T14:15:22Z",
-            "updated": "2019-08-24T14:15:22Z",
-            "changePercent": 0
+            "average": 0
           }
         }
       }
@@ -2681,7 +2627,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2705,17 +2667,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
+        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -2729,23 +2683,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.changePercent</td>
+        <td>portfolio.assets.stock.price.average</td>
         <td>
           number
         </td>
@@ -2834,15 +2772,14 @@ _No headers specified_
           "name": "string",
           "type": "string",
           "price": {
-            "close": 0,
+            "symbol": "string",
+            "timestamp": "2019-08-24T14:15:22Z",
+            "open": 0,
             "high": 0,
             "low": 0,
-            "open": 0,
-            "symbol": "string",
+            "close": 0,
             "volume": 0,
-            "date": "2019-08-24T14:15:22Z",
-            "updated": "2019-08-24T14:15:22Z",
-            "changePercent": 0
+            "average": 0
           }
         }
       }
@@ -3003,7 +2940,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>assets.stock.price.close <strong>(required)</strong></td>
+        <td>assets.stock.price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>assets.stock.price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3027,17 +2980,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>assets.stock.price.open <strong>(required)</strong></td>
+        <td>assets.stock.price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -3051,23 +2996,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>assets.stock.price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.changePercent</td>
+        <td>assets.stock.price.average</td>
         <td>
           number
         </td>
@@ -3153,15 +3082,14 @@ _No headers specified_
         "name": "string",
         "type": "string",
         "price": {
-          "close": 0,
+          "symbol": "string",
+          "timestamp": "2019-08-24T14:15:22Z",
+          "open": 0,
           "high": 0,
           "low": 0,
-          "open": 0,
-          "symbol": "string",
+          "close": 0,
           "volume": 0,
-          "date": "2019-08-24T14:15:22Z",
-          "updated": "2019-08-24T14:15:22Z",
-          "changePercent": 0
+          "average": 0
         }
       }
     }
@@ -3224,7 +3152,23 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price.close <strong>(required)</strong></td>
+        <td>price.symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>price.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3248,17 +3192,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price.open <strong>(required)</strong></td>
+        <td>price.close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -3272,23 +3208,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price.date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.changePercent</td>
+        <td>price.average</td>
         <td>
           number
         </td>
@@ -3306,15 +3226,14 @@ _No headers specified_
   "name": "string",
   "type": "string",
   "price": {
-    "close": 0,
+    "symbol": "string",
+    "timestamp": "2019-08-24T14:15:22Z",
+    "open": 0,
     "high": 0,
     "low": 0,
-    "open": 0,
-    "symbol": "string",
+    "close": 0,
     "volume": 0,
-    "date": "2019-08-24T14:15:22Z",
-    "updated": "2019-08-24T14:15:22Z",
-    "changePercent": 0
+    "average": 0
   }
 }
 ```
@@ -3333,7 +3252,23 @@ _No headers specified_
   </thead>
   <tbody>
       <tr>
-        <td>close <strong>(required)</strong></td>
+        <td>symbol <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3357,17 +3292,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>open <strong>(required)</strong></td>
+        <td>close <strong>(required)</strong></td>
         <td>
           number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>symbol <strong>(required)</strong></td>
-        <td>
-          string
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -3381,23 +3308,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>date <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>updated</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>changePercent</td>
+        <td>average</td>
         <td>
           number
         </td>
@@ -3411,14 +3322,13 @@ _No headers specified_
 
 ```json
 {
-  "close": 0,
+  "symbol": "string",
+  "timestamp": "2019-08-24T14:15:22Z",
+  "open": 0,
   "high": 0,
   "low": 0,
-  "open": 0,
-  "symbol": "string",
+  "close": 0,
   "volume": 0,
-  "date": "2019-08-24T14:15:22Z",
-  "updated": "2019-08-24T14:15:22Z",
-  "changePercent": 0
+  "average": 0
 }
 ```
