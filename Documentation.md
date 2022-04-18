@@ -15,14 +15,14 @@ API definition for the Invest.io app
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
-  - [`GET` /stocks/{symbol}/price](#op-get-stocks-symbol-price) 
+  - [`GET` /stocks/{symbol}/quote](#op-get-stocks-symbol-quote) 
   - [`GET` /stocks/{symbol}/price/historical/{range}](#op-get-stocks-symbol-price-historical-range) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
   - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
-  - [Stock](#schema-stock)
+  - [Asset](#schema-asset)
   - [Price](#schema-price)
 
 
@@ -876,125 +876,13 @@ _No headers specified_
       <tr>
         <td>portfolio.assets <strong>(required)</strong></td>
         <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.quantity</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock</td>
-        <td>
           object
         </td>
-        <td>Schema respresenting a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.timestamp</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.average</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.cash</td>
+        <td>portfolio.cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1067,26 +955,10 @@ _No headers specified_
 {
   "success": true,
   "portfolio": {
-    "assets": [
-      {
-        "quantity": 0,
-        "stock": {
-          "symbol": "string",
-          "name": "string",
-          "type": "string",
-          "price": {
-            "symbol": "string",
-            "timestamp": "2019-08-24T14:15:22Z",
-            "open": 0,
-            "high": 0,
-            "low": 0,
-            "close": 0,
-            "volume": 0,
-            "average": 0
-          }
-        }
-      }
-    ],
+    "assets": {
+      "property1": 0,
+      "property2": 0
+    },
     "cash": 0,
     "value": 0,
     "user": {
@@ -1157,125 +1029,13 @@ _No headers specified_
       <tr>
         <td>portfolio.assets <strong>(required)</strong></td>
         <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.quantity</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock</td>
-        <td>
           object
         </td>
-        <td>Schema respresenting a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.timestamp</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.average</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.cash</td>
+        <td>portfolio.cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1348,26 +1108,10 @@ _No headers specified_
 {
   "success": true,
   "portfolio": {
-    "assets": [
-      {
-        "quantity": 0,
-        "stock": {
-          "symbol": "string",
-          "name": "string",
-          "type": "string",
-          "price": {
-            "symbol": "string",
-            "timestamp": "2019-08-24T14:15:22Z",
-            "open": 0,
-            "high": 0,
-            "low": 0,
-            "close": 0,
-            "volume": 0,
-            "average": 0
-          }
-        }
-      }
-    ],
+    "assets": {
+      "property1": 0,
+      "property2": 0
+    },
     "cash": 0,
     "value": 0,
     "user": {
@@ -1483,7 +1227,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.type <strong>(required)</strong></td>
+        <td>stocks.class <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1491,15 +1235,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>stocks.exchange <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1507,57 +1243,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.timestamp</td>
+        <td>stocks.active <strong>(required)</strong></td>
         <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.average</td>
-        <td>
-          number
+          boolean
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1575,17 +1263,9 @@ _No headers specified_
     {
       "symbol": "string",
       "name": "string",
-      "type": "string",
-      "price": {
-        "symbol": "string",
-        "timestamp": "2019-08-24T14:15:22Z",
-        "open": 0,
-        "high": 0,
-        "low": 0,
-        "close": 0,
-        "volume": 0,
-        "average": 0
-      }
+      "class": "string",
+      "exchange": "string",
+      "active": true
     }
   ]
 }
@@ -1693,7 +1373,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.type <strong>(required)</strong></td>
+        <td>stocks.class <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1701,15 +1381,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.symbol <strong>(required)</strong></td>
+        <td>stocks.exchange <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1717,57 +1389,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.price.timestamp</td>
+        <td>stocks.active <strong>(required)</strong></td>
         <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>stocks.price.average</td>
-        <td>
-          number
+          boolean
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1785,17 +1409,9 @@ _No headers specified_
     {
       "symbol": "string",
       "name": "string",
-      "type": "string",
-      "price": {
-        "symbol": "string",
-        "timestamp": "2019-08-24T14:15:22Z",
-        "open": 0,
-        "high": 0,
-        "low": 0,
-        "close": 0,
-        "volume": 0,
-        "average": 0
-      }
+      "class": "string",
+      "exchange": "string",
+      "active": true
     }
   ]
 }
@@ -1803,8 +1419,8 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/{symbol}/price
-<a id="op-get-stocks-symbol-price" />
+### `GET` /stocks/{symbol}/quote
+<a id="op-get-stocks-symbol-quote" />
 
 > Get a stock's recent pricing
 
@@ -1879,7 +1495,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price</td>
+        <td>quote</td>
         <td>
           number
         </td>
@@ -1895,7 +1511,7 @@ _No headers specified_
 ```json
 {
   "success": true,
-  "price": 0
+  "quote": 0
 }
 ```
 
@@ -2022,7 +1638,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.timestamp</td>
+        <td>prices.timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2062,7 +1678,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.volume</td>
+        <td>prices.volume <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2070,7 +1686,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.average</td>
+        <td>prices.average <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>prices.change</td>
         <td>
           number
         </td>
@@ -2095,7 +1719,8 @@ _No headers specified_
       "low": 0,
       "close": 0,
       "volume": 0,
-      "average": 0
+      "average": 0,
+      "change": 0
     }
   ]
 }
@@ -2162,13 +1787,45 @@ Symbol of the stock to purchase
   </thead>
   <tbody>
       <tr>
-        <td>quantity</td>
+        <td>body</td>
         <td>
-          number
+          oneOf
         </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
+        <tr>
+          <td>body.0</td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.0.qty</td>
+          <td>
+            number
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1</td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1.notional</td>
+          <td>
+            number
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
   </tbody>
 </table>
 
@@ -2177,7 +1834,7 @@ Symbol of the stock to purchase
 
 ```json
 {
-  "quantity": 0
+  "qty": 0
 }
 ```
 
@@ -2214,198 +1871,6 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
-      <tr>
-        <td>portfolio</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a user's portfolio</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets <strong>(required)</strong></td>
-        <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.quantity</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.timestamp</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.average</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.cash</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.value</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a user account</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.email <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.dob <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.username <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td>Set to true if the user's email has been verified.</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.phone</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
   </tbody>
 </table>
 
@@ -2414,38 +1879,7 @@ _No headers specified_
 
 ```json
 {
-  "success": true,
-  "portfolio": {
-    "assets": [
-      {
-        "quantity": 0,
-        "stock": {
-          "symbol": "string",
-          "name": "string",
-          "type": "string",
-          "price": {
-            "symbol": "string",
-            "timestamp": "2019-08-24T14:15:22Z",
-            "open": 0,
-            "high": 0,
-            "low": 0,
-            "close": 0,
-            "volume": 0,
-            "average": 0
-          }
-        }
-      }
-    ],
-    "cash": 0,
-    "value": 0,
-    "user": {
-      "name": "string",
-      "email": "user@example.com",
-      "dob": "2019-08-24T14:15:22Z",
-      "username": "string",
-      "phone": "string"
-    }
-  }
+  "success": true
 }
 ```
 
@@ -2510,13 +1944,45 @@ Symbol of the stock to sell
   </thead>
   <tbody>
       <tr>
-        <td>quantity</td>
+        <td>body</td>
         <td>
-          number
+          oneOf
         </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
+        <tr>
+          <td>body.0</td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.0.qty</td>
+          <td>
+            number
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1</td>
+          <td>
+            object
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
+        <tr>
+          <td>body.1.notional</td>
+          <td>
+            number
+          </td>
+          <td></td>
+          <td><em>Any</em></td>
+        </tr>
   </tbody>
 </table>
 
@@ -2525,7 +1991,7 @@ Symbol of the stock to sell
 
 ```json
 {
-  "quantity": 0
+  "qty": 0
 }
 ```
 
@@ -2562,198 +2028,6 @@ _No headers specified_
         <td></td>
         <td><em>Any</em></td>
       </tr>
-      <tr>
-        <td>portfolio</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a user's portfolio</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets <strong>(required)</strong></td>
-        <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.quantity</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.type <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.timestamp</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.assets.stock.price.average</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.cash</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.value</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user</td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting a user account</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.email <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.dob <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.username <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td>Set to true if the user's email has been verified.</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>portfolio.user.phone</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
   </tbody>
 </table>
 
@@ -2762,38 +2036,7 @@ _No headers specified_
 
 ```json
 {
-  "success": true,
-  "portfolio": {
-    "assets": [
-      {
-        "quantity": 0,
-        "stock": {
-          "symbol": "string",
-          "name": "string",
-          "type": "string",
-          "price": {
-            "symbol": "string",
-            "timestamp": "2019-08-24T14:15:22Z",
-            "open": 0,
-            "high": 0,
-            "low": 0,
-            "close": 0,
-            "volume": 0,
-            "average": 0
-          }
-        }
-      }
-    ],
-    "cash": 0,
-    "value": 0,
-    "user": {
-      "name": "string",
-      "email": "user@example.com",
-      "dob": "2019-08-24T14:15:22Z",
-      "username": "string",
-      "phone": "string"
-    }
-  }
+  "success": true
 }
 ```
 
@@ -2886,125 +2129,13 @@ _No headers specified_
       <tr>
         <td>assets <strong>(required)</strong></td>
         <td>
-          array(object)
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.quantity</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock</td>
-        <td>
           object
         </td>
-        <td>Schema respresenting a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>assets.stock.name <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.type <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.symbol <strong>(required)</strong></td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.timestamp</td>
-        <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>assets.stock.price.average</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>cash</td>
+        <td>cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3074,26 +2205,10 @@ _No headers specified_
 
 ```json
 {
-  "assets": [
-    {
-      "quantity": 0,
-      "stock": {
-        "symbol": "string",
-        "name": "string",
-        "type": "string",
-        "price": {
-          "symbol": "string",
-          "timestamp": "2019-08-24T14:15:22Z",
-          "open": 0,
-          "high": 0,
-          "low": 0,
-          "close": 0,
-          "volume": 0,
-          "average": 0
-        }
-      }
-    }
-  ],
+  "assets": {
+    "property1": 0,
+    "property2": 0
+  },
   "cash": 0,
   "value": 0,
   "user": {
@@ -3105,9 +2220,9 @@ _No headers specified_
   }
 }
 ```
-<a id="schema-stock" />
+<a id="schema-asset" />
 
-#### Stock
+#### Asset
 
 <table>
   <thead>
@@ -3136,7 +2251,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>type <strong>(required)</strong></td>
+        <td>class <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -3144,15 +2259,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price <strong>(required)</strong></td>
-        <td>
-          object
-        </td>
-        <td>Schema respresenting neccesary information on a specific date for a stock</td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.symbol <strong>(required)</strong></td>
+        <td>exchange <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -3160,57 +2267,9 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>price.timestamp</td>
+        <td>active <strong>(required)</strong></td>
         <td>
-          string
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.open <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.high <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.low <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.close <strong>(required)</strong></td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.volume</td>
-        <td>
-          number
-        </td>
-        <td></td>
-        <td><em>Any</em></td>
-      </tr>
-      <tr>
-        <td>price.average</td>
-        <td>
-          number
+          boolean
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -3224,17 +2283,9 @@ _No headers specified_
 {
   "symbol": "string",
   "name": "string",
-  "type": "string",
-  "price": {
-    "symbol": "string",
-    "timestamp": "2019-08-24T14:15:22Z",
-    "open": 0,
-    "high": 0,
-    "low": 0,
-    "close": 0,
-    "volume": 0,
-    "average": 0
-  }
+  "class": "string",
+  "exchange": "string",
+  "active": true
 }
 ```
 <a id="schema-price" />
@@ -3260,7 +2311,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>timestamp</td>
+        <td>timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -3300,7 +2351,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>volume</td>
+        <td>volume <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3308,7 +2359,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>average</td>
+        <td>average <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>change</td>
         <td>
           number
         </td>
@@ -3329,6 +2388,7 @@ _No headers specified_
   "low": 0,
   "close": 0,
   "volume": 0,
-  "average": 0
+  "average": 0,
+  "change": 0
 }
 ```
