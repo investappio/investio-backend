@@ -14,7 +14,7 @@ const portfolioSchema = new Schema({
 async function buy (symbol, q, n) {
   if ((q != null && n != null) || (q == null && n == null)) return false
 
-  const price = await Asset.fetchPrice(symbol)
+  const price = await Asset.fetchQuote(symbol)
   const qty = q ? Big(q).round(6) : Big(n).div(price).round(6)
   const notional = n ? Big(n).round(2) : qty.times(price).round(2)
 
@@ -37,7 +37,7 @@ async function buy (symbol, q, n) {
 async function sell (symbol, q, n) {
   if ((q != null && n != null) || (q == null && n == null)) return false
 
-  const price = await Asset.fetchPrice(symbol)
+  const price = await Asset.fetchQuote(symbol)
   const qty = q ? Big(q).round(6) : Big(n).div(price).round(6)
   const notional = n ? Big(n).round(2) : qty.times(price).round(2)
 
@@ -67,7 +67,7 @@ async function getValue () {
     const prev = await p
     const [symbol, qty] = c
 
-    const price = await Asset.fetchPrice(symbol)
+    const price = await Asset.fetchQuote(symbol)
 
     return Big(price).times(qty).plus(prev)
   }, Big(0))

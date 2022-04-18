@@ -37,30 +37,30 @@ async function search (query) {
   return this.find({ $or: [{ symbol: { $regex: query, $options: 'i' } }, { name: { $regex: query, $options: 'i' } }] }).limit(25)
 }
 
-async function fetchPrice (symbol) {
+async function fetchQuote (symbol) {
   const key = `${symbol}/quotes/latest`
   const cached = await redis.get(key)
   const asset = await this.findOne({ symbol })
 
-  const price = cached || await (async () => {
-    const quote = (await alpaca.getLatestQuote(symbol)).AskPrice
+  const quote = cached || await (async () => {
+    const price = (await alpaca.getLatestQuote(symbol)).AskPrice
 
     if (asset.active && quote === 0) {
       const ohlc = await Price.findOne({ symbol, timestamp: { $lte: DateTime.now() } }).sort('-timestamp')
       return ohlc.close
     }
 
-    return quote
+    return price
   })()
 
   if (cached == null) {
-    await redis.set(key, price, 'EX', 60)
+    await redis.set(key, quote, 'EX', 60)
   }
 
-  return price
+  return quote
 }
 
 assetSchema.static('search', search)
-assetSchema.static('fetchPrice', fetchPrice)
+assetSchema.static('fetchQuote', fetchQuote)
 
 module.exports = model('Asset', assetSchema)

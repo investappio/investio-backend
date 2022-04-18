@@ -47,7 +47,7 @@ router.post('/:symbol/sell', async (ctx) => {
 router.get('/:symbol/price', async (ctx) => {
   ctx.body = {}
 
-  ctx.body.price = await Asset.fetchPrice(ctx.params.symbol)
+  ctx.body.quote = await Asset.fetchQuote(ctx.params.symbol)
   ctx.body.success = true
 })
 
