@@ -89,3 +89,56 @@ prices.bulk_write(
         )
     )
 )
+
+"""
+Aggregate to set/update change value of prices
+"""
+prices.aggregate(
+    [
+        {
+            "$setWindowFields": {
+                "partitionBy": "$symbol",
+                "sortBy": {
+                    "timestamp": 1,
+                },
+                "output": {
+                    "last": {
+                        "$shift": {
+                            "output": "$close",
+                            "by": -1,
+                        },
+                    },
+                },
+            },
+        },
+        {
+            "$replaceWith": {
+                "$setField": {
+                    "field": "change",
+                    "input": "$$CURRENT",
+                    "value": {
+                        "$round": [
+                            {
+                                "$cond": [
+                                    {"$eq": ["$last", None]},
+                                    0,
+                                    {"$subtract": ["$close", "$last"]},
+                                ]
+                            },
+                            2,
+                        ]
+                    },
+                }
+            }
+        },
+        {"$unset": "last"},
+        {
+            "$merge": {
+                "into": "prices",
+                "on": "_id",
+                "whenMatched": "replace",
+                "whenNotMatched": "insert",
+            }
+        },
+    ]
+)

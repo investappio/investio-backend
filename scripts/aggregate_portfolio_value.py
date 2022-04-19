@@ -6,6 +6,7 @@ from pymongo import MongoClient
 client = MongoClient(
     "mongodb://investio:password@mongo:27017/investio?authSource=admin&readPreference=primary&appname=MongoDB+Compass&directConnection=true&ssl=false"
 )
+
 result = client["investio"]["prices"].aggregate(
     [
         {
@@ -32,7 +33,7 @@ result = client["investio"]["prices"].aggregate(
                     "value": {
                         "$cond": [
                             {"$eq": ["$last", None]},
-                            0,
+                            None,
                             {"$subtract": ["$close", "$last"]},
                         ]
                     },

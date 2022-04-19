@@ -34,6 +34,10 @@ const priceSchema = new Schema({
   average: {
     type: Number,
     required: true
+  },
+  change: {
+    type: Number,
+    required: true
   }
 })
 

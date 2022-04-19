@@ -493,6 +493,7 @@ components:
         - close
         - volume
         - average
+        - change
   securitySchemes:
     bearerAuth:
       type: http
