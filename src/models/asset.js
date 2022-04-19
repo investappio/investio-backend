@@ -45,7 +45,7 @@ async function fetchQuote (symbol) {
   const quote = cached || await (async () => {
     const price = (await alpaca.getLatestQuote(symbol)).AskPrice
 
-    if (asset.active && price === 0) {
+    if (asset.active && (price === 0 || price == null)) {
       const ohlc = await Price.findOne({ symbol, timestamp: { $lte: DateTime.now() } }).sort('-timestamp')
       return ohlc.close
     }
