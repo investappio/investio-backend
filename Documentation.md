@@ -1694,7 +1694,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>prices.change</td>
+        <td>prices.change <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2367,7 +2367,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>change</td>
+        <td>change <strong>(required)</strong></td>
         <td>
           number
         </td>
