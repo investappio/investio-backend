@@ -142,3 +142,41 @@ prices.aggregate(
         },
     ]
 )
+
+portfolios = db["portfolios"]
+
+"""
+Aggregate to calculate each portfolio's closing price
+"""
+portfolios.aggregate(
+    [
+        {"$project": {"_id": "$_id", "asset": {"$objectToArray": "$assets"}}},
+        {"$unwind": "$asset"},
+        {
+            "$lookup": {
+                "from": "prices",
+                "localField": "asset.k",
+                "foreignField": "symbol",
+                "pipeline": [{"$sort": {"timestamp": -1}}, {"$limit": 1}],
+                "as": "price",
+            }
+        },
+        {"$unwind": "$price"},
+        {
+            "$group": {
+                "_id": "$_id",
+                "value": {"$sum": {"$multiply": ["$asset.v", "$price.close"]}},
+                "timestamp": {"$first": "$price.timestamp"},
+            }
+        },
+        {
+            "$set": {
+                "value": {"$round": ["$value", 2]},
+                "timestamp": {"$dateTrunc": {"date": "$timestamp", "unit": "day"}},
+                "portfolio": "$_id",
+            }
+        },
+        {"$unset": "_id"},
+        {"$out": "portfolio_history"},
+    ]
+)

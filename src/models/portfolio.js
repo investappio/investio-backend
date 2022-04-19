@@ -4,6 +4,7 @@ const Big = require('big.js')
 const { Schema, model } = require('mongoose')
 const Asset = require('./asset')
 const Order = require('./order')
+const PortfolioHistory = require('./portfolio_history')
 
 const portfolioSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
@@ -75,69 +76,25 @@ async function getValue () {
   return value.plus(this.cash).round(2)
 }
 
-async function getHistory (opts) {
+async function getValueHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
-  const step = (() => {
-    const duration = options.duration
+  const date = (new DateTime(options.date)).endOf('day')
+  const startDate = date.minus(Duration.fromDurationLike(options.duration))
 
-    switch (true) {
-      case duration.weeks != null:
-        return Duration.fromDurationLike({ days: 1 })
-      case duration.months != null:
-        return Duration.fromDurationLike({ weeks: 1 })
-      case duration.years != null:
-        return Duration.fromDurationLike({ months: 1 })
-    }
-  })()
+  const history = await PortfolioHistory.find({ timestamp: { $gte: startDate, $lte: date } })
 
-  let head = false
-  let date = (new DateTime(options.date)).endOf('day')
-  const endDate = date.minus(Duration.fromDurationLike(options.duration))
+  history.push({
+    timestamp: date,
+    value: (await this.getValue()).minus(this.cash).round(2)
+  })
 
-  const res = [
-    {
-      timestamp: date,
-      value: (await this.getValue()).minus(this.cash).round(2)
-    }
-  ]
-
-  for (; date > endDate; date = date.minus(step)) {
-    const closeDate = date.minus(step)
-
-    if (head) {
-      res.push({
-        timestamp: closeDate,
-        value: Big(0)
-      })
-
-      continue
-    }
-
-    const orders = await Order.find({ date: { $gte: date.endOf('day').minus(step), $lte: date.endOf('day') } }).sort('-date')
-
-    const snapshot = await orders.reduce(async (prev, cur) => {
-      const mult = cur.side === 'buy' ? 1 : -1
-      const diff = Big(cur.notional).times(cur.qty).times(mult)
-      head = head || cur.prev == null
-
-      return (await prev).plus(diff).round(2)
-    }, Big(0))
-
-    if (head) continue
-
-    res.push({
-      timestamp: closeDate,
-      value: res.at(-1).value.minus(snapshot)
-    })
-  }
-
-  return res.reverse()
+  return history
 }
 
 portfolioSchema.method('buy', buy)
 portfolioSchema.method('sell', sell)
 portfolioSchema.method('getValue', getValue)
-portfolioSchema.method('getHistory', getHistory)
+portfolioSchema.method('getValueHistory', getValueHistory)
 
 module.exports = model('Portfolio', portfolioSchema)
