@@ -45,7 +45,7 @@ async function fetchQuote (symbol) {
   const quote = cached || await (async () => {
     const price = (await alpaca.getLatestQuote(symbol)).AskPrice
 
-    if (asset.active && quote === 0) {
+    if (asset.active && price === 0) {
       const ohlc = await Price.findOne({ symbol, timestamp: { $lte: DateTime.now() } }).sort('-timestamp')
       return ohlc.close
     }
@@ -54,7 +54,9 @@ async function fetchQuote (symbol) {
   })()
 
   if (cached == null) {
-    await redis.set(key, quote, 'EX', 60)
+    await redis.set(key, quote, {
+      EX: 830
+    })
   }
 
   return quote

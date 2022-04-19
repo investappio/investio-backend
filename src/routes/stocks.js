@@ -26,36 +26,53 @@ router.get('/gainers', async (ctx) => {
   ctx.body.stocks = res
 })
 
+router.get('/:symbol', async (ctx) => {
+  ctx.body = {}
+
+  const { symbol } = ctx.params
+
+  const res = await Asset.findOne({ symbol })
+
+  ctx.body.success = true
+  ctx.body.stock = res
+})
+
 router.post('/:symbol/buy', async (ctx) => {
   ctx.body = {}
 
+  const { symbol } = ctx.params
   const { qty, notional } = ctx.request.body
 
   const portfolio = await ctx.user.getPortfolio()
-  ctx.body.success = await portfolio.buy(ctx.params.symbol, qty, notional)
+  ctx.body.success = await portfolio.buy(symbol, qty, notional)
 })
 
 router.post('/:symbol/sell', async (ctx) => {
   ctx.body = {}
 
+  const { symbol } = ctx.params
   const { qty, notional } = ctx.request.body
 
   const portfolio = await ctx.user.getPortfolio()
-  ctx.body.success = await portfolio.sell(ctx.params.symbol, qty, notional)
+  ctx.body.success = await portfolio.sell(symbol, qty, notional)
 })
 
 router.get('/:symbol/quote', async (ctx) => {
   ctx.body = {}
 
-  ctx.body.quote = await Asset.fetchQuote(ctx.params.symbol)
+  const { symbol } = ctx.params
+
+  ctx.body.quote = await Asset.fetchQuote(symbol)
   ctx.body.success = true
 })
 
 router.get('/:symbol/price/historical/:range', async (ctx) => {
   ctx.body = {}
 
+  const { symbol, range } = ctx.params
+
   const duration = (() => {
-    switch (ctx.params.range) {
+    switch (range) {
       case '3m':
         return { months: 3 }
       case '1y':
@@ -65,7 +82,7 @@ router.get('/:symbol/price/historical/:range', async (ctx) => {
     }
   })()
 
-  const asset = await Asset.findOne({ symbol: ctx.params.symbol })
+  const asset = await Asset.findOne({ symbol })
   const res = await asset.getPriceHistory({ duration })
 
   ctx.body.success = true
