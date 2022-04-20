@@ -13,6 +13,8 @@ API definition for the Invest.io app
   - [`GET` /user/{user}/following](#op-get-user-user-following) 
   - [`GET` /user/{user}/portfolio](#op-get-user-user-portfolio) 
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
+  - [`GET` /user/portfolio/historical/{range}](#op-get-user-portfolio-historical-range) 
+  - [`GET` /user/leaderboard](#op-get-user-leaderboard) 
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
   - [`GET` /stocks/{symbol}/quote](#op-get-stocks-symbol-quote) 
@@ -22,6 +24,7 @@ API definition for the Invest.io app
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
+  - [Portfolio History](#schema-portfolio-history)
   - [Asset](#schema-asset)
   - [Price](#schema-price)
 
@@ -1127,6 +1130,544 @@ _No headers specified_
 
 </div>
 
+### `GET` /user/portfolio/historical/{range}
+<a id="op-get-user-portfolio-historical-range" />
+
+> Get the current user's portfolio history by range
+
+Get the portfolio history of the current user
+
+
+#### Path parameters
+
+##### &#9655; range
+
+Interval to get prices from
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>range  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Interval to get prices from</td>
+        <td><code>2w</code>, <code>3m</code>, <code>1y</code></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history</td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.assets <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.cash <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "history": [
+    {
+      "timestamp": "2019-08-24T14:15:22Z",
+      "cash": 0,
+      "portfolio": {
+        "assets": {
+          "property1": 0,
+          "property2": 0
+        },
+        "cash": 0,
+        "value": 0,
+        "user": {
+          "name": "string",
+          "email": "user@example.com",
+          "dob": "2019-08-24T14:15:22Z",
+          "username": "string",
+          "phone": "string"
+        }
+      },
+      "user": {
+        "name": "string",
+        "email": "user@example.com",
+        "dob": "2019-08-24T14:15:22Z",
+        "username": "string",
+        "phone": "string"
+      }
+    }
+  ]
+}
+```
+
+</div>
+
+### `GET` /user/leaderboard
+<a id="op-get-user-leaderboard" />
+
+> Get the global leaderboard of portfolios
+
+Get the portfolio of the current user
+
+
+
+
+#### Query parameters
+
+##### &#9655; count
+
+Number of portfolios to return
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>count </td>
+        <td>
+          integer
+        </td>
+        <td>query</td>
+        <td>Number of portfolios to return</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard</td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.assets <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.cash <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "leaderboard": [
+    {
+      "timestamp": "2019-08-24T14:15:22Z",
+      "cash": 0,
+      "portfolio": {
+        "assets": {
+          "property1": 0,
+          "property2": 0
+        },
+        "cash": 0,
+        "value": 0,
+        "user": {
+          "name": "string",
+          "email": "user@example.com",
+          "dob": "2019-08-24T14:15:22Z",
+          "username": "string",
+          "phone": "string"
+        }
+      },
+      "user": {
+        "name": "string",
+        "email": "user@example.com",
+        "dob": "2019-08-24T14:15:22Z",
+        "username": "string",
+        "phone": "string"
+      }
+    }
+  ]
+}
+```
+
+</div>
+
 ### `GET` /stocks/gainers
 <a id="op-get-stocks-gainers" />
 
@@ -1219,7 +1760,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.name <strong>(required)</strong></td>
+        <td>stocks.timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1227,25 +1768,57 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.class <strong>(required)</strong></td>
+        <td>stocks.open <strong>(required)</strong></td>
         <td>
-          string
+          number
         </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.exchange <strong>(required)</strong></td>
+        <td>stocks.high <strong>(required)</strong></td>
         <td>
-          string
+          number
         </td>
         <td></td>
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.active <strong>(required)</strong></td>
+        <td>stocks.low <strong>(required)</strong></td>
         <td>
-          boolean
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.close <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.volume <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.average <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>stocks.change <strong>(required)</strong></td>
+        <td>
+          number
         </td>
         <td></td>
         <td><em>Any</em></td>
@@ -1262,10 +1835,14 @@ _No headers specified_
   "stocks": [
     {
       "symbol": "string",
-      "name": "string",
-      "class": "string",
-      "exchange": "string",
-      "active": true
+      "timestamp": "2019-08-24T14:15:22Z",
+      "open": 0,
+      "high": 0,
+      "low": 0,
+      "close": 0,
+      "volume": 0,
+      "average": 0,
+      "change": 0
     }
   ]
 }
@@ -2211,6 +2788,197 @@ _No headers specified_
   },
   "cash": 0,
   "value": 0,
+  "user": {
+    "name": "string",
+    "email": "user@example.com",
+    "dob": "2019-08-24T14:15:22Z",
+    "username": "string",
+    "phone": "string"
+  }
+}
+```
+<a id="schema-portfolio-history" />
+
+#### Portfolio History
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>cash</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.cash <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+##### Example _(generated)_
+
+```json
+{
+  "timestamp": "2019-08-24T14:15:22Z",
+  "cash": 0,
+  "portfolio": {
+    "assets": {
+      "property1": 0,
+      "property2": 0
+    },
+    "cash": 0,
+    "value": 0,
+    "user": {
+      "name": "string",
+      "email": "user@example.com",
+      "dob": "2019-08-24T14:15:22Z",
+      "username": "string",
+      "phone": "string"
+    }
+  },
   "user": {
     "name": "string",
     "email": "user@example.com",
