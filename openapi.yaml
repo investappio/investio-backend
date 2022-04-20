@@ -98,6 +98,44 @@ paths:
       description: Login and authneticate a user
       security: []
     parameters: []
+  /user/profile:
+    get:
+      summary: "Get the current user's profile"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  profile:
+                    $ref: "#/components/schemas/User"
+  /user/{user}/:
+    get:
+      summary: "Get a user's profile"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  profile:
+                    $ref: "#/components/schemas/User"
+      parameters:
+        - schema:
+            type: string
+          name: user
+          in: path
+          description: Username of a user
+          required: true
+
   /user/search:
     get:
       summary: "General search for a user"

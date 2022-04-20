@@ -34,6 +34,15 @@ async function getPortfolio (ctx) {
   ctx.body.portfolio = portfolio
 }
 
+async function getProfile (ctx) {
+  ctx.body = {}
+
+  ctx.body.success = true
+  ctx.body.profile = ctx.targetUser || ctx.user
+}
+
+router.get('/profile', getProfile)
+
 router.get('/portfolio', getPortfolio)
 
 router.get('/portfolio/historical/:range', async (ctx) => {
@@ -69,6 +78,7 @@ router.use('/:user',
       ctx.response.status = 404
     }
   }, (new Router())
+    .get('/', getProfile)
     .get('/portfolio', getPortfolio)
     .get('/following', async (ctx) => {
       ctx.body = {}
