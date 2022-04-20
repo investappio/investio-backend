@@ -95,42 +95,32 @@ Aggregate to set/update change value of prices
 """
 prices.aggregate(
     [
+        {"$match": {"timestamp": {"$gte": arrow.now().shift(weeks=-1).datetime}}},
         {
             "$setWindowFields": {
                 "partitionBy": "$symbol",
-                "sortBy": {
-                    "timestamp": 1,
-                },
-                "output": {
-                    "last": {
-                        "$shift": {
-                            "output": "$close",
-                            "by": -1,
-                        },
-                    },
-                },
-            },
+                "sortBy": {"timestamp": 1},
+                "output": {"last": {"$shift": {"output": "$close", "by": -1}}},
+            }
         },
         {
-            "$replaceWith": {
-                "$setField": {
-                    "field": "change",
-                    "input": "$$CURRENT",
-                    "value": {
-                        "$round": [
-                            {
-                                "$cond": [
-                                    {"$eq": ["$last", None]},
-                                    0,
-                                    {"$subtract": ["$close", "$last"]},
-                                ]
-                            },
-                            2,
-                        ]
-                    },
+            "$set": {
+                "change": {
+                    "$round": [
+                        {
+                            "$cond": [
+                                {"$eq": ["$last", None]},
+                                0,
+                                {"$subtract": ["$close", "$last"]},
+                            ]
+                        },
+                        2,
+                    ]
                 }
             }
         },
+        {"$set": {"changePercent": {"$round": [{"$divide": ["$change", "$last"]}, 4]}}},
+        {"$match": {"last": {"$ne": None}}},
         {"$unset": "last"},
         {
             "$merge": {
@@ -209,6 +199,7 @@ portfolio_history.aggregate(
                 "timestamp": {"$first": "$timestamp"},
                 "value": {"$first": "$value"},
                 "user": {"$first": "$user"},
+                "cash": {"$first": "$cash"},
             }
         },
         {

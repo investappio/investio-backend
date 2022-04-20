@@ -210,6 +210,62 @@ paths:
                   portfolio:
                     $ref: "#/components/schemas/Portfolio"
       description: Get the portfolio of the current user
+  /user/portfolio/historical/{range}:
+    get:
+      summary: "Get the current user's portfolio history by range"
+      operationId: get-user-portfolio-historical
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  history:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PortfolioHistory"
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - 2w
+              - 3m
+              - 1y
+          in: path
+          name: range
+          required: true
+          description: Interval to get prices from
+      description: Get the portfolio history of the current user
+  /user/leaderboard:
+    get:
+      summary: "Get the global leaderboard of portfolios"
+      operationId: get-portfolio-leaderboard
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  leaderboard:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PortfolioHistory"
+      parameters:
+        - schema:
+            type: integer
+            minimum: 1
+          in: query
+          name: count
+          description: Number of portfolios to return
+      description: Get the portfolio of the current user
   /stocks/gainers:
     get:
       summary: "Get the top gaining stocks from previous day"
@@ -227,7 +283,7 @@ paths:
                   stocks:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Asset"
+                      $ref: "#/components/schemas/Price"
       description: Fetch the top gaining stocks
       parameters:
         - schema:
@@ -439,6 +495,21 @@ components:
       required:
         - cash
         - assets
+    PortfolioHistory:
+      title: Portfolio History
+      type: object
+      description: Schema representing the historical state of a portfolio
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        cash:
+          type: number
+          minimum: 0
+        portfolio:
+          $ref: "#/components/schemas/Portfolio"
+        user:
+          $ref: "#/components/schemas/User"
     Asset:
       title: Asset
       description: "Schema respresenting a stock asset"
@@ -494,6 +565,7 @@ components:
         - volume
         - average
         - change
+        - changePercent
   securitySchemes:
     bearerAuth:
       type: http

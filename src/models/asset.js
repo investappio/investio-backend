@@ -39,6 +39,10 @@ async function search (query) {
   return this.find({ $or: [{ symbol: { $regex: query, $options: 'i' } }, { $text: { $search: query } }] }).limit(25)
 }
 
+async function topGainers (count) {
+  return Price.find({}).sort([['timestamp', -1], ['changePercent', -1]]).limit(count)
+}
+
 async function fetchQuote (symbol) {
   const key = `${symbol}/quotes/latest`
   const cached = await redis.get(key)
@@ -66,5 +70,6 @@ async function fetchQuote (symbol) {
 
 assetSchema.static('search', search)
 assetSchema.static('fetchQuote', fetchQuote)
+assetSchema.static('topGainers', topGainers)
 
 module.exports = model('Asset', assetSchema)

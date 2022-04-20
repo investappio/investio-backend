@@ -38,6 +38,11 @@ const priceSchema = new Schema({
   change: {
     type: Number,
     required: true
+  },
+  changePercent: {
+    type: Number,
+    required: true,
+    index: true
   }
 })
 

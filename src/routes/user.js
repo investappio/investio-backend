@@ -17,7 +17,9 @@ router.get('/search', async (ctx) => {
 router.get('/leaderboard', async (ctx) => {
   ctx.body = {}
 
-  const leaderboard = await Leaderboard.getLeaders(100)
+  const { count } = ctx.request.query
+
+  const leaderboard = await Leaderboard.getLeaders(count)
 
   ctx.body.success = true
   ctx.body.leaderboard = leaderboard
