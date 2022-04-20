@@ -8,6 +8,8 @@ API definition for the Invest.io app
 * [Paths](#paths)
   - [`POST` /auth/register](#op-post-auth-register) 
   - [`POST` /auth/login](#op-post-auth-login) 
+  - [`GET` /user/profile](#op-get-user-profile) 
+  - [`GET` /user/{user}/](#op-get-user-user) 
   - [`GET` /user/search](#op-get-user-search) 
   - [`POST` /user/{user}/follow](#op-post-user-user-follow) 
   - [`GET` /user/{user}/following](#op-get-user-user-following) 
@@ -458,6 +460,261 @@ _No headers specified_
 {
   "success": true,
   "user": {
+    "name": "string",
+    "email": "user@example.com",
+    "dob": "2019-08-24T14:15:22Z",
+    "username": "string",
+    "phone": "string"
+  }
+}
+```
+
+</div>
+
+### `GET` /user/profile
+<a id="op-get-user-profile" />
+
+> Get the current user's profile
+
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "profile": {
+    "name": "string",
+    "email": "user@example.com",
+    "dob": "2019-08-24T14:15:22Z",
+    "username": "string",
+    "phone": "string"
+  }
+}
+```
+
+</div>
+
+### `GET` /user/{user}/
+<a id="op-get-user-user" />
+
+> Get a user's profile
+
+
+
+#### Path parameters
+
+##### &#9655; user
+
+Username of a user
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>user  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>path</td>
+        <td>Username of a user</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>profile.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "profile": {
     "name": "string",
     "email": "user@example.com",
     "dob": "2019-08-24T14:15:22Z",
