@@ -25,6 +25,8 @@ const assetSchema = new Schema({
   }
 })
 
+assetSchema.index({ name: 'text', symbol: 'text' }, { weights: { symbol: 5, name: 2 } })
+
 async function getPriceHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
@@ -34,7 +36,7 @@ async function getPriceHistory (opts) {
 assetSchema.method('getPriceHistory', getPriceHistory)
 
 async function search (query) {
-  return this.find({ $or: [{ symbol: { $regex: query, $options: 'i' } }, { name: { $regex: query, $options: 'i' } }] }).limit(25)
+  return this.find({ $or: [{ symbol: { $regex: query, $options: 'i' } }, { $text: { $search: query } }] }).limit(25)
 }
 
 async function fetchQuote (symbol) {

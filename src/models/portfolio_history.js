@@ -7,7 +7,8 @@ const portfolioHistorySchema = new Schema({
     required: true,
     index: true
   },
-  value: { type: Number }
+  value: { type: Number },
+  cash: { type: Number }
 })
 
 portfolioHistorySchema.index({ portfolio: 1, timestamp: 1 }, { unique: true })

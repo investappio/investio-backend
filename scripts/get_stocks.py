@@ -51,7 +51,7 @@ ohlc = alpaca.get_bars(
     .shift(weeks=-1)
     .format(arrow.FORMAT_RFC3339)
     .replace(" ", "T"),
-    end=arrow.now().floor("hour").format(arrow.FORMAT_RFC3339).replace(" ", "T"),
+    end=arrow.now().floor("day").format(arrow.FORMAT_RFC3339).replace(" ", "T"),
     adjustment="all",
 )
 
@@ -146,7 +146,7 @@ prices.aggregate(
 portfolios = db["portfolios"]
 
 """
-Aggregate to calculate each portfolio's closing price
+Aggregate to calculate each portfolio's closing value
 """
 portfolios.aggregate(
     [
@@ -171,12 +171,49 @@ portfolios.aggregate(
         },
         {
             "$set": {
-                "value": {"$round": ["$value", 2]},
+                "value": {"$round": [{"$sum": ["$value", "$cash"]}, 2]},
                 "timestamp": {"$dateTrunc": {"date": "$timestamp", "unit": "day"}},
                 "portfolio": "$_id",
             }
         },
         {"$unset": "_id"},
-        {"$out": "portfolio_history"},
+        {
+            "$merge": {
+                "into": "portfolio_history",
+                "on": ["timestamp", "portfolio"],
+                "whenMatched": "replace",
+                "whenNotMatched": "insert",
+            }
+        },
+    ]
+)
+
+portfolio_history = db["portfolio_history"]
+
+"""
+Aggregate to calculate each portfolio's closing value
+"""
+portfolio_history.aggregate(
+    [
+        {"$sort": {"timestamp": -1}},
+        {
+            "$group": {
+                "_id": "$user",
+                "timestamp": {"$first": "$timestamp"},
+                "value": {"$first": "$value"},
+                "user": {"$first": "$user"},
+            }
+        },
+        {
+            "$lookup": {
+                "from": "users",
+                "localField": "user",
+                "foreignField": "_id",
+                "as": "user",
+            }
+        },
+        {"$unwind": {"path": "$user"}},
+        {"$unset": ["user.dob", "user.email", "user.password", "user.__v"]},
+        {"$out": "leaderboard"},
     ]
 )

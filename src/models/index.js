@@ -3,6 +3,7 @@ const Order = require('./order')
 const Price = require('./price')
 const Portfolio = require('./portfolio')
 const PortfolioHistory = require('./portfolio_history')
+const Leaderboard = require('./leaderboard')
 const Asset = require('./asset')
 const User = require('./user')
 
@@ -13,5 +14,6 @@ module.exports = {
   PortfolioHistory,
   User,
   Asset,
+  Leaderboard,
   Order
 }

@@ -86,7 +86,8 @@ async function getValueHistory (opts) {
 
   history.push({
     timestamp: date,
-    value: (await this.getValue()).minus(this.cash).round(2)
+    value: (await this.getValue()),
+    cash: this.cash
   })
 
   return history

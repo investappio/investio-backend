@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const { User } = require('../models')
+const { User, Leaderboard } = require('../models')
 
 const router = new Router()
 
@@ -8,10 +8,19 @@ router.get('/search', async (ctx) => {
 
   const { query } = ctx.request.query
 
-  const res = await User.search(query)
+  const users = await User.search(query)
 
   ctx.body.success = true
-  ctx.body.users = res
+  ctx.body.users = users
+})
+
+router.get('/leaderboard', async (ctx) => {
+  ctx.body = {}
+
+  const leaderboard = await Leaderboard.getLeaders(100)
+
+  ctx.body.success = true
+  ctx.body.leaderboard = leaderboard
 })
 
 async function getPortfolio (ctx) {

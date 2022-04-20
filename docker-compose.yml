@@ -46,22 +46,21 @@ services:
       - "MONGO_DATABASE=${MONGO_DATABASE}"
       - "MONGO_USERNAME=${MONGO_USERNAME}"
       - "MONGO_PASSWORD=${MONGO_PASSWORD}"
-      - "IEX_CLOUD_TOKEN=${IEX_CLOUD_TOKEN}"
       - "APCA_API_KEY_ID=${APCA_API_KEY_ID}"
       - "APCA_API_SECRET_KEY=${APCA_API_SECRET_KEY}"
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.stocks.container: "stocks"
-      ofelia.job-exec.stocks.schedule: "0 0 5 * * *"
+      ofelia.job-exec.stocks.schedule: "0 15 4 * * *"
       ofelia.job-exec.stocks.command: "python3 get_stocks.py"
   redis:
     image: redis:latest
     container_name: redis
     command: --loglevel warning --requirepass ${REDIS_PASSWORD}
-    restart: always
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
-      interval: 1s
+      test: ["CMD-SHELL", "redis-cli -a '${REDIS_PASSWORD}' ping | grep PONG"]
+      interval: 5s
       timeout: 5s
       retries: 10
     ports:
@@ -74,7 +73,7 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u ${MONGO_USERNAME} -p '${MONGO_PASSWORD}' --quiet"]
-      interval: 1s
+      interval: 5s
       timeout: 5s
       retries: 10
     command: [--auth]
