@@ -95,7 +95,7 @@ Aggregate to set/update change value of prices
 """
 prices.aggregate(
     [
-        {"$match": {"timestamp": {"$gte": arrow.now().shift(weeks=-1).datetime}}},
+        {"$match": {"timestamp": {"$gte": arrow.now().shift(weeks=-2).datetime}}},
         {
             "$setWindowFields": {
                 "partitionBy": "$symbol",
