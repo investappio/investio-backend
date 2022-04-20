@@ -144,8 +144,9 @@ prices.aggregate(
 )
 
 portfolios = db["portfolios"]
+portfolio_history = db["portfolio_history"]
 
-portfolios.create_index(
+portfolio_history.create_index(
     [("timestamp", pymongo.DESCENDING), ("portfolio", pymongo.ASCENDING)],
     unique=True,
     background=True,
@@ -193,8 +194,6 @@ portfolios.aggregate(
         },
     ]
 )
-
-portfolio_history = db["portfolio_history"]
 
 """
 Aggregate to calculate each portfolio's closing value
