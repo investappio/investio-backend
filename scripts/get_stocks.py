@@ -157,7 +157,7 @@ Aggregate to calculate each portfolio's closing value
 """
 portfolios.aggregate(
     [
-        {"$project": {"_id": "$_id", "asset": {"$objectToArray": "$assets"}}},
+        {"$addFields": {"asset": {"$objectToArray": "$assets"}}},
         {"$unwind": "$asset"},
         {
             "$lookup": {
@@ -174,6 +174,8 @@ portfolios.aggregate(
                 "_id": "$_id",
                 "value": {"$sum": {"$multiply": ["$asset.v", "$price.close"]}},
                 "timestamp": {"$first": "$price.timestamp"},
+                "cash": {"$first": "$cash"},
+                "user": {"$first": "$user"},
             }
         },
         {
