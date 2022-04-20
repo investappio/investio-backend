@@ -120,7 +120,6 @@ prices.aggregate(
             }
         },
         {"$set": {"changePercent": {"$round": [{"$divide": ["$change", "$last"]}, 4]}}},
-        {"$match": {"last": {"$ne": None}}},
         {"$unset": "last"},
         {
             "$merge": {
