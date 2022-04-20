@@ -13,6 +13,7 @@ exports.normalizePort = (val) => {
 exports.alpaca = new Alpaca({
   keyId: process.env.APCA_API_KEY_ID,
   secretKey: process.env.APCA_API_SECRET_KEY,
+  verbose: true,
   paper: true
 })
 

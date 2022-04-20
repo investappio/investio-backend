@@ -6,7 +6,7 @@ const jwt = require('koa-jwt')
 const mongoose = require('mongoose')
 
 const routes = require('./routes')
-const { normalizePort } = require('./utils')
+const { alpaca, normalizePort } = require('./utils')
 
 const app = new Koa()
 const port = normalizePort(process.env.PORT || '3000')
@@ -28,7 +28,18 @@ mongoose.connect(
   }
 )
 
+const newsSocket = alpaca.news_stream
+
+newsSocket.onConnect(() => {
+  newsSocket.subscribe(['*'])
+})
+
+newsSocket.onNews((news) => {
+  console.log(news)
+})
+
 mongoose.connection.once('open', async () => {
   app.use(routes)
   app.listen(port)
+  newsSocket.connect()
 })
