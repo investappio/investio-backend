@@ -76,11 +76,8 @@ services:
       interval: 15s
       timeout: 6s
       retries: 8
-    command: [--auth]
     ports:
       - 27017:27017
-    volumes:
-      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
     environment:
       - "MONGO_INITDB_DATABASE=${MONGO_DATABASE}"
       - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}"

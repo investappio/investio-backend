@@ -20,13 +20,22 @@ app.use(koaBody({
 app.use(jwt({ secret: process.env.JWT_SECRET.split(','), passthrough: true }))
 
 mongoose.connect(
-  `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DATABASE}`,
+  `mongodb://${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DATABASE}`,
   {
-    keepAlive: 1,
+    authSource: 'admin',
+    auth: {
+      username: process.env.MONGO_USERNAME,
+      password: process.env.MONGO_PASSWORD
+    },
+    keepAlive: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    autoCreate: true,
+    autoIndex: true
   }
 )
+
+mongoose.connection.useDb('investio')
 
 mongoose.connection.once('open', async () => {
   app.use(routes)

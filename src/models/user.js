@@ -55,6 +55,12 @@ const userSchema = new Schema({
       delete ret.password
       delete ret.__v
     }
+  },
+  toObject: {
+    transform (_, ret) {
+      delete ret.password
+      delete ret.__v
+    }
   }
 })
 

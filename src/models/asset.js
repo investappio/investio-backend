@@ -25,7 +25,7 @@ const assetSchema = new Schema({
   }
 })
 
-assetSchema.index({ name: 'text', symbol: 'text' }, { weights: { symbol: 5, name: 2 } })
+assetSchema.index({ name: 'text', symbol: 'text' })
 
 async function getPriceHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
