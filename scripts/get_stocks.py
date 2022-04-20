@@ -103,23 +103,29 @@ prices.aggregate(
                 "output": {"last": {"$shift": {"output": "$close", "by": -1}}},
             }
         },
+        {"$set": {"last": {"$cond": [{"$eq": ["$last", None]}, 0, "$last"]}}},
         {
             "$set": {
                 "change": {
-                    "$round": [
-                        {
-                            "$cond": [
-                                {"$eq": ["$last", None]},
-                                0,
-                                {"$subtract": ["$close", "$last"]},
-                            ]
-                        },
-                        2,
+                    "$cond": [
+                        {"$eq": ["$last", 0]},
+                        0,
+                        {"$round": [{"$subtract": ["$close", "$last"]}, 2]},
                     ]
                 }
             }
         },
-        {"$set": {"changePercent": {"$round": [{"$divide": ["$change", "$last"]}, 4]}}},
+        {
+            "$set": {
+                "changePercent": {
+                    "$cond": [
+                        {"$eq": ["$last", 0]},
+                        0,
+                        {"$round": [{"$divide": ["$change", "$last"]}, 4]},
+                    ]
+                }
+            }
+        },
         {"$unset": "last"},
         {
             "$merge": {
