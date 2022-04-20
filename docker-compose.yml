@@ -7,6 +7,8 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
     environment:
       - "PORT=${PORT}"
@@ -35,8 +37,6 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-      redis:
-        condition: service_healthy
     command: /bin/sh -c "python3 get_stocks.py && tail -f /dev/null"
     working_dir: /usr/src/app
     volumes:
@@ -60,9 +60,9 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "redis-cli -a '${REDIS_PASSWORD}' ping | grep PONG"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      interval: 15s
+      timeout: 6s
+      retries: 8
     ports:
       - 6379:6379
     environment:
@@ -72,10 +72,10 @@ services:
     container_name: mongo
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u ${MONGO_USERNAME} -p '${MONGO_PASSWORD}' --quiet"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      test: ["CMD-SHELL", "echo 'db.stats().ok' | mongo admin -u '${MONGO_USERNAME}' -p '${MONGO_PASSWORD}' --quiet"]
+      interval: 15s
+      timeout: 6s
+      retries: 8
     command: [--auth]
     ports:
       - 27017:27017
