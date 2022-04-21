@@ -30,17 +30,31 @@ assetSchema.index({ name: 'text', symbol: 'text' })
 async function getPriceHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
-  return Price.find({ symbol: this.symbol, date: { $lte: options.date.endOf('day'), $gte: options.date.minus(options.duration) } }).sort('-date')
+  return Price.find({
+    symbol: this.symbol,
+    date: {
+      $lte: options.date.endOf('day'),
+      $gte: options.date.minus(options.duration)
+    }
+  }).sort('-date')
 }
 
 assetSchema.method('getPriceHistory', getPriceHistory)
 
 async function search (query) {
-  return this.find({ $or: [{ symbol: { $regex: query, $options: 'i' } }, { $text: { $search: query } }] }).limit(25)
+  return this.find({
+    $or: [
+      { symbol: { $regex: query, $options: 'i' } },
+      { $text: { $search: query } }
+    ]
+  }).limit(25)
 }
 
 async function topGainers (count) {
-  return Price.find({}).sort([['timestamp', -1], ['changePercent', -1]]).limit(count)
+  return Price.find({}).sort([
+    ['timestamp', -1],
+    ['changePercent', -1]
+  ]).limit(count)
 }
 
 async function fetchQuote (symbol) {
@@ -52,7 +66,11 @@ async function fetchQuote (symbol) {
     const price = (await alpaca.getLatestQuote(symbol)).AskPrice
 
     if (asset.active && (price === 0 || price == null)) {
-      const ohlc = await Price.findOne({ symbol, timestamp: { $lte: DateTime.now() } }).sort('-timestamp')
+      const ohlc = await Price.findOne({
+        symbol,
+        timestamp: { $lte: DateTime.now() }
+      }).sort('-timestamp')
+
       return ohlc.close
     }
 
