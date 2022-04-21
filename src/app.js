@@ -53,9 +53,9 @@ mongoose.connection.once('open', async () => {
 
       return new News({
         timestamp: createdAt,
-        summary: sanitizeHtml(summary, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' '),
-        content: sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' '),
-        headline: sanitizeHtml(headline, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' '),
+        summary: sanitizeHtml(summary, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' ').trim(),
+        content: sanitizeHtml(content, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' ').trim(),
+        headline: sanitizeHtml(headline, { allowedTags: [], allowedAttributes: {} }).replace(/\s/g, ' ').trim(),
         ...article
       })
     })

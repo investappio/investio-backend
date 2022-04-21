@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const newsSchema = new Schema({
+  id: { type: Number, unique: true, required: true },
   author: { type: String },
   timestamp: { type: Date, index: true, required: true },
   headline: { type: String, minlength: 1, required: true },
