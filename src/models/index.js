@@ -6,6 +6,7 @@ const PortfolioHistory = require('./portfolio_history')
 const Leaderboard = require('./leaderboard')
 const Asset = require('./asset')
 const User = require('./user')
+const News = require('./news')
 
 module.exports = {
   Follow,
@@ -15,5 +16,6 @@ module.exports = {
   User,
   Asset,
   Leaderboard,
-  Order
+  Order,
+  News
 }

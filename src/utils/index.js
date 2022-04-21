@@ -1,5 +1,7 @@
 const Alpaca = require('@alpacahq/alpaca-trade-api')
 const redis = require('redis')
+const EventEmitter = require('events')
+const { WebSocket } = require('ws')
 
 exports.normalizePort = (val) => {
   const port = parseInt(val, 10)
@@ -21,4 +23,39 @@ exports.redis = (() => {
   const client = redis.createClient({ url: `redis://:${process.env.REDIS_PASSWORD}@redis` })
   client.connect()
   return client
+})()
+
+exports.newsStream = (() => {
+  const emitter = new EventEmitter()
+  const ws = new WebSocket('wss://stream.data.alpaca.markets/v1beta1/news')
+
+  ws.on('open', () => {
+    ws.send(JSON.stringify({ action: 'auth', key: process.env.APCA_API_KEY_ID, secret: process.env.APCA_API_SECRET_KEY }))
+  })
+
+  ws.on('message', (msg) => {
+    const data = JSON.parse(msg.toString())
+    const type = data[0].T
+
+    if (type === 'success') {
+      emitter.emit(data[0].msg)
+    }
+
+    if (type === 'subscription') {
+      emitter.emit('subscribed')
+    }
+
+    if (type === 'n') {
+      emitter.emit('news', data)
+      return
+    }
+
+    console.log(data)
+  })
+
+  emitter.on('subscribe', (key, value) => {
+    ws.send(JSON.stringify({ action: 'subscribe', [key]: value }))
+  })
+
+  return emitter
 })()
