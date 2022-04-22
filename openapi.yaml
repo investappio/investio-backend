@@ -355,6 +355,33 @@ paths:
           in: query
           name: query
           description: Name or symbol of searched stock
+  /stocks/quotes:
+    get:
+      summary: "Get recent pricing for multiple stocks"
+      operationId: get-stock-quotes
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  quotes:
+                    type: object
+                    additionalProperties:
+                      type: number
+                      minimum: 0
+      description: Get the latest quote for multiple quotes
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          required: true
+          description: Comma seperated string of symbols to get get quotes for
   /stocks/{symbol}/quote:
     get:
       summary: "Get a stock's recent pricing"

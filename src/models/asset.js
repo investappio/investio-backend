@@ -86,8 +86,51 @@ async function fetchQuote (symbol) {
   return quote
 }
 
+async function fetchQuotes (symbols) {
+  const cached = new Map(
+    await symbols.reduce(
+      async (prev, symbol) => {
+        const cache = await redis.get(`${symbol}/quotes/latest`)
+        if (cache) (await prev).push([symbol, cache])
+
+        return prev
+      }, [])
+  )
+
+  const misses = symbols.filter((symbol) => !cached.has(symbol))
+  const fetched = new Map([...(await alpaca.getLatestQuotes(misses))].map(([symbol, val]) => [symbol, val.AskPrice]))
+
+  const quotes = (await [...cached, ...fetched].reduce(async (prev, [symbol, quote]) => {
+    const entries = await prev
+
+    if (quote === 0 || quote === null) {
+      const asset = await this.findOne({ symbol })
+
+      if (asset === null) return entries
+
+      const ohlc = await Price.findOne({
+        symbol,
+        timestamp: { $lte: DateTime.now() }
+      }).sort('-timestamp')
+
+      entries.push([symbol, asset.active ? ohlc.close : 0])
+    } else {
+      await redis.set(`${symbol}/quotes/latest`, quote, {
+        EX: 830
+      })
+
+      entries.push([symbol, quote])
+    }
+
+    return entries
+  }, []))
+
+  return Object.fromEntries(new Map(quotes))
+}
+
 assetSchema.static('search', search)
 assetSchema.static('fetchQuote', fetchQuote)
+assetSchema.static('fetchQuotes', fetchQuotes)
 assetSchema.static('topGainers', topGainers)
 
 module.exports = model('Asset', assetSchema)

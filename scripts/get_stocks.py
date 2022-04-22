@@ -11,7 +11,7 @@ Fetch all stocks and filter for those in the NYSE
 """
 markets = set(["NYSE", "NASDAQ"])
 asset_list = list(
-    filter(lambda a: (a.exchange in markets), alpaca.list_assets(status="active"))
+    filter(lambda a: (a.exchange in markets), alpaca.list_assets())
 )
 
 assets = db["assets"]

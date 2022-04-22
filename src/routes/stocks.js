@@ -26,6 +26,15 @@ router.get('/gainers', async (ctx) => {
   ctx.body.stocks = res
 })
 
+router.get('/quotes', async (ctx) => {
+  ctx.body = {}
+
+  const { symbols } = ctx.request.query
+
+  ctx.body.quotes = await Asset.fetchQuotes(symbols.split(','))
+  ctx.body.success = true
+})
+
 router.get('/:symbol', async (ctx) => {
   ctx.body = {}
 
