@@ -7,7 +7,7 @@ from pymongo import UpdateOne
 db = mongo_client()
 
 """
-Fetch all stocks and filter for those in the NYSE
+Fetch all assets and filter for those in the NYSE
 """
 markets = set(["NYSE", "NASDAQ"])
 asset_list = list(
@@ -39,7 +39,7 @@ assets.bulk_write(
 )
 
 """
-Fetch the market prices from the previous days of our updated stocks
+Fetch the market prices from the previous days of our updated assets
 """
 symbols = list(map(lambda a: a.symbol, asset_list))
 

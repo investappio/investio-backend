@@ -11,7 +11,7 @@ router.get('/search', async (ctx) => {
   const res = await Asset.search(query)
 
   ctx.body.success = true
-  ctx.body.stocks = res
+  ctx.body.assets = res
 })
 
 router.get('/gainers', async (ctx) => {
@@ -22,7 +22,7 @@ router.get('/gainers', async (ctx) => {
   const res = await Asset.topGainers(count || 5)
 
   ctx.body.success = true
-  ctx.body.stocks = res
+  ctx.body.assets = res
 })
 
 router.get('/quotes', async (ctx) => {
@@ -42,7 +42,7 @@ router.get('/:symbol', async (ctx) => {
   const res = await Asset.findOne({ symbol })
 
   ctx.body.success = true
-  ctx.body.stock = res
+  ctx.body.asset = res
 })
 
 router.post('/:symbol/buy', async (ctx) => {
