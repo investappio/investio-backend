@@ -1472,7 +1472,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>history.timestamp</td>
+        <td>history.timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1480,7 +1480,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>history.cash</td>
+        <td>history.value <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>history.cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1627,6 +1635,7 @@ _No headers specified_
   "history": [
     {
       "timestamp": "2019-08-24T14:15:22Z",
+      "value": 0,
       "cash": 0,
       "portfolio": {
         "assets": {
@@ -1741,7 +1750,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>leaderboard.timestamp</td>
+        <td>leaderboard.timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -1749,7 +1758,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>leaderboard.cash</td>
+        <td>leaderboard.value <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>leaderboard.cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -1896,6 +1913,7 @@ _No headers specified_
   "leaderboard": [
     {
       "timestamp": "2019-08-24T14:15:22Z",
+      "value": 0,
       "cash": 0,
       "portfolio": {
         "assets": {
@@ -3171,7 +3189,7 @@ _No headers specified_
   </thead>
   <tbody>
       <tr>
-        <td>timestamp</td>
+        <td>timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -3179,7 +3197,15 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>cash</td>
+        <td>value <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>cash <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -3322,6 +3348,7 @@ _No headers specified_
 ```json
 {
   "timestamp": "2019-08-24T14:15:22Z",
+  "value": 0,
   "cash": 0,
   "portfolio": {
     "assets": {
