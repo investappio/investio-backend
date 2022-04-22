@@ -577,7 +577,7 @@ components:
           $ref: "#/components/schemas/User"
     Asset:
       title: Asset
-      description: "Schema respresenting a asset asset"
+      description: "Schema respresenting a asset"
       type: object
       properties:
         symbol:
