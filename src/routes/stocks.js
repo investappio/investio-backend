@@ -14,7 +14,6 @@ router.get('/search', async (ctx) => {
   ctx.body.stocks = res
 })
 
-// TODO: Adapt to Alpaca API
 router.get('/gainers', async (ctx) => {
   ctx.body = {}
 
