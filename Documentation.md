@@ -17,13 +17,13 @@ API definition for the Invest.io app
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
   - [`GET` /user/portfolio/historical/{range}](#op-get-user-portfolio-historical-range) 
   - [`GET` /user/leaderboard](#op-get-user-leaderboard) 
-  - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
-  - [`GET` /stocks/search](#op-get-stocks-search) 
-  - [`GET` /stocks/quotes](#op-get-stocks-quotes) 
-  - [`GET` /stocks/{symbol}/quote](#op-get-stocks-symbol-quote) 
-  - [`GET` /stocks/{symbol}/price/historical/{range}](#op-get-stocks-symbol-price-historical-range) 
-  - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
-  - [`POST` /stocks/{symbol}/sell](#op-post-stocks-symbol-sell) 
+  - [`GET` /assets/gainers](#op-get-assets-gainers) 
+  - [`GET` /assets/search](#op-get-assets-search) 
+  - [`GET` /assets/quotes](#op-get-assets-quotes) 
+  - [`GET` /assets/{symbol}/quote](#op-get-assets-symbol-quote) 
+  - [`GET` /assets/{symbol}/price/historical/{range}](#op-get-assets-symbol-price-historical-range) 
+  - [`POST` /assets/{symbol}/buy](#op-post-assets-symbol-buy) 
+  - [`POST` /assets/{symbol}/sell](#op-post-assets-symbol-sell) 
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
@@ -1926,12 +1926,12 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/gainers
-<a id="op-get-stocks-gainers" />
+### `GET` /assets/gainers
+<a id="op-get-assets-gainers" />
 
-> Get the top gaining stocks from previous day
+> Get the top gaining assets from previous day
 
-Fetch the top gaining stocks
+Fetch the top gaining assets
 
 
 
@@ -1940,7 +1940,7 @@ Fetch the top gaining stocks
 
 ##### &#9655; count
 
-Number of stocks to return
+Number of assets to return
 
 
 <table>
@@ -1960,7 +1960,7 @@ Number of stocks to return
           integer
         </td>
         <td>query</td>
-        <td>Number of stocks to return</td>
+        <td>Number of assets to return</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -2002,7 +2002,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks</td>
+        <td>assets</td>
         <td>
           array(object)
         </td>
@@ -2010,7 +2010,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.symbol <strong>(required)</strong></td>
+        <td>assets.symbol <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2018,7 +2018,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.timestamp <strong>(required)</strong></td>
+        <td>assets.timestamp <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2026,7 +2026,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.open <strong>(required)</strong></td>
+        <td>assets.open <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2034,7 +2034,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.high <strong>(required)</strong></td>
+        <td>assets.high <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2042,7 +2042,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.low <strong>(required)</strong></td>
+        <td>assets.low <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2050,7 +2050,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.close <strong>(required)</strong></td>
+        <td>assets.close <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2058,7 +2058,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.volume <strong>(required)</strong></td>
+        <td>assets.volume <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2066,7 +2066,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.average <strong>(required)</strong></td>
+        <td>assets.average <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2074,7 +2074,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.change <strong>(required)</strong></td>
+        <td>assets.change <strong>(required)</strong></td>
         <td>
           number
         </td>
@@ -2090,7 +2090,7 @@ _No headers specified_
 ```json
 {
   "success": true,
-  "stocks": [
+  "assets": [
     {
       "symbol": "string",
       "timestamp": "2019-08-24T14:15:22Z",
@@ -2108,12 +2108,12 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/search
-<a id="op-get-stocks-search" />
+### `GET` /assets/search
+<a id="op-get-assets-search" />
 
-> General search for stocks
+> General search for assets
 
-Search for stocks by name or symbol
+Search for assets by name or symbol
 
 
 
@@ -2122,7 +2122,7 @@ Search for stocks by name or symbol
 
 ##### &#9655; query
 
-Name or symbol of searched stock
+Name or symbol of searched asset
 
 
 <table>
@@ -2142,7 +2142,7 @@ Name or symbol of searched stock
           string
         </td>
         <td>query</td>
-        <td>Name or symbol of searched stock</td>
+        <td>Name or symbol of searched asset</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -2184,7 +2184,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks</td>
+        <td>assets</td>
         <td>
           array(object)
         </td>
@@ -2192,7 +2192,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.symbol <strong>(required)</strong></td>
+        <td>assets.symbol <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2200,7 +2200,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.name <strong>(required)</strong></td>
+        <td>assets.name <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2208,7 +2208,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.class <strong>(required)</strong></td>
+        <td>assets.class <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2216,7 +2216,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.exchange <strong>(required)</strong></td>
+        <td>assets.exchange <strong>(required)</strong></td>
         <td>
           string
         </td>
@@ -2224,7 +2224,7 @@ _No headers specified_
         <td><em>Any</em></td>
       </tr>
       <tr>
-        <td>stocks.active <strong>(required)</strong></td>
+        <td>assets.active <strong>(required)</strong></td>
         <td>
           boolean
         </td>
@@ -2240,7 +2240,7 @@ _No headers specified_
 ```json
 {
   "success": true,
-  "stocks": [
+  "assets": [
     {
       "symbol": "string",
       "name": "string",
@@ -2254,10 +2254,10 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/quotes
-<a id="op-get-stocks-quotes" />
+### `GET` /assets/quotes
+<a id="op-get-assets-quotes" />
 
-> Get recent pricing for multiple stocks
+> Get recent pricing for multiple assets
 
 Get the latest quote for multiple quotes
 
@@ -2355,19 +2355,19 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/{symbol}/quote
-<a id="op-get-stocks-symbol-quote" />
+### `GET` /assets/{symbol}/quote
+<a id="op-get-assets-symbol-quote" />
 
-> Get a stock's recent pricing
+> Get a asset's recent pricing
 
-Get a stock's latest quote
+Get a asset's latest quote
 
 
 #### Path parameters
 
 ##### &#9655; symbol
 
-Symbol of the stock to get the quote of
+Symbol of the asset to get the quote of
 
 
 <table>
@@ -2387,7 +2387,7 @@ Symbol of the stock to get the quote of
           string
         </td>
         <td>path</td>
-        <td>Symbol of the stock to get the quote of</td>
+        <td>Symbol of the asset to get the quote of</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -2453,19 +2453,19 @@ _No headers specified_
 
 </div>
 
-### `GET` /stocks/{symbol}/price/historical/{range}
-<a id="op-get-stocks-symbol-price-historical-range" />
+### `GET` /assets/{symbol}/price/historical/{range}
+<a id="op-get-assets-symbol-price-historical-range" />
 
-> Get a stock's historical price data
+> Get a asset's historical price data
 
-Get a stock's historical prices
+Get a asset's historical prices
 
 
 #### Path parameters
 
 ##### &#9655; symbol
 
-Symbol of the stock to get the price history of
+Symbol of the asset to get the price history of
 
 
 <table>
@@ -2485,7 +2485,7 @@ Symbol of the stock to get the price history of
           string
         </td>
         <td>path</td>
-        <td>Symbol of the stock to get the price history of</td>
+        <td>Symbol of the asset to get the price history of</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -2664,19 +2664,19 @@ _No headers specified_
 
 </div>
 
-### `POST` /stocks/{symbol}/buy
-<a id="op-post-stocks-symbol-buy" />
+### `POST` /assets/{symbol}/buy
+<a id="op-post-assets-symbol-buy" />
 
-> Buy a stock for a user
+> Buy a asset for a user
 
-Purchase a stock for the logged in user
+Purchase a asset for the logged in user
 
 
 #### Path parameters
 
 ##### &#9655; symbol
 
-Symbol of the stock to purchase
+Symbol of the asset to purchase
 
 
 <table>
@@ -2696,7 +2696,7 @@ Symbol of the stock to purchase
           string
         </td>
         <td>path</td>
-        <td>Symbol of the stock to purchase</td>
+        <td>Symbol of the asset to purchase</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>
@@ -2821,19 +2821,19 @@ _No headers specified_
 
 </div>
 
-### `POST` /stocks/{symbol}/sell
-<a id="op-post-stocks-symbol-sell" />
+### `POST` /assets/{symbol}/sell
+<a id="op-post-assets-symbol-sell" />
 
-> Sell a user's stock
+> Sell a user's asset
 
-Sell a stock for the logged in user
+Sell a asset for the logged in user
 
 
 #### Path parameters
 
 ##### &#9655; symbol
 
-Symbol of the stock to sell
+Symbol of the asset to sell
 
 
 <table>
@@ -2853,7 +2853,7 @@ Symbol of the stock to sell
           string
         </td>
         <td>path</td>
-        <td>Symbol of the stock to sell</td>
+        <td>Symbol of the asset to sell</td>
         <td><em>Any</em></td>
       </tr>
   </tbody>

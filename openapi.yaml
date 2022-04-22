@@ -304,10 +304,10 @@ paths:
           name: count
           description: Number of portfolios to return
       description: Get the portfolio of the current user
-  /stocks/gainers:
+  /assets/gainers:
     get:
-      summary: "Get the top gaining stocks from previous day"
-      operationId: get-stocks-gainers
+      summary: "Get the top gaining assets from previous day"
+      operationId: get-assets-gainers
       responses:
         "200":
           description: OK
@@ -318,22 +318,22 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  stocks:
+                  assets:
                     type: array
                     items:
                       $ref: "#/components/schemas/Price"
-      description: Fetch the top gaining stocks
+      description: Fetch the top gaining assets
       parameters:
         - schema:
             type: integer
             minimum: 1
           in: query
           name: count
-          description: Number of stocks to return
-  /stocks/search:
+          description: Number of assets to return
+  /assets/search:
     get:
-      summary: "General search for stocks"
-      operationId: get-stocks-search
+      summary: "General search for assets"
+      operationId: get-assets-search
       responses:
         "200":
           description: OK
@@ -344,21 +344,21 @@ paths:
                 properties:
                   success:
                     type: boolean
-                  stocks:
+                  assets:
                     type: array
                     items:
                       $ref: "#/components/schemas/Asset"
-      description: Search for stocks by name or symbol
+      description: Search for assets by name or symbol
       parameters:
         - schema:
             type: string
           in: query
           name: query
-          description: Name or symbol of searched stock
-  /stocks/quotes:
+          description: Name or symbol of searched asset
+  /assets/quotes:
     get:
-      summary: "Get recent pricing for multiple stocks"
-      operationId: get-stock-quotes
+      summary: "Get recent pricing for multiple assets"
+      operationId: get-asset-quotes
       responses:
         "200":
           description: OK
@@ -382,10 +382,10 @@ paths:
           name: symbols
           required: true
           description: Comma seperated string of symbols to get get quotes for
-  /stocks/{symbol}/quote:
+  /assets/{symbol}/quote:
     get:
-      summary: "Get a stock's recent pricing"
-      operationId: get-stocks-quote
+      summary: "Get a asset's recent pricing"
+      operationId: get-assets-quote
       responses:
         "200":
           description: OK
@@ -399,18 +399,18 @@ paths:
                   quote:
                     type: number
                     minimum: 0
-      description: Get a stock's latest quote
+      description: Get a asset's latest quote
       parameters:
         - schema:
             type: string
           in: path
           name: symbol
           required: true
-          description: Symbol of the stock to get the quote of
-  /stocks/{symbol}/price/historical/{range}:
+          description: Symbol of the asset to get the quote of
+  /assets/{symbol}/price/historical/{range}:
     get:
-      summary: "Get a stock's historical price data"
-      operationId: get-stocks-price-history
+      summary: "Get a asset's historical price data"
+      operationId: get-assets-price-history
       responses:
         "200":
           description: OK
@@ -425,14 +425,14 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Price"
-      description: Get a stock's historical prices
+      description: Get a asset's historical prices
       parameters:
         - schema:
             type: string
           in: path
           name: symbol
           required: true
-          description: Symbol of the stock to get the price history of
+          description: Symbol of the asset to get the price history of
         - schema:
             type: string
             enum:
@@ -443,10 +443,10 @@ paths:
           name: range
           required: true
           description: Interval to get prices from
-  /stocks/{symbol}/buy:
+  /assets/{symbol}/buy:
     post:
-      summary: "Buy a stock for a user"
-      operationId: post-stocks-buy
+      summary: "Buy a asset for a user"
+      operationId: post-assets-buy
       responses:
         "200":
           description: OK
@@ -457,14 +457,14 @@ paths:
                 properties:
                   success:
                     type: boolean
-      description: Purchase a stock for the logged in user
+      description: Purchase a asset for the logged in user
       parameters:
         - schema:
             type: string
           in: path
           name: symbol
           required: true
-          description: Symbol of the stock to purchase
+          description: Symbol of the asset to purchase
       requestBody:
         content:
           application/json:
@@ -480,10 +480,10 @@ paths:
                     notional:
                       type: number
                       minimum: 0
-  /stocks/{symbol}/sell:
+  /assets/{symbol}/sell:
     post:
-      summary: "Sell a user's stock"
-      operationId: post-stocks-sell
+      summary: "Sell a user's asset"
+      operationId: post-assets-sell
       responses:
         "200":
           description: OK
@@ -494,14 +494,14 @@ paths:
                 properties:
                   success:
                     type: boolean
-      description: Sell a stock for the logged in user
+      description: Sell a asset for the logged in user
       parameters:
         - schema:
             type: string
           in: path
           name: symbol
           required: true
-          description: Symbol of the stock to sell
+          description: Symbol of the asset to sell
       requestBody:
         content:
           application/json:
@@ -577,7 +577,7 @@ components:
           $ref: "#/components/schemas/User"
     Asset:
       title: Asset
-      description: "Schema respresenting a stock asset"
+      description: "Schema respresenting a asset asset"
       type: object
       properties:
         symbol:
@@ -598,7 +598,7 @@ components:
         - active
     Price:
       title: Price
-      description: "Schema respresenting neccesary information on a specific date for a stock"
+      description: "Schema respresenting pricing information on a specific date for a asset"
       type: object
       properties:
         symbol:

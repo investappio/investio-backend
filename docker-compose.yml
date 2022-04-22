@@ -30,14 +30,14 @@ services:
       - "${PORT}:${PORT}"
     expose:
       - "${PORT}"
-  stocks:
+  assets:
     build: ./scripts
-    container_name: stocks
+    container_name: assets
     restart: on-failure:1
     depends_on:
       mongo:
         condition: service_healthy
-    command: /bin/sh -c "python3 get_stocks.py && tail -f /dev/null"
+    command: /bin/sh -c "python3 get_assets.py && tail -f /dev/null"
     working_dir: /usr/src/app
     volumes:
       - ./scripts:/usr/src/app
@@ -50,9 +50,9 @@ services:
       - "APCA_API_SECRET_KEY=${APCA_API_SECRET_KEY}"
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.stocks.container: "stocks"
-      ofelia.job-exec.stocks.schedule: "0 15 4 * * *"
-      ofelia.job-exec.stocks.command: "python3 get_stocks.py"
+      ofelia.job-exec.assets.container: "assets"
+      ofelia.job-exec.assets.schedule: "0 15 4 * * *"
+      ofelia.job-exec.assets.command: "python3 get_assets.py"
   redis:
     image: redis:latest
     container_name: redis
@@ -87,7 +87,7 @@ services:
     container_name: ofelia
     restart: unless-stopped
     depends_on:
-      stocks:
+      assets:
         condition: service_started
     command: daemon --docker
     volumes:
