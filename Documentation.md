@@ -17,7 +17,7 @@ API definition for the Invest.io app
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
   - [`GET` /user/portfolio/historical/{range}](#op-get-user-portfolio-historical-range) 
   - [`GET` /user/leaderboard](#op-get-user-leaderboard) 
-  - [`GET` /assets/gainers](#op-get-assets-gainers) 
+  - [`GET` /assets/movers](#op-get-assets-movers) 
   - [`GET` /assets/search](#op-get-assets-search) 
   - [`GET` /assets/quotes](#op-get-assets-quotes) 
   - [`GET` /assets/{symbol}/quote](#op-get-assets-symbol-quote) 
@@ -1926,8 +1926,8 @@ _No headers specified_
 
 </div>
 
-### `GET` /assets/gainers
-<a id="op-get-assets-gainers" />
+### `GET` /assets/movers
+<a id="op-get-assets-movers" />
 
 > Get the top gaining assets from previous day
 
