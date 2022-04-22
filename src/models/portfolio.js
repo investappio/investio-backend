@@ -64,13 +64,13 @@ async function sell (symbol, q, n) {
 }
 
 async function getValue () {
+  const quotes = await Asset.fetchQuotes([...this.assets.keys()])
+
   const value = await [...this.assets.entries()].reduce(async (p, c) => {
     const prev = await p
     const [symbol, qty] = c
 
-    const price = await Asset.fetchQuote(symbol)
-
-    return Big(price).times(qty).plus(prev)
+    return Big(quotes[symbol]).times(qty).plus(prev)
   }, Big(0))
 
   return value.plus(this.cash).round(2)
@@ -79,7 +79,7 @@ async function getValue () {
 async function getValueHistory (opts) {
   const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
-  const date = (new DateTime(options.date)).endOf('day')
+  const date = (new DateTime(options.date))
   const startDate = date.minus(Duration.fromDurationLike(options.duration))
 
   const history = await PortfolioHistory.find({ timestamp: { $gte: startDate, $lte: date } })

@@ -98,7 +98,7 @@ async function fetchQuotes (symbols) {
   )
 
   const misses = symbols.filter((symbol) => !cached.has(symbol))
-  const fetched = new Map([...(await alpaca.getLatestQuotes(misses))].map(([symbol, val]) => [symbol, val.AskPrice]))
+  const fetched = new Map(misses.length > 0 ? [...(await alpaca.getLatestQuotes(misses))].map(([symbol, val]) => [symbol, val.AskPrice]) : [])
 
   const quotes = (await [...cached, ...fetched].reduce(async (prev, [symbol, quote]) => {
     const entries = await prev
