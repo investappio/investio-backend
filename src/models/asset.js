@@ -43,6 +43,7 @@ assetSchema.method('getPriceHistory', getPriceHistory)
 
 async function search (query) {
   return this.find({
+    active: true,
     $or: [
       { symbol: { $regex: query, $options: 'i' } },
       { $text: { $search: query } }

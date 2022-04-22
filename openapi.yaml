@@ -568,6 +568,9 @@ components:
         timestamp:
           type: string
           format: date-time
+        value:
+          type: number
+          minimum: 0
         cash:
           type: number
           minimum: 0
@@ -575,6 +578,10 @@ components:
           $ref: "#/components/schemas/Portfolio"
         user:
           $ref: "#/components/schemas/User"
+      required:
+        - timestamp
+        - value
+        - cash
     Asset:
       title: Asset
       description: "Schema respresenting a asset"
