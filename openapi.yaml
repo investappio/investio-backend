@@ -304,10 +304,10 @@ paths:
           name: count
           description: Number of portfolios to return
       description: Get the portfolio of the current user
-  /assets/gainers:
+  /assets/movers:
     get:
       summary: "Get the top gaining assets from previous day"
-      operationId: get-assets-gainers
+      operationId: get-assets-movers
       responses:
         "200":
           description: OK

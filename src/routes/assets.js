@@ -14,7 +14,7 @@ router.get('/search', async (ctx) => {
   ctx.body.assets = res
 })
 
-router.get('/gainers', async (ctx) => {
+router.get('/movers', async (ctx) => {
   ctx.body = {}
 
   const { count } = ctx.request.query
