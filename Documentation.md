@@ -19,6 +19,7 @@ API definition for the Invest.io app
   - [`GET` /user/leaderboard](#op-get-user-leaderboard) 
   - [`GET` /stocks/gainers](#op-get-stocks-gainers) 
   - [`GET` /stocks/search](#op-get-stocks-search) 
+  - [`GET` /stocks/quotes](#op-get-stocks-quotes) 
   - [`GET` /stocks/{symbol}/quote](#op-get-stocks-symbol-quote) 
   - [`GET` /stocks/{symbol}/price/historical/{range}](#op-get-stocks-symbol-price-historical-range) 
   - [`POST` /stocks/{symbol}/buy](#op-post-stocks-symbol-buy) 
@@ -2248,6 +2249,107 @@ _No headers specified_
       "active": true
     }
   ]
+}
+```
+
+</div>
+
+### `GET` /stocks/quotes
+<a id="op-get-stocks-quotes" />
+
+> Get recent pricing for multiple stocks
+
+Get the latest quote for multiple quotes
+
+
+
+
+#### Query parameters
+
+##### &#9655; symbols
+
+Comma seperated string of symbols to get get quotes for
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>symbols  <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Comma seperated string of symbols to get get quotes for</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>quotes</td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "quotes": {
+    "property1": 0,
+    "property2": 0
+  }
 }
 ```
 
