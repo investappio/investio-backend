@@ -7,11 +7,11 @@ from pymongo import UpdateOne
 db = mongo_client()
 
 """
-Fetch all assets and filter for those in the NYSE
+Fetch all active assets and filter for those in the NYSE
 """
 markets = set(["NYSE", "NASDAQ"])
 asset_list = list(
-    filter(lambda a: (a.exchange in markets), alpaca.list_assets())
+    filter(lambda a: (a.exchange in markets), alpaca.list_assets(status="active"))
 )
 
 assets = db["assets"]
@@ -219,4 +219,26 @@ portfolio_history.aggregate(
         {"$unset": ["user.dob", "user.email", "user.password", "user.__v"]},
         {"$out": "leaderboard"},
     ]
+)
+
+"""
+Fetch all inactive assets and filter for those in the NYSE
+"""
+
+asset_list_inactive = list(
+    filter(lambda a: (a.exchange in markets), alpaca.list_assets(status="inactive"))
+)
+
+# Bulk insert/replace the fetched assets
+assets.bulk_write(
+    list(
+        map(
+            lambda asset: UpdateOne(
+                {"symbol": asset.symbol},
+                {"$set": asset_transform(**asset._raw)},
+                upsert=True,
+            ),
+            asset_list_inactive,
+        )
+    )
 )
