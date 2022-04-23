@@ -58,6 +58,13 @@ async function topGainers (count) {
   ]).limit(count)
 }
 
+async function topLosers (count) {
+  return Price.find({}).sort([
+    ['timestamp', -1],
+    ['changePercent', 1]
+  ]).limit(count)
+}
+
 async function fetchQuote (symbol) {
   const key = `${symbol}/quotes/latest`
   const cached = await redis.get(key)
@@ -133,5 +140,6 @@ assetSchema.static('search', search)
 assetSchema.static('fetchQuote', fetchQuote)
 assetSchema.static('fetchQuotes', fetchQuotes)
 assetSchema.static('topGainers', topGainers)
+assetSchema.static('topLosers', topLosers)
 
 module.exports = model('Asset', assetSchema)

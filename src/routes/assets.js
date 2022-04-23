@@ -19,10 +19,13 @@ router.get('/movers', async (ctx) => {
 
   const { count } = ctx.request.query
 
-  const res = await Asset.topGainers(count || 5)
+  const gainers = await Asset.topGainers(count || 5)
+  const losers = await Asset.topLosers(count || 5)
+
+  const res = [...gainers, ...losers].sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
 
   ctx.body.success = true
-  ctx.body.assets = res
+  ctx.body.assets = res.slice(0, count || 5)
 })
 
 router.get('/quotes', async (ctx) => {
