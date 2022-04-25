@@ -6,7 +6,7 @@ const router = new Router()
 router.get('/search', async (ctx) => {
   ctx.body = {}
 
-  const { query } = ctx.request.query
+  const query = ctx.request.query.query || ''
 
   const res = await Asset.search(query)
 
@@ -17,21 +17,21 @@ router.get('/search', async (ctx) => {
 router.get('/movers', async (ctx) => {
   ctx.body = {}
 
-  const { count } = ctx.request.query
+  const count = ctx.request.query.count || 5
 
-  const gainers = await Asset.topGainers(count || 5)
-  const losers = await Asset.topLosers(count || 5)
+  const gainers = await Asset.topGainers(count)
+  const losers = await Asset.topLosers(count)
 
   const res = [...gainers, ...losers].sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))
 
   ctx.body.success = true
-  ctx.body.assets = res.slice(0, count || 5)
+  ctx.body.assets = res.slice(0, count)
 })
 
 router.get('/quotes', async (ctx) => {
   ctx.body = {}
 
-  const { symbols } = ctx.request.query
+  const symbols = ctx.request.query.symbols || ''
 
   ctx.body.quotes = await Asset.fetchQuotes(symbols.split(','))
   ctx.body.success = true
