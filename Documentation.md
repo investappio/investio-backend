@@ -1978,6 +1978,35 @@ Number of portfolios to return
 </table>
 
 
+##### &#9655; start
+
+Starting index of leaderboard entries to fetch
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>start </td>
+        <td>
+          integer
+        </td>
+        <td>query</td>
+        <td>Starting index of leaderboard entries to fetch</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
 
 
 
