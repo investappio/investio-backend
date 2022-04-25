@@ -28,7 +28,7 @@ const assetSchema = new Schema({
 assetSchema.index({ name: 'text', symbol: 'text' })
 
 async function getPriceHistory (opts) {
-  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
+  const options = { ...opts, ...{ date: DateTime.now(), duration: { weeks: 2 } } }
 
   return Price.find({
     symbol: this.symbol,

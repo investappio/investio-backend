@@ -41,9 +41,21 @@ async function getProfile (ctx) {
   ctx.body.profile = ctx.targetUser || ctx.user
 }
 
+async function getOrders (ctx) {
+  ctx.body = {}
+
+  const { start, count } = ctx.request.query
+  const portfolio = await (ctx.targetUser || ctx.user).getPortfolio()
+
+  ctx.body.success = true
+  ctx.body.orders = await portfolio.getOrderHistory({ start, count })
+}
+
 router.get('/profile', getProfile)
 
 router.get('/portfolio', getPortfolio)
+
+router.get('/orders', getOrders)
 
 router.get('/portfolio/historical/:range', async (ctx) => {
   ctx.body = {}
@@ -80,6 +92,7 @@ router.use('/:user',
   }, (new Router())
     .get('/', getProfile)
     .get('/portfolio', getPortfolio)
+    .get('/orders', getOrders)
     .get('/following', async (ctx) => {
       ctx.body = {}
       ctx.body.following = ctx.user.following(ctx.targetUser)

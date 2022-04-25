@@ -248,6 +248,36 @@ paths:
                   portfolio:
                     $ref: "#/components/schemas/Portfolio"
       description: Get the portfolio of the current user
+  /user/orders:
+    get:
+      summary: "Get the current user's order history"
+      operationId: get-user-orders
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  orders:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Order"
+      parameters:
+        - schema:
+            type: string
+            format: date-time
+          name: start
+          in: query
+          description: Start time to get orders from
+        - schema:
+            type: number
+          name: count
+          in: query
+          description: Limit on the number of orders to return
   /user/portfolio/historical/{range}:
     get:
       summary: "Get the current user's portfolio history by range"
@@ -551,6 +581,9 @@ components:
           type: object
           additionalProperties:
             type: number
+          example:
+            AAPL: 0.23
+            SNOW: 0.18
         cash:
           type: number
         value:
@@ -560,6 +593,29 @@ components:
       required:
         - cash
         - assets
+    Order:
+      title: Order
+      type: object
+      description: "Schema representing a user's order"
+      properties:
+        portfolio:
+          $ref: "#/components/schemas/Portfolio"
+        symbol:
+          type: string
+        qty:
+          type: number
+          minimum: 0
+        notional:
+          type: number
+          minimum: 0
+        side:
+          type: string
+          enum:
+            - buy
+            - sell
+        timestamp:
+          type: string
+          format: date-time
     PortfolioHistory:
       title: Portfolio History
       type: object

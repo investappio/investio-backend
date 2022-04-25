@@ -77,7 +77,7 @@ async function getValue () {
 }
 
 async function getValueHistory (opts) {
-  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
+  const options = { ...opts, ...{ date: DateTime.now(), duration: { weeks: 2 } } }
 
   const date = (new DateTime(options.date))
   const startDate = date.minus(Duration.fromDurationLike(options.duration))
@@ -93,9 +93,15 @@ async function getValueHistory (opts) {
   return history
 }
 
+async function getOrderHistory (opts) {
+  const options = { ...opts, ...{ start: DateTime.now().toISO(), count: 25 } }
+  return Order.find({ portfolio: this, timestamp: { $lt: options.start } }).limit(options.count)
+}
+
 portfolioSchema.method('buy', buy)
 portfolioSchema.method('sell', sell)
 portfolioSchema.method('getValue', getValue)
+portfolioSchema.method('getOrderHistory', getOrderHistory)
 portfolioSchema.method('getValueHistory', getValueHistory)
 
 module.exports = model('Portfolio', portfolioSchema)
