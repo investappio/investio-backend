@@ -12,6 +12,10 @@ exports.normalizePort = (val) => {
   return false
 }
 
+exports.filterUndefined = (obj) => {
+  Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key])
+}
+
 exports.alpaca = new Alpaca({
   keyId: process.env.APCA_API_KEY_ID,
   secretKey: process.env.APCA_API_SECRET_KEY,

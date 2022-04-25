@@ -1,5 +1,5 @@
 const { DateTime } = require('luxon')
-const { alpaca, redis } = require('../utils')
+const { alpaca, redis, filterUndefined } = require('../utils')
 
 const { Schema, model } = require('mongoose')
 const Price = require('./price')
@@ -28,7 +28,8 @@ const assetSchema = new Schema({
 assetSchema.index({ name: 'text', symbol: 'text' })
 
 async function getPriceHistory (opts) {
-  const options = { ...opts, ...{ date: DateTime.now(), duration: { weeks: 2 } } }
+  filterUndefined(opts)
+  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
   return Price.find({
     symbol: this.symbol,

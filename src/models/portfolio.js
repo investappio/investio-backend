@@ -5,6 +5,7 @@ const { Schema, model } = require('mongoose')
 const Asset = require('./asset')
 const Order = require('./order')
 const PortfolioHistory = require('./portfolio_history')
+const { filterUndefined } = require('../utils')
 
 const portfolioSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
@@ -77,7 +78,8 @@ async function getValue () {
 }
 
 async function getValueHistory (opts) {
-  const options = { ...opts, ...{ date: DateTime.now(), duration: { weeks: 2 } } }
+  filterUndefined(opts)
+  const options = { ...{ date: DateTime.now(), duration: { weeks: 2 } }, ...opts }
 
   const date = (new DateTime(options.date))
   const startDate = date.minus(Duration.fromDurationLike(options.duration))
@@ -94,7 +96,8 @@ async function getValueHistory (opts) {
 }
 
 async function getOrderHistory (opts) {
-  const options = { ...opts, ...{ start: DateTime.now().toISO(), count: 25 } }
+  filterUndefined(opts)
+  const options = { ...{ start: DateTime.now().toISO(), count: 25 }, ...opts }
   return Order.find({ portfolio: this, timestamp: { $lt: options.start } }).limit(options.count)
 }
 

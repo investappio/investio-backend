@@ -333,6 +333,12 @@ paths:
           in: query
           name: count
           description: Number of portfolios to return
+        - schema:
+            type: integer
+            minimum: 0
+          in: query
+          name: start
+          description: Starting index of leaderboard entries to fetch
       description: Get the portfolio of the current user
   /assets/movers:
     get:
