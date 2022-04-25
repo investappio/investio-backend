@@ -15,6 +15,7 @@ API definition for the Invest.io app
   - [`GET` /user/{user}/following](#op-get-user-user-following) 
   - [`GET` /user/{user}/portfolio](#op-get-user-user-portfolio) 
   - [`GET` /user/portfolio](#op-get-user-portfolio) 
+  - [`GET` /user/orders](#op-get-user-orders) 
   - [`GET` /user/portfolio/historical/{range}](#op-get-user-portfolio-historical-range) 
   - [`GET` /user/leaderboard](#op-get-user-leaderboard) 
   - [`GET` /assets/movers](#op-get-assets-movers) 
@@ -27,6 +28,7 @@ API definition for the Invest.io app
 * [Schemas](#schemas)
   - [User](#schema-user)
   - [Portfolio](#schema-portfolio)
+  - [Order](#schema-order)
   - [Portfolio History](#schema-portfolio-history)
   - [Asset](#schema-asset)
   - [Price](#schema-price)
@@ -1217,8 +1219,8 @@ _No headers specified_
   "success": true,
   "portfolio": {
     "assets": {
-      "property1": 0,
-      "property2": 0
+      "AAPL": 0.23,
+      "SNOW": 0.18
     },
     "cash": 0,
     "value": 0,
@@ -1370,8 +1372,8 @@ _No headers specified_
   "success": true,
   "portfolio": {
     "assets": {
-      "property1": 0,
-      "property2": 0
+      "AAPL": 0.23,
+      "SNOW": 0.18
     },
     "cash": 0,
     "value": 0,
@@ -1383,6 +1385,275 @@ _No headers specified_
       "phone": "string"
     }
   }
+}
+```
+
+</div>
+
+### `GET` /user/orders
+<a id="op-get-user-orders" />
+
+> Get the current user's order history
+
+
+
+
+
+#### Query parameters
+
+##### &#9655; start
+
+Start time to get orders from
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>start </td>
+        <td>
+          string
+        </td>
+        <td>query</td>
+        <td>Start time to get orders from</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### &#9655; count
+
+Limit on the number of orders to return
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>In</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>count </td>
+        <td>
+          number
+        </td>
+        <td>query</td>
+        <td>Limit on the number of orders to return</td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+#### Responses
+
+
+##### ▶ 200 - OK
+
+###### Headers
+_No headers specified_
+
+###### application/json
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>success</td>
+        <td>
+          boolean
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders</td>
+        <td>
+          array(object)
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.assets <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.cash <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.symbol</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.qty</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.notional</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>orders.side</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><code>buy</code>, <code>sell</code></td>
+      </tr>
+      <tr>
+        <td>orders.timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+
+##### Example _(generated)_
+
+```json
+{
+  "success": true,
+  "orders": [
+    {
+      "portfolio": {
+        "assets": {
+          "AAPL": 0.23,
+          "SNOW": 0.18
+        },
+        "cash": 0,
+        "value": 0,
+        "user": {
+          "name": "string",
+          "email": "user@example.com",
+          "dob": "2019-08-24T14:15:22Z",
+          "username": "string",
+          "phone": "string"
+        }
+      },
+      "symbol": "string",
+      "qty": 0,
+      "notional": 0,
+      "side": "buy",
+      "timestamp": "2019-08-24T14:15:22Z"
+    }
+  ]
 }
 ```
 
@@ -1639,8 +1910,8 @@ _No headers specified_
       "cash": 0,
       "portfolio": {
         "assets": {
-          "property1": 0,
-          "property2": 0
+          "AAPL": 0.23,
+          "SNOW": 0.18
         },
         "cash": 0,
         "value": 0,
@@ -1917,8 +2188,8 @@ _No headers specified_
       "cash": 0,
       "portfolio": {
         "assets": {
-          "property1": 0,
-          "property2": 0
+          "AAPL": 0.23,
+          "SNOW": 0.18
         },
         "cash": 0,
         "value": 0,
@@ -3160,8 +3431,8 @@ _No headers specified_
 ```json
 {
   "assets": {
-    "property1": 0,
-    "property2": 0
+    "AAPL": 0.23,
+    "SNOW": 0.18
   },
   "cash": 0,
   "value": 0,
@@ -3172,6 +3443,169 @@ _No headers specified_
     "username": "string",
     "phone": "string"
   }
+}
+```
+<a id="schema-order" />
+
+#### Order
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Accepted values</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>portfolio</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user's portfolio</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.assets <strong>(required)</strong></td>
+        <td>
+          object
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.cash <strong>(required)</strong></td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.value</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user</td>
+        <td>
+          object
+        </td>
+        <td>Schema respresenting a user account</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.name <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.email <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.dob <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.username <strong>(required)</strong></td>
+        <td>
+          string
+        </td>
+        <td>Set to true if the user's email has been verified.</td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>portfolio.user.phone</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>symbol</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>qty</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>notional</td>
+        <td>
+          number
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+      <tr>
+        <td>side</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><code>buy</code>, <code>sell</code></td>
+      </tr>
+      <tr>
+        <td>timestamp</td>
+        <td>
+          string
+        </td>
+        <td></td>
+        <td><em>Any</em></td>
+      </tr>
+  </tbody>
+</table>
+
+##### Example _(generated)_
+
+```json
+{
+  "portfolio": {
+    "assets": {
+      "AAPL": 0.23,
+      "SNOW": 0.18
+    },
+    "cash": 0,
+    "value": 0,
+    "user": {
+      "name": "string",
+      "email": "user@example.com",
+      "dob": "2019-08-24T14:15:22Z",
+      "username": "string",
+      "phone": "string"
+    }
+  },
+  "symbol": "string",
+  "qty": 0,
+  "notional": 0,
+  "side": "buy",
+  "timestamp": "2019-08-24T14:15:22Z"
 }
 ```
 <a id="schema-portfolio-history" />
@@ -3352,8 +3786,8 @@ _No headers specified_
   "cash": 0,
   "portfolio": {
     "assets": {
-      "property1": 0,
-      "property2": 0
+      "AAPL": 0.23,
+      "SNOW": 0.18
     },
     "cash": 0,
     "value": 0,
