@@ -98,7 +98,7 @@ async function getValueHistory (opts) {
 async function getOrderHistory (opts) {
   filterUndefined(opts)
   const options = { ...{ start: DateTime.now().toISO(), count: 25 }, ...opts }
-  return Order.find({ portfolio: this, timestamp: { $lt: options.start } }).limit(options.count)
+  return Order.find({ portfolio: this, timestamp: { $lt: options.start } }).sort('-timestamp').limit(options.count)
 }
 
 portfolioSchema.method('buy', buy)

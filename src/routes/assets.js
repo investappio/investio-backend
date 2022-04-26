@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const { Asset } = require('../models')
+const { Asset, News } = require('../models')
 
 const router = new Router()
 
@@ -26,6 +26,16 @@ router.get('/movers', async (ctx) => {
 
   ctx.body.success = true
   ctx.body.assets = res.slice(0, count)
+})
+
+router.get('/news', async (ctx) => {
+  ctx.body = {}
+
+  const { start, count } = ctx.request.query
+
+  ctx.body.success = true
+  ctx.body.prev = await News.getPrevKey({ start, count })
+  ctx.body.news = await News.getNews({ start, count })
 })
 
 router.get('/quotes', async (ctx) => {
