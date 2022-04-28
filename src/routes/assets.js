@@ -1,5 +1,6 @@
 const Router = require('@koa/router')
 const { Asset, News } = require('../models')
+const { iex } = require('../utils')
 
 const router = new Router()
 
@@ -53,6 +54,20 @@ router.get('/:symbol', async (ctx) => {
   const { symbol } = ctx.params
 
   const res = await Asset.findOne({ symbol })
+
+  if (!res.company) {
+    const {
+      symbol: _,
+      companyName,
+      exchange,
+      scurityName,
+      issueType,
+      primarySicCode,
+      ...company
+    } = await iex(`/stock/${symbol}/company`)
+    res.company = company
+    res.save()
+  }
 
   ctx.body.success = true
   ctx.body.asset = res

@@ -2,6 +2,7 @@ const Alpaca = require('@alpacahq/alpaca-trade-api')
 const redis = require('redis')
 const EventEmitter = require('events')
 const { WebSocket } = require('ws')
+const axios = require('axios').default
 
 exports.normalizePort = (val) => {
   const port = parseInt(val, 10)
@@ -22,6 +23,16 @@ exports.alpaca = new Alpaca({
   verbose: true,
   paper: true
 })
+
+exports.iex = async (path, params = {}) => {
+  const base = 'https://cloud.iexapis.com/stable'
+
+  return axios.get(`${base}/${path}`, {
+    params: {
+      token: process.env.IEX_TOKEN, ...params
+    }
+  })
+}
 
 exports.redis = (() => {
   const client = redis.createClient({ url: `redis://:${process.env.REDIS_PASSWORD}@redis` })
