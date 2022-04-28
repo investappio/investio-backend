@@ -66,7 +66,7 @@ router.get('/:symbol', async (ctx) => {
       ...company
     } = await iex(`/stock/${symbol}/company`)
     res.company = company
-    res.save()
+    await res.save()
   }
 
   ctx.body.success = true
