@@ -22,7 +22,8 @@ const assetSchema = new Schema({
   active: {
     type: Boolean,
     required: true
-  }
+  },
+  company: {}
 })
 
 assetSchema.index({ name: 'text', symbol: 'text' })
