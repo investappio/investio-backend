@@ -64,7 +64,7 @@ router.get('/:symbol', async (ctx) => {
       issueType,
       primarySicCode,
       ...company
-    } = await iex(`/stock/${symbol}/company`)
+    } = (await iex(`/stock/${symbol}/company`))
     console.log(company)
     res.company = company
     await res.save()

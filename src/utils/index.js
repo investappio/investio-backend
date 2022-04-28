@@ -27,11 +27,13 @@ exports.alpaca = new Alpaca({
 exports.iex = async (path, params = {}) => {
   const base = 'https://cloud.iexapis.com/stable'
 
-  return axios.get(`${base}/${path}`, {
+  const res = await axios.get(`${base}/${path}`, {
     params: {
       token: process.env.IEX_TOKEN, ...params
     }
   })
+
+  return res.data
 }
 
 exports.redis = (() => {
