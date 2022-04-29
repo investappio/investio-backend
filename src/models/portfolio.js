@@ -84,7 +84,7 @@ async function getValueHistory (opts) {
   const date = (new DateTime(options.date))
   const startDate = date.minus(Duration.fromDurationLike(options.duration))
 
-  const history = await PortfolioHistory.find({ timestamp: { $gte: startDate, $lte: date } })
+  const history = await PortfolioHistory.find({ timestamp: { $gte: startDate, $lte: date }, portfolio: this })
 
   history.push({
     timestamp: date,
