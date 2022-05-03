@@ -22,7 +22,7 @@
     "koa-jwt": "^4.0.3",
     "koa-logger": "^3.2.1",
     "luxon": "^2.3.2",
-    "mongoose": "^6.3.1",
+    "mongoose": "^6.3.2",
     "redis": "^4.0.6",
     "sanitize-html": "^2.7.0",
     "ws": "^8.5.0"
