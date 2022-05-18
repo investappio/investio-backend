@@ -25,7 +25,7 @@
     "mongoose": "^6.3.3",
     "redis": "^4.0.6",
     "sanitize-html": "^2.7.0",
-    "ws": "^8.5.0"
+    "ws": "^8.6.0"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
