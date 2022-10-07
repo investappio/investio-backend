@@ -13,7 +13,7 @@
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^2.16.1",
     "@koa/router": "^12.0.0",
-    "axios": "^0.27.2",
+    "axios": "^1.1.2",
     "bcrypt": "^5.0.1",
     "big.js": "^6.2.1",
     "jsonwebtoken": "^8.5.1",
